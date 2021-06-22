@@ -83,6 +83,13 @@ MIT License. Contributions welcomed.
 
 ## More
 
+#### Checkout other awesome projects for Flutter on Windows
+(Irrespective of order)
+- [bitsdojo_window](https://github.com/bitsdojo/bitsdojo_window)
+  - A Flutter package that makes it easy to customize and work with your Flutter desktop app window.
+- [fluent_ui](https://github.com/bdlukaa/fluent_ui)
+  - Implements Microsoft's Fluent Design System in Flutter.
+
 <img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/aero.jpg' height='512'></img>
 
 Aero blur effect.
