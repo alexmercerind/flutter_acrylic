@@ -1,7 +1,9 @@
 name: flutter_acrylic
-description: A new flutter plugin project.
+description: Acrylic & aero blur effect on Flutter Windows.
 version: 0.0.1
-homepage:
+homepage: https://github.com/alexmercerind/flutter_acrylic
+repository: https://github.com/alexmercerind/flutter_acrylic
+documentation: https://github.com/alexmercerind/flutter_acrylic/blob/master/README.md
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
