@@ -13,7 +13,7 @@ dependencies:
 
 ## Example
 
-You can download & try out the example application [here](https://github.com/alexmercerind).
+You can [download](https://github.com/alexmercerind/flutter_acrylic/releases/download/v0.0.1/flutter_acrylic_example.zip) & try out the example application.
 
 <img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/acrylic.jpg' height='512'></img>
 
@@ -72,6 +72,8 @@ Learn more at [Rafael Rivera](https://github.com/riverar)'s amazing blog post ab
 
 In most cases, you might wanna render custom window frame because the blur effect might leak outside the window boundary.
 You can use [bitsdojo_window](https://github.com/bitsdojo/bitsdojo_window) to make a custom window for your Flutter application.
+
+Currently `AcrylicEffect.acrylic` causes lag on window drag, this is a bug in Windows itself. Latest Windows 11 build appears to be fixing this issue.
 
 You can see the [example](https://github.com/alexmercerind/flutter_acrylic/blob/master/example/lib/main.dart) application for further details.
 
