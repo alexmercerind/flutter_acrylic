@@ -2,84 +2,102 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
-
 final MethodChannel _channel = const MethodChannel('flutter_acrylic');
 final Completer<void> _create = new Completer<void>();
 
-
-/// Blur effects.
-enum BlurEffect {
+/// Acrylic effects.
+enum AcrylicEffect {
   /// Default window background. No blur effect.
   disabled,
-  /// Gradient window background.
-  gradient,
+
+  /// Solid window background.
+  solid,
+
   /// Transparent window background.
   transparent,
-  /// Aero blur effect like Windows 7.
+
+  /// Aero blur effect. Windows Vista & Windows 7 like.
   aero,
+
   /// Acrylic blur effect. Requires Windows 10 version 1803 or higher.
   acrylic
 }
 
-
-/// **FlutterAcrylic**
-/// 
-/// Flutter plugin to blur the window background.
-/// 
-/// Exposes undocumented `SetWindowCompositionAttribute` API from `user32.dll` on Windows.
-/// 
-/// Example
+/// **Acrylic**
+///
+/// _Example_
 /// ```dart
 /// void main() {
 ///   WidgetsFlutterBinding.ensureInitialized();
-///   FlutterAcrylic.create();
+///   Acrylic.initialize();
 ///   runApp(MyApp());
 /// }
-/// 
+///
 /// ...
-/// await FlutterAcrylic.set(
-///   mode: AcrylicMode.aero,
+/// await Acrylic.setEffect(
+///   effect: AcrylicEffect.aero,
 ///   gradientColor: Colors.white.withOpacity(0.2)
 /// );
 /// ```
-/// 
-class FlutterAcrylic {
-
-  /// Initializes [FlutterAcrylic] plugin.
-  /// 
-  /// Must be called before calling any other method of the class.
-  /// 
+///
+class Acrylic {
+  /// Initializes [Acrylic] class.
+  ///
+  /// Must be called before calling [Acrylic.setEffect].
+  ///
+  /// _Example_
   /// ```dart
-  /// await FlutterAcrylic.create();
+  /// await Acrylic.initialize();
   /// ```
-  /// 
-  static Future<void> create() async {
-    await _channel.invokeMethod('FlutterAcrylic.create');
+  ///
+  static Future<void> initialize({bool drawCustomFrame: false}) async {
+    await _channel.invokeMethod(
+        'Acrylic.initialize', {'drawCustomFrame': drawCustomFrame});
     _create.complete();
   }
 
-  /// Sets [AcrylicMode] for the window.
-  /// 
+  /// Sets [BlurEffect] for the window.
+  ///
+  /// Uses undocumented `SetWindowCompositionAttribute` API from `user32.dll` on Windows.
+  ///
+  /// Enables aero, acrylic or other transparency on the Flutter instance window.
+  ///
+  /// _Example_
   /// ```dart
-  /// await FlutterAcrylic.set(
-  ///   mode: AcrylicMode.acrylic,
+  /// await FlutterAcrylic.setEffect(
+  ///   effect: AcrylicEffect.acrylic,
   ///   gradientColor: Colors.black.withOpacity(0.2)
   /// );
   /// ```
-  /// 
-  static Future<void> set({required BlurEffect effect, Color gradientColor: Colors.white}) async {
+  ///
+  static Future<void> setEffect(
+      {required AcrylicEffect effect,
+      Color gradientColor: Colors.white}) async {
     await _create.future;
-    await _channel.invokeMethod(
-      'FlutterAcrylic.set',
-      {
-        'effect': effect.index,
-        'gradientColor': {
-          'R': gradientColor.red,
-          'G': gradientColor.green,
-          'B': gradientColor.blue,
-          'A': gradientColor.alpha
-        }
+    await _channel.invokeMethod('Acrylic.setEffect', {
+      'effect': effect.index,
+      'gradientColor': {
+        'R': gradientColor.red,
+        'G': gradientColor.green,
+        'B': gradientColor.blue,
+        'A': gradientColor.alpha
       }
-    );
+    });
+  }
+}
+
+/// **Window**
+///
+/// General utilities to control Flutter instance window.
+///
+class Window {
+  /// Makes the Flutter window fullscreen.
+  static Future<void> enterFullscreen() async {
+    await _channel.invokeMethod('Window.enterFullscreen');
+  }
+
+  /// Restores the Flutter window back to normal from fullscreen mode.
+  static Future<void> exitFullscreen() async {
+    await _channel.invokeMethod('Window.exitFullscreen');
   }
 }
