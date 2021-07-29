@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -7,13 +9,15 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Acrylic.initialize();
   runApp(MyApp());
-  doWhenWindowReady(() {
-    final initialSize = Size(960, 720);
-    appWindow.minSize = Size(720, 480);
-    appWindow.size = initialSize;
-    appWindow.alignment = Alignment.center;
-    appWindow.show();
-  });
+  if (Platform.isWindows) {
+    doWhenWindowReady(() {
+      final initialSize = Size(960, 720);
+      appWindow.minSize = Size(720, 480);
+      appWindow.size = initialSize;
+      appWindow.alignment = Alignment.center;
+      appWindow.show();
+    });
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -128,7 +132,7 @@ class MyAppBodyState extends State<MyAppBody> {
             ),
           ),
         ),
-        WindowTitleBarBox(
+        Platform.isWindows ? WindowTitleBarBox(
           child: MoveWindow(
             child: Container(
               width: MediaQuery.of(context).size.width,
@@ -163,7 +167,7 @@ class MyAppBodyState extends State<MyAppBody> {
               ),
             ),
           ),
-        ),
+        ): Container(),
       ],
     );
   }
