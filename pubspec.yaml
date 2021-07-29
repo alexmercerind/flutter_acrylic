@@ -30,6 +30,8 @@ flutter:
     platforms:
       windows:
         pluginClass: FlutterAcrylicPlugin
+      linux:
+        pluginClass: FlutterAcrylicPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
