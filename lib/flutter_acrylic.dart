@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 final MethodChannel _channel = const MethodChannel('flutter_acrylic');
 final Completer<void> _create = new Completer<void>();
 
-/// Acrylic effects.
+/// Acrylic effects for the Flutter window.
 enum AcrylicEffect {
-  /// Default window background. No blur effect.
+  /// Default window background. Works on Linux.
   disabled,
 
-  /// Solid window background.
+  /// Solid window background. Works on Linux.
   solid,
 
-  /// Transparent window background.
+  /// Transparent window background. Works on Linux.
   transparent,
 
-  /// Aero blur effect. Windows Vista & Windows 7 like.
+  /// Aero blur effect. Windows Vista & Windows 7 like glossy blur effect.
   aero,
 
   /// Acrylic blur effect. Requires Windows 10 version 1803 or higher.
@@ -27,9 +27,9 @@ enum AcrylicEffect {
 ///
 /// _Example_
 /// ```dart
-/// void main() {
+/// Future<void> main() async {
 ///   WidgetsFlutterBinding.ensureInitialized();
-///   Acrylic.initialize();
+///   await Acrylic.initialize();
 ///   runApp(MyApp());
 /// }
 ///

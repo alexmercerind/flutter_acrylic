@@ -43,8 +43,8 @@ class MyAppBody extends StatefulWidget {
 }
 
 class MyAppBodyState extends State<MyAppBody> {
-  AcrylicEffect effect = AcrylicEffect.aero;
-  Color color = Colors.white.withOpacity(0.2);
+  AcrylicEffect effect = AcrylicEffect.transparent;
+  Color color = Platform.isWindows ? Colors.white.withOpacity(0.2): Colors.transparent;
 
   @override
   void initState() {
