@@ -12,6 +12,7 @@ struct _FlutterAcrylicPlugin {
 };
 
 static double R = 0.0, G = 0.0, B = 0.0, A = 0.0;
+static bool g_is_window_fullscreen = false;
 static FlPluginRegistrar* g_registrar = nullptr;
 
 G_DEFINE_TYPE(FlutterAcrylicPlugin, flutter_acrylic_plugin, g_object_get_type())
@@ -29,21 +30,66 @@ static void flutter_acrylic_plugin_handle_method_call(FlutterAcrylicPlugin* self
   g_autoptr(FlMethodResponse) response = nullptr;
   const gchar* method = fl_method_call_get_name(method_call);
   if (strcmp(method, "Acrylic.initialize") == 0) {
+    /* Not required for Linux. */
     response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
   }
-  if (strcmp(method, "Acrylic.setEffect") == 0) {
+  else if (strcmp(method, "Acrylic.setEffect") == 0) {
     FlView* view = fl_plugin_registrar_get_view(g_registrar);
     GtkWindow* window = GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(view)));
     gtk_widget_hide(GTK_WIDGET(window));
     gtk_widget_hide(GTK_WIDGET(view));
     auto arguments = fl_method_call_get_args(method_call);
+    int effect = fl_value_get_int(fl_value_lookup_string(arguments, "effect"));
     auto gradientColor = fl_value_lookup_string(arguments, "gradientColor");
-    R = ((double)fl_value_get_int(fl_value_lookup_string(gradientColor, "R")) / 255.0);
-    G = ((double)fl_value_get_int(fl_value_lookup_string(gradientColor, "G")) / 255.0);
-    B = ((double)fl_value_get_int(fl_value_lookup_string(gradientColor, "B")) / 255.0);
-    A = ((double)fl_value_get_int(fl_value_lookup_string(gradientColor, "A")) / 255.0);
+    if (effect == 0) {
+      R = 1.0;
+      G = 1.0;
+      B = 1.0;
+      A = 1.0;
+      response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+    }
+    else if (effect == 1) {
+      R = ((double)fl_value_get_int(fl_value_lookup_string(gradientColor, "R")) / 255.0);
+      G = ((double)fl_value_get_int(fl_value_lookup_string(gradientColor, "G")) / 255.0);
+      B = ((double)fl_value_get_int(fl_value_lookup_string(gradientColor, "B")) / 255.0);
+      A = 1.0;
+      response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+    }
+    else if (effect == 2) {
+      R = ((double)fl_value_get_int(fl_value_lookup_string(gradientColor, "R")) / 255.0);
+      G = ((double)fl_value_get_int(fl_value_lookup_string(gradientColor, "G")) / 255.0);
+      B = ((double)fl_value_get_int(fl_value_lookup_string(gradientColor, "B")) / 255.0);
+      A = ((double)fl_value_get_int(fl_value_lookup_string(gradientColor, "A")) / 255.0);
+      response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+    }
+    else {
+      response = FL_METHOD_RESPONSE(
+        fl_method_error_response_new(
+          "-1",
+          "NOT_SUPPORTED_ON_LINUX",
+          fl_value_new_string("Only AcrylicEffect.disabled, AcrylicEffect.solid & AcrylicEffect.transparent works on Linux.")
+        )
+      );
+    }
     gtk_widget_show(GTK_WIDGET(window));
     gtk_widget_show(GTK_WIDGET(view));
+  }
+  else if (strcmp(method, "Window.enterFullscreen") == 0) {
+    if (!g_is_window_fullscreen) {
+      g_is_window_fullscreen = true;
+      FlView* view = fl_plugin_registrar_get_view(g_registrar);
+      GtkWindow* window = GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(view)));
+      gtk_window_fullscreen(GTK_WINDOW(window));
+    }
+    response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+  }
+  else if (strcmp(method, "Window.exitFullscreen") == 0) {
+    if (g_is_window_fullscreen) {
+      g_is_window_fullscreen = false;
+      FlView* view = fl_plugin_registrar_get_view(g_registrar);
+      GtkWindow* window = GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(view)));
+      gtk_window_unfullscreen(GTK_WINDOW(window));
+    }
     response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
   }
   else {
@@ -94,6 +140,6 @@ void flutter_acrylic_plugin_register_with_registrar(FlPluginRegistrar* registrar
   g_signal_connect(G_OBJECT(window), "draw", G_CALLBACK(drawCallback), NULL);
   gtk_widget_show(GTK_WIDGET(window));
   gtk_widget_show(GTK_WIDGET(view));
-  g_registrar = registrar;
+  g_registrar = FL_PLUGIN_REGISTRAR(g_object_ref(registrar));
   g_object_unref(plugin);
 }
