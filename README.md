@@ -1,5 +1,5 @@
 <h1 align="center"><a href="https://github.com/alexmercerind/flutter_acrylic">flutter_acrylic</a></h1>
-<h4 align="center">Acrylic & aero blur effect on Flutter Windows.</h4>
+<h4 align="center">Window blur & transparency effects for Flutter on Windows & Linux</h4>
 
 
 ## Installation
@@ -8,14 +8,17 @@ Mention in your `pubspec.yaml`.
 ```yaml
 dependencies:
   ...
-  flutter_acrylic: ^0.0.1
+  flutter_acrylic: ^0.0.2
 ```
 
 ## Example
 
 You can [download](https://github.com/alexmercerind/flutter_acrylic/releases/download/v0.0.1/flutter_acrylic_example.zip) & try out the example application.
 
-<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/acrylic.jpg' height='512'></img>
+<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/linux_blur.png' width='640'></img>
+
+
+<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/acrylic.jpg' width='640'></img>
 
 ## Documentation
 
@@ -67,6 +70,31 @@ More features coming soon.
 
 ## Notes
 
+### Linux
+
+
+**Additional setup for Linux.**
+
+Find `my_application.cc` inside the `linux` directory of your Flutter project & remove following lines from it.
+
+```cpp
+gtk_widget_show(GTK_WIDGET(window));
+```
+
+```cpp
+gtk_widget_show(GTK_WIDGET(view));
+```
+
+**Adding blur to the Window.**
+
+Since current Flutter embedder on Linux uses GTK 3.0, so there is no official API available for backdrop blur of the window.
+
+However, some desktop environments like KDE Plasma (with KWin compositor) have some third party scripts like [kwin-forceblur](https://github.com/esjeon/kwin-forceblur) from [Eon S. Jeon](https://github.com/esjeon), which allow to add blur to GTK 3.0 windows aswell, when the window is transparent (which you can certainly achieve using the plugin). Thus, this setup can be used to obtain result as shown in the picture.
+
+Blur on Linux is more dependent on the compositor, some compositors like compiz or wayfire also seem to support blur effects.
+
+### Windows
+
 This plugin exposes the undocumented `SetWindowCompositionAttribute` API from `user32.dll` on Windows 10.
 Learn more at [Rafael Rivera](https://github.com/riverar)'s amazing blog post about this [here](https://withinrafael.com/2015/07/08/adding-the-aero-glass-blur-to-your-windows-10-apps).
 
@@ -90,10 +118,13 @@ MIT License. Contributions welcomed.
 - [fluent_ui](https://github.com/bdlukaa/fluent_ui)
   - Implements Microsoft's Fluent Design System in Flutter.
 
-<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/aero.jpg' height='512'></img>
+<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/aero.jpg' width='640'></img>
 
 Aero blur effect.
 
-<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/transparent.jpg' height='512'></img>
+<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/linux_transparent.png' width='640'></img>
+
+
+<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/transparent.jpg' width='640'></img>
 
 Transparent Flutter window.
