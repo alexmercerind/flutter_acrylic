@@ -30,6 +30,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         splashFactory: InkRipple.splashFactory,
       ),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.dark,
       home: MyAppBody(),
     );
   }
@@ -44,7 +46,7 @@ class MyAppBody extends StatefulWidget {
 
 class MyAppBodyState extends State<MyAppBody> {
   AcrylicEffect effect = AcrylicEffect.transparent;
-  Color color = Platform.isWindows ? Colors.white.withOpacity(0.2): Colors.transparent;
+  Color color = Platform.isWindows ? Color(0x00222222) : Colors.transparent;
 
   @override
   void initState() {
@@ -72,7 +74,7 @@ class MyAppBodyState extends State<MyAppBody> {
               children: [
                 Card(
                     elevation: 4.0,
-                    color: Colors.white,
+                    color: Colors.black,
                     child: Container(
                       height: 5 * 48.0,
                       width: 240.0,
@@ -132,42 +134,44 @@ class MyAppBodyState extends State<MyAppBody> {
             ),
           ),
         ),
-        Platform.isWindows ? WindowTitleBarBox(
-          child: MoveWindow(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 56.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  MinimizeWindowButton(
-                    colors: WindowButtonColors(
-                        iconNormal: Colors.white,
-                        mouseOver: Colors.white.withOpacity(0.1),
-                        mouseDown: Colors.white.withOpacity(0.2),
-                        iconMouseOver: Colors.white,
-                        iconMouseDown: Colors.white),
+        Platform.isWindows
+            ? WindowTitleBarBox(
+                child: MoveWindow(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 56.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        MinimizeWindowButton(
+                          colors: WindowButtonColors(
+                              iconNormal: Colors.white,
+                              mouseOver: Colors.white.withOpacity(0.1),
+                              mouseDown: Colors.white.withOpacity(0.2),
+                              iconMouseOver: Colors.white,
+                              iconMouseDown: Colors.white),
+                        ),
+                        MaximizeWindowButton(
+                          colors: WindowButtonColors(
+                              iconNormal: Colors.white,
+                              mouseOver: Colors.white.withOpacity(0.1),
+                              mouseDown: Colors.white.withOpacity(0.2),
+                              iconMouseOver: Colors.white,
+                              iconMouseDown: Colors.white),
+                        ),
+                        CloseWindowButton(
+                          colors: WindowButtonColors(
+                              mouseOver: Color(0xFFD32F2F),
+                              mouseDown: Color(0xFFB71C1C),
+                              iconNormal: Colors.white,
+                              iconMouseOver: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
-                  MaximizeWindowButton(
-                    colors: WindowButtonColors(
-                        iconNormal: Colors.white,
-                        mouseOver: Colors.white.withOpacity(0.1),
-                        mouseDown: Colors.white.withOpacity(0.2),
-                        iconMouseOver: Colors.white,
-                        iconMouseDown: Colors.white),
-                  ),
-                  CloseWindowButton(
-                    colors: WindowButtonColors(
-                        mouseOver: Color(0xFFD32F2F),
-                        mouseDown: Color(0xFFB71C1C),
-                        iconNormal: Colors.white,
-                        iconMouseOver: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ): Container(),
+                ),
+              )
+            : Container(),
       ],
     );
   }

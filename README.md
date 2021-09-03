@@ -15,10 +15,8 @@ dependencies:
 
 You can [download](https://github.com/alexmercerind/flutter_acrylic/releases/download/v0.0.1/flutter_acrylic_example.zip) & try out the example application.
 
-<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/linux_blur.png' width='640'></img>
-
-
-<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/acrylic.jpg' width='640'></img>
+![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/linux_blur.png?raw=true)
+![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/acrylic.jpg?raw=true)
 
 ## Documentation
 
@@ -118,13 +116,12 @@ MIT License. Contributions welcomed.
 - [fluent_ui](https://github.com/bdlukaa/fluent_ui)
   - Implements Microsoft's Fluent Design System in Flutter.
 
-<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/aero.jpg' width='640'></img>
+![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/aero.jpg?raw=true)
 
 Aero blur effect.
 
-<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/linux_transparent.png' width='640'></img>
+![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/linux_transparent.png?raw=true)
 
-
-<img src='https://github.com/alexmercerind/flutter_acrylic/blob/assets/transparent.jpg' width='640'></img>
+![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/transparent.jpg?raw=true)
 
 Transparent Flutter window.
