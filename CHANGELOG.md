@@ -1,3 +1,11 @@
+## 0.0.3
+
+- Update image links & example.
+
+## 0.0.2
+
+- Linux support.
+
 ## 0.0.1
 
 - Added `Acrylic` class to use aero or acrylic blur effects on Flutter Windows.
