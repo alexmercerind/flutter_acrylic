@@ -1,18 +1,17 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-
-import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Acrylic.initialize();
-  runApp(MyApp());
+  runApp(const MyApp());
   if (Platform.isWindows) {
     doWhenWindowReady(() {
-      final initialSize = Size(960, 720);
-      appWindow.minSize = Size(720, 480);
+      Size initialSize = const Size(960, 720);
+      appWindow.minSize = const Size(720, 480);
       appWindow.size = initialSize;
       appWindow.alignment = Alignment.center;
       appWindow.show();
@@ -32,13 +31,13 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.dark,
-      home: MyAppBody(),
+      home: const MyAppBody(),
     );
   }
 }
 
 class MyAppBody extends StatefulWidget {
-  MyAppBody({Key? key}) : super(key: key);
+  const MyAppBody({Key? key}) : super(key: key);
 
   @override
   MyAppBodyState createState() => MyAppBodyState();
@@ -46,18 +45,8 @@ class MyAppBody extends StatefulWidget {
 
 class MyAppBodyState extends State<MyAppBody> {
   AcrylicEffect effect = AcrylicEffect.transparent;
-  Color color = Platform.isWindows ? Color(0x00222222) : Colors.transparent;
-
-  @override
-  void initState() {
-    super.initState();
-    this.setWindowEffect(this.effect);
-  }
-
-  void setWindowEffect(AcrylicEffect? value) {
-    Acrylic.setEffect(effect: value!, gradientColor: this.color);
-    this.setState(() => this.effect = value);
-  }
+  Color color =
+      Platform.isWindows ? const Color(0x00222222) : Colors.transparent;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +54,7 @@ class MyAppBodyState extends State<MyAppBody> {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: Text('Flutter Acrylic'),
+            title: const Text('Flutter Acrylic'),
           ),
           backgroundColor: Colors.transparent,
           body: Center(
@@ -73,35 +62,38 @@ class MyAppBodyState extends State<MyAppBody> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Card(
-                    elevation: 4.0,
-                    color: Colors.black,
-                    child: Container(
-                      height: 5 * 48.0,
-                      width: 240.0,
-                      child: Column(
-                        children: AcrylicEffect.values
-                            .map(
-                              (effect) => RadioListTile<AcrylicEffect>(
-                                  title: Text(
-                                      effect
-                                              .toString()
-                                              .split('.')
-                                              .last[0]
-                                              .toUpperCase() +
-                                          effect
-                                              .toString()
-                                              .split('.')
-                                              .last
-                                              .substring(1),
-                                      style: TextStyle(fontSize: 14.0)),
-                                  value: effect,
-                                  groupValue: this.effect,
-                                  onChanged: this.setWindowEffect),
-                            )
-                            .toList(),
-                      ),
-                    )),
-                SizedBox(
+                  elevation: 4.0,
+                  color: Colors.black,
+                  child: SizedBox(
+                    height: 5 * 48.0,
+                    width: 240.0,
+                    child: Column(
+                      children: AcrylicEffect.values
+                          .map(
+                            (effect) => RadioListTile<AcrylicEffect>(
+                              title: Text(
+                                effect
+                                        .toString()
+                                        .split('.')
+                                        .last[0]
+                                        .toUpperCase() +
+                                    effect
+                                        .toString()
+                                        .split('.')
+                                        .last
+                                        .substring(1),
+                                style: const TextStyle(fontSize: 14.0),
+                              ),
+                              value: effect,
+                              groupValue: this.effect,
+                              onChanged: setWindowEffect,
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ),
+                const SizedBox(
                   height: 32.0,
                 ),
                 ElevatedButton(
@@ -110,10 +102,10 @@ class MyAppBodyState extends State<MyAppBody> {
                     alignment: Alignment.center,
                     height: 28.0,
                     width: 140.0,
-                    child: Text('Enter Fullscreen'),
+                    child: const Text('Enter Fullscreen'),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16.0,
                 ),
                 ElevatedButton(
@@ -122,14 +114,19 @@ class MyAppBodyState extends State<MyAppBody> {
                     alignment: Alignment.center,
                     height: 28.0,
                     width: 140.0,
-                    child: Text('Exit Fullscreen'),
+                    child: const Text('Exit Fullscreen'),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 32.0,
                 ),
-                Text('More features coming soon!',
-                    style: TextStyle(fontSize: 14.0, color: Colors.white)),
+                const Text(
+                  'More features coming soon!',
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.white,
+                  ),
+                ),
               ],
             ),
           ),
@@ -137,7 +134,7 @@ class MyAppBodyState extends State<MyAppBody> {
         Platform.isWindows
             ? WindowTitleBarBox(
                 child: MoveWindow(
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 56.0,
                     child: Row(
@@ -161,10 +158,11 @@ class MyAppBodyState extends State<MyAppBody> {
                         ),
                         CloseWindowButton(
                           colors: WindowButtonColors(
-                              mouseOver: Color(0xFFD32F2F),
-                              mouseDown: Color(0xFFB71C1C),
-                              iconNormal: Colors.white,
-                              iconMouseOver: Colors.white),
+                            mouseOver: const Color(0xFFD32F2F),
+                            mouseDown: const Color(0xFFB71C1C),
+                            iconNormal: Colors.white,
+                            iconMouseOver: Colors.white,
+                          ),
                         ),
                       ],
                     ),
@@ -174,5 +172,16 @@ class MyAppBodyState extends State<MyAppBody> {
             : Container(),
       ],
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setWindowEffect(effect);
+  }
+
+  void setWindowEffect(AcrylicEffect? value) {
+    Acrylic.setEffect(effect: value!, gradientColor: color);
+    setState(() => effect = value);
   }
 }
