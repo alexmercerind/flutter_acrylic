@@ -1,3 +1,10 @@
+## 0.1.0
+
+- Implement `WindowEffect.mica` for Windows 11 or greater.
+- BREAKING: Rename `AcrylicEffect` `enum` to `WindowEffect`.
+- BREAKING: Rename `gradientColor` argument to color.
+- Add `Window.showWindowControls` & `Window.hideWindowControls`.
+
 ## 0.0.3
 
 - Update image links & example.
