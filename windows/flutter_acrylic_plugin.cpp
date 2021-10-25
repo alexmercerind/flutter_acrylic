@@ -1,6 +1,8 @@
 #include <thread>
+#include <iostream>
 
 #include <dwmapi.h>
+#include <VersionHelpers.h>
 
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar_windows.h>
@@ -70,11 +72,18 @@ typedef BOOL(WINAPI* GetWindowCompositionAttribute)(
 typedef BOOL(WINAPI* SetWindowCompositionAttribute)(
     HWND, WINDOWCOMPOSITIONATTRIBDATA*);
 
+typedef LONG NTSTATUS, *PNTSTATUS;
+#define STATUS_SUCCESS (0x00000000)
+
+typedef NTSTATUS(WINAPI* RtlGetVersionPtr)(PRTL_OSVERSIONINFOW);
+
 namespace {
 
 static constexpr auto kChannelName = "com.alexmercerind/flutter_acrylic";
 static constexpr auto kInitialize = "Initialize";
 static constexpr auto kSetEffect = "SetEffect";
+static constexpr auto kHideWindowControls = "HideWindowControls";
+static constexpr auto kShowWindowControls = "ShowWindowControls";
 static constexpr auto kEnterFullscreen = "EnterFullscreen";
 static constexpr auto kExitFullscreen = "ExitFullscreen";
 
@@ -91,10 +100,14 @@ class FlutterAcrylicPlugin : public flutter::Plugin {
   bool is_initialized_ = false;
   bool is_fullscreen_ = false;
   RECT last_rect_ = {};
+  int32_t window_effect_last_ = 0;
 
   void HandleMethodCall(
       const flutter::MethodCall<flutter::EncodableValue>& call,
       std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
+
+  RTL_OSVERSIONINFOW GetWindowsVersion();
+  HWND GetParentWindow();
 };
 
 void FlutterAcrylicPlugin::RegisterWithRegistrar(
@@ -117,35 +130,38 @@ FlutterAcrylicPlugin::FlutterAcrylicPlugin(
 
 FlutterAcrylicPlugin::~FlutterAcrylicPlugin() {}
 
+RTL_OSVERSIONINFOW FlutterAcrylicPlugin::GetWindowsVersion() {
+  HMODULE hmodule = ::GetModuleHandleW(L"ntdll.dll");
+  if (hmodule) {
+    RtlGetVersionPtr rtl_get_version_ptr =
+        (RtlGetVersionPtr)::GetProcAddress(hmodule, "RtlGetVersion");
+    if (rtl_get_version_ptr != nullptr) {
+      RTL_OSVERSIONINFOW rovi = {0};
+      rovi.dwOSVersionInfoSize = sizeof(rovi);
+      if (STATUS_SUCCESS == rtl_get_version_ptr(&rovi)) {
+        return rovi;
+      }
+    }
+  }
+  RTL_OSVERSIONINFOW rovi = {0};
+  return rovi;
+}
+
+HWND FlutterAcrylicPlugin::GetParentWindow() {
+  return ::GetAncestor(registrar_->GetView()->GetNativeWindow(), GA_ROOT);
+}
+
 void FlutterAcrylicPlugin::HandleMethodCall(
     const flutter::MethodCall<flutter::EncodableValue>& call,
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
   if (call.method_name() == kInitialize) {
-    flutter::EncodableMap arguments =
-        std::get<flutter::EncodableMap>(*call.arguments());
-    bool draw_custom_frame =
-        std::get<bool>(arguments[flutter::EncodableValue("drawCustomFrame")]);
     if (!is_initialized_) {
-      user32 = GetModuleHandleA("user32.dll");
+      user32 = ::GetModuleHandleA("user32.dll");
       if (user32) {
         set_window_composition_attribute_ =
             reinterpret_cast<SetWindowCompositionAttribute>(
-                GetProcAddress(user32, "SetWindowCompositionAttribute"));
+                ::GetProcAddress(user32, "SetWindowCompositionAttribute"));
         if (set_window_composition_attribute_) {
-          if (draw_custom_frame) {
-            HWND window =
-                GetAncestor(registrar_->GetView()->GetNativeWindow(), GA_ROOT);
-            RECT rect;
-            GetWindowRect(window, &rect);
-            SetWindowLong(window, GWL_STYLE,
-                          WS_POPUP | WS_CAPTION | WS_VISIBLE);
-            MARGINS margins = {0, 0, 1, 0};
-            DwmExtendFrameIntoClientArea(window, &margins);
-            SetWindowPos(window, nullptr, rect.left, rect.top,
-                         rect.right - rect.left, rect.bottom - rect.top,
-                         SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_NOMOVE |
-                             SWP_NOSIZE | SWP_FRAMECHANGED);
-          }
           is_initialized_ = true;
           result->Success();
         } else
@@ -159,54 +175,82 @@ void FlutterAcrylicPlugin::HandleMethodCall(
         std::get<flutter::EncodableMap>(*call.arguments());
     int32_t effect =
         std::get<int32_t>(arguments[flutter::EncodableValue("effect")]);
-    flutter::EncodableMap gradient_color = std::get<flutter::EncodableMap>(
-        arguments[flutter::EncodableValue("gradientColor")]);
-    ACCENT_POLICY accent = {
-        static_cast<ACCENT_STATE>(effect), 2,
-        static_cast<DWORD>(
-            (std::get<int>(gradient_color[flutter::EncodableValue("A")])
-             << 24) +
-            (std::get<int>(gradient_color[flutter::EncodableValue("B")])
-             << 16) +
-            (std::get<int>(gradient_color[flutter::EncodableValue("G")]) << 8) +
-            (std::get<int>(gradient_color[flutter::EncodableValue("R")]))),
-        0};
-    WINDOWCOMPOSITIONATTRIBDATA data;
-    data.Attrib = WCA_ACCENT_POLICY;
-    data.pvData = &accent;
-    data.cbData = sizeof(accent);
-    set_window_composition_attribute_(
-        GetAncestor(registrar_->GetView()->GetNativeWindow(), GA_ROOT), &data);
+    flutter::EncodableMap color = std::get<flutter::EncodableMap>(
+        arguments[flutter::EncodableValue("color")]);
+    bool dark = std::get<bool>(arguments[flutter::EncodableValue("dark")]);
+    if (effect == 5) {
+      if (GetWindowsVersion().dwBuildNumber > 19041) {
+        BOOL enable = true, dark_bool = dark;
+        MARGINS margins = {-1};
+        ::DwmExtendFrameIntoClientArea(GetParentWindow(), &margins);
+        ::DwmSetWindowAttribute(GetParentWindow(), 20, &dark_bool,
+                                sizeof(dark_bool));
+        ::DwmSetWindowAttribute(GetParentWindow(), 1029, &enable,
+                                sizeof(enable));
+      }
+    } else {
+      if (GetWindowsVersion().dwBuildNumber > 19041 &&
+          window_effect_last_ == 5) {
+        BOOL enable = false;
+        MARGINS margins = {0};
+        ::DwmExtendFrameIntoClientArea(GetParentWindow(), &margins);
+        ::DwmSetWindowAttribute(GetParentWindow(), 20, &enable, sizeof(enable));
+        ::DwmSetWindowAttribute(GetParentWindow(), 1029, &enable,
+                                sizeof(enable));
+      }
+      ACCENT_POLICY accent = {
+          static_cast<ACCENT_STATE>(effect), 2,
+          static_cast<DWORD>(
+              (std::get<int>(color[flutter::EncodableValue("A")]) << 24) +
+              (std::get<int>(color[flutter::EncodableValue("B")]) << 16) +
+              (std::get<int>(color[flutter::EncodableValue("G")]) << 8) +
+              (std::get<int>(color[flutter::EncodableValue("R")]))),
+          0};
+      WINDOWCOMPOSITIONATTRIBDATA data;
+      data.Attrib = WCA_ACCENT_POLICY;
+      data.pvData = &accent;
+      data.cbData = sizeof(accent);
+      set_window_composition_attribute_(GetParentWindow(), &data);
+    }
+    window_effect_last_ = effect;
+    result->Success();
+  } else if (call.method_name() == kHideWindowControls) {
+    ::SetWindowLong(GetParentWindow(), GWL_STYLE,
+                    ::GetWindowLong(GetParentWindow(), GWL_STYLE) &
+                        (0xFFFFFFFF ^ WS_SYSMENU));
+    result->Success();
+  } else if (call.method_name() == kShowWindowControls) {
+    ::SetWindowLong(GetParentWindow(), GWL_STYLE,
+                    ::GetWindowLong(GetParentWindow(), GWL_STYLE) | WS_SYSMENU);
     result->Success();
   } else if (call.method_name() == kEnterFullscreen) {
     if (!is_fullscreen_) {
       is_fullscreen_ = true;
-      HWND window =
-          GetAncestor(registrar_->GetView()->GetNativeWindow(), GA_ROOT);
+      HWND window = GetParentWindow();
       HMONITOR monitor = ::MonitorFromWindow(window, MONITOR_DEFAULTTONEAREST);
       MONITORINFO info;
       info.cbSize = sizeof(MONITORINFO);
       GetMonitorInfo(monitor, &info);
       SetWindowLongPtr(window, GWL_STYLE, WS_POPUP | WS_VISIBLE);
-      GetWindowRect(window, &last_rect_);
-      SetWindowPos(window, HWND_TOPMOST, info.rcMonitor.left,
-                   info.rcMonitor.top,
-                   info.rcMonitor.right - info.rcMonitor.left,
-                   info.rcMonitor.bottom - info.rcMonitor.top, SWP_SHOWWINDOW);
-      ShowWindow(window, SW_MAXIMIZE);
+      ::GetWindowRect(window, &last_rect_);
+      ::SetWindowPos(
+          window, HWND_TOPMOST, info.rcMonitor.left, info.rcMonitor.top,
+          info.rcMonitor.right - info.rcMonitor.left,
+          info.rcMonitor.bottom - info.rcMonitor.top, SWP_SHOWWINDOW);
+      ::ShowWindow(window, SW_MAXIMIZE);
     }
     result->Success();
   } else if (call.method_name() == kExitFullscreen) {
     if (is_fullscreen_) {
       is_fullscreen_ = false;
-      HWND window =
-          GetAncestor(registrar_->GetView()->GetNativeWindow(), GA_ROOT);
-      SetWindowLongPtr(window, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
-      SetWindowPos(window, HWND_NOTOPMOST, last_rect_.left, last_rect_.top,
-                   last_rect_.right - last_rect_.left,
-                   last_rect_.bottom - last_rect_.top, SWP_SHOWWINDOW);
-      ShowWindow(window, SW_RESTORE);
+      HWND window = GetParentWindow();
+      ::SetWindowLongPtr(window, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
+      ::SetWindowPos(window, HWND_NOTOPMOST, last_rect_.left, last_rect_.top,
+                     last_rect_.right - last_rect_.left,
+                     last_rect_.bottom - last_rect_.top, SWP_SHOWWINDOW);
+      ::ShowWindow(window, SW_RESTORE);
     }
+    result->Success();
   } else
     result->NotImplemented();
 }
