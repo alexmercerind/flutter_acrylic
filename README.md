@@ -19,14 +19,12 @@ dependencies:
 
 ## Documentation
 
-### Acrylic
-
 Initialize the plugin inside the main method.
 
 ```dart
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Acrylic.initialize();
+  await Window.initialize();
   runApp(MyApp());
 }
 ```
@@ -34,9 +32,15 @@ void main() {
 Apply the effect to Flutter window.
 
 ```dart
-Acrylic.setEffect(
-  effect: WindowEffect.aero,
-  color: this.color,
+await Acrylic.setEffect(
+  effect: WindowEffect.acrylic,
+  color: Color(0xCC222222),
+);
+```
+
+```dart
+await Acrylic.setEffect(
+  effect: WindowEffect.mica,
   dark: true,
 );
 ```
@@ -49,8 +53,6 @@ Following effects are available.
 - `WindowEffect.aero`.
 - `WindowEffect.acrylic`.
 - `WindowEffect.mica`.
-
-### Window
 
 Other utility features offered by the plugin.
 
