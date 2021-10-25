@@ -3,21 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_acrylic/flutter_acrylic.dart';
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Acrylic.initialize();
+  await Window.initialize();
   runApp(MyApp());
-  if (Platform.isWindows) {
-    doWhenWindowReady(() {
-      final initialSize = Size(960, 720);
-      appWindow.minSize = Size(720, 480);
-      appWindow.size = initialSize;
-      appWindow.alignment = Alignment.center;
-      appWindow.show();
-    });
-  }
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +20,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         splashFactory: InkRipple.splashFactory,
       ),
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData.dark().copyWith(
+        splashFactory: InkRipple.splashFactory,
+      ),
       themeMode: ThemeMode.dark,
       home: MyAppBody(),
     );
@@ -45,7 +37,7 @@ class MyAppBody extends StatefulWidget {
 }
 
 class MyAppBodyState extends State<MyAppBody> {
-  AcrylicEffect effect = AcrylicEffect.transparent;
+  WindowEffect effect = WindowEffect.transparent;
   Color color = Platform.isWindows ? Color(0x00222222) : Colors.transparent;
 
   @override
@@ -54,8 +46,12 @@ class MyAppBodyState extends State<MyAppBody> {
     this.setWindowEffect(this.effect);
   }
 
-  void setWindowEffect(AcrylicEffect? value) {
-    Acrylic.setEffect(effect: value!, gradientColor: this.color);
+  void setWindowEffect(WindowEffect? value) {
+    Window.setEffect(
+      effect: value!,
+      color: this.color,
+      dark: true,
+    );
     this.setState(() => this.effect = value);
   }
 
@@ -64,114 +60,99 @@ class MyAppBodyState extends State<MyAppBody> {
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(
-            title: Text('Flutter Acrylic'),
-          ),
           backgroundColor: Colors.transparent,
           body: Center(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Card(
-                    elevation: 4.0,
-                    color: Colors.black,
-                    child: Container(
-                      height: 5 * 48.0,
-                      width: 240.0,
-                      child: Column(
-                        children: AcrylicEffect.values
-                            .map(
-                              (effect) => RadioListTile<AcrylicEffect>(
-                                  title: Text(
-                                      effect
-                                              .toString()
-                                              .split('.')
-                                              .last[0]
-                                              .toUpperCase() +
-                                          effect
-                                              .toString()
-                                              .split('.')
-                                              .last
-                                              .substring(1),
-                                      style: TextStyle(fontSize: 14.0)),
-                                  value: effect,
-                                  groupValue: this.effect,
-                                  onChanged: this.setWindowEffect),
-                            )
-                            .toList(),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Flutter Acrylic',
+                        style: TextStyle(
+                          fontSize: 32.0,
+                        ),
                       ),
-                    )),
-                SizedBox(
-                  height: 32.0,
-                ),
-                ElevatedButton(
-                  onPressed: Window.enterFullscreen,
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 28.0,
-                    width: 140.0,
-                    child: Text('Enter Fullscreen'),
+                      Text('github.com/alexmercerind/flutter_acrylic'),
+                    ],
                   ),
                 ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: WindowEffect.values
+                      .map(
+                        (effect) => RadioListTile<WindowEffect>(
+                          title: Text(
+                              effect
+                                      .toString()
+                                      .split('.')
+                                      .last[0]
+                                      .toUpperCase() +
+                                  effect
+                                      .toString()
+                                      .split('.')
+                                      .last
+                                      .substring(1),
+                              style: TextStyle(fontSize: 14.0)),
+                          value: effect,
+                          groupValue: this.effect,
+                          onChanged: this.setWindowEffect,
+                        ),
+                      )
+                      .toList(),
+                ),
                 SizedBox(
-                  height: 16.0,
+                  height: 48.0,
                 ),
-                ElevatedButton(
-                  onPressed: Window.exitFullscreen,
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 28.0,
-                    width: 140.0,
-                    child: Text('Exit Fullscreen'),
-                  ),
+                ButtonBar(
+                  alignment: MainAxisAlignment.start,
+                  children: [
+                    MaterialButton(
+                      onPressed: Window.hideWindowControls,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 28.0,
+                        width: 140.0,
+                        child: Text('Hide controls'),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: Window.showWindowControls,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 28.0,
+                        width: 140.0,
+                        child: Text('Show controls'),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: Window.enterFullscreen,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 28.0,
+                        width: 140.0,
+                        child: Text('Enter fullscreen'),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: Window.exitFullscreen,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 28.0,
+                        width: 140.0,
+                        child: Text('Exit fullscreen'),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: 32.0,
-                ),
-                Text('More features coming soon!',
-                    style: TextStyle(fontSize: 14.0, color: Colors.white)),
               ],
             ),
           ),
         ),
-        Platform.isWindows
-            ? WindowTitleBarBox(
-                child: MoveWindow(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 56.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        MinimizeWindowButton(
-                          colors: WindowButtonColors(
-                              iconNormal: Colors.white,
-                              mouseOver: Colors.white.withOpacity(0.1),
-                              mouseDown: Colors.white.withOpacity(0.2),
-                              iconMouseOver: Colors.white,
-                              iconMouseDown: Colors.white),
-                        ),
-                        MaximizeWindowButton(
-                          colors: WindowButtonColors(
-                              iconNormal: Colors.white,
-                              mouseOver: Colors.white.withOpacity(0.1),
-                              mouseDown: Colors.white.withOpacity(0.2),
-                              iconMouseOver: Colors.white,
-                              iconMouseDown: Colors.white),
-                        ),
-                        CloseWindowButton(
-                          colors: WindowButtonColors(
-                              mouseOver: Color(0xFFD32F2F),
-                              mouseDown: Color(0xFFB71C1C),
-                              iconNormal: Colors.white,
-                              iconMouseOver: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            : Container(),
       ],
     );
   }
