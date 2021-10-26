@@ -32,14 +32,14 @@ Future<void> main() async {
 Apply the effect to Flutter window.
 
 ```dart
-await Acrylic.setEffect(
+await Window.setEffect(
   effect: WindowEffect.acrylic,
   color: Color(0xCC222222),
 );
 ```
 
 ```dart
-await Acrylic.setEffect(
+await Window.setEffect(
   effect: WindowEffect.mica,
   dark: true,
 );
