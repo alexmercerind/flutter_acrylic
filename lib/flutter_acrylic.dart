@@ -25,6 +25,9 @@ const _kEnterFullscreen = "EnterFullscreen";
 /// Exits fullscreen.
 const _kExitFullscreen = "ExitFullscreen";
 
+/// Overrides the brightness setting of the window (macOS only).
+const _kOverrideMacOSBrightness = "OverrideMacOSBrightness";
+
 final MethodChannel _kChannel = const MethodChannel(_kChannelName);
 final Completer<void> _kCompleter = new Completer<void>();
 
@@ -138,10 +141,6 @@ class Window {
   ///
   /// When using [WindowEffect.acrylic], [WindowEffect.aero], [WindowEffect.disabled], [WindowEffect.solid] or [WindowEffect.transparent],
   /// [color] argument can be used to change the resulting tint (or color) of the window background.
-  /// 
-  /// On macOS, the window will by default respect the system's brightness setting. If [doForceMacOSBrightness] is true, the brightness
-  /// will instead be overriden according to the value of the [dark] argument.
-  /// Warning: Once the brightness has been overriden, it can no longer be restored to its default value.
   ///
   /// _Examples_
   ///
@@ -163,7 +162,6 @@ class Window {
     required WindowEffect effect,
     Color color: Colors.transparent,
     bool dark: true,
-    bool doForceMacOSBrightness: false,
   }) async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(
@@ -177,7 +175,6 @@ class Window {
           'A': color.alpha,
         },
         'dark': dark,
-        'doForceBrightness': doForceMacOSBrightness,
       },
     );
   }
@@ -200,5 +197,18 @@ class Window {
   /// Restores the Flutter window back to normal from fullscreen mode.
   static Future<void> exitFullscreen() async {
     await _kChannel.invokeMethod(_kExitFullscreen);
+  }
+  
+  /// Overrides the brightness setting of the window (macOS only).
+  static Future<void> overrideMacOSBrightness({
+    required bool dark,
+  }) async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(
+      _kOverrideMacOSBrightness,
+      {
+        'dark': dark,
+      },
+    );
   }
 }

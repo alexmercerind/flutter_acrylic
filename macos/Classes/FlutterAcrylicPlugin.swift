@@ -77,6 +77,10 @@ public class MainFlutterWindowManipulator {
     private static var contentView: NSView?
     private static var invalidateShadow: () -> Void = {}
     
+    private static func printMissingContentViewWarning() {
+        print("Warning: The MainFlutterWindowManipulator's contentView has not been set. Please make sure the flutter_acrylic plugin is initialized correctly in your MainFlutterWindow.swift file.")
+    }
+    
     public static func setContentView(contentView: NSView) {
         self.contentView = contentView
     }
@@ -86,16 +90,21 @@ public class MainFlutterWindowManipulator {
     }
     
     @available(macOS 10.14, *)
-    public static func setMaterial(material: NSVisualEffectView.Material, dark: Bool, doForceBrightness: Bool) {
+    public static func setAppearance(dark: Bool) {
+        let superView = contentView!.superview!
+        superView.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
+        
+        self.invalidateShadow()
+    }
+    
+    @available(macOS 10.14, *)
+    public static func setMaterial(material: NSVisualEffectView.Material) {
         if (self.contentView == nil) {
-            print("Warning: The MainFlutterWindowManipulator's contentView has not been set. Please make sure the flutter_acrylic plugin is initialized correctly in your MainFlutterWindow.swift file.")
+            printMissingContentViewWarning()
             return
         }
         
         let superView = contentView!.superview!
-        if (doForceBrightness) {
-            superView.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
-        }
         
         let blurView = NSVisualEffectView()
         blurView.frame = superView.bounds
@@ -113,8 +122,8 @@ public class MainFlutterWindowManipulator {
     }
     
     @available(macOS 10.14, *)
-    public static func setEffect(material: NSVisualEffectView.Material, dark: Bool, doForceBrightness: Bool) {
-        setMaterial(material: material, dark: dark, doForceBrightness: doForceBrightness)
+    public static func setEffect(material: NSVisualEffectView.Material) {
+        setMaterial(material: material)
     }
 }
 
@@ -146,11 +155,9 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
         case "SetEffect":
             if #available(macOS 10.14, *) {
                 let effectID = args["effect"] as! NSNumber
-                let dark = args["dark"] as! Bool
-                let doForceBrightness = args["doForceBrightness"] as! Bool
                 let material = EffectIDToMaterialConverter.getMaterialFromEffectID(effectID: effectID)
                 
-                MainFlutterWindowManipulator.setEffect(material: material, dark: dark, doForceBrightness: doForceBrightness)
+                MainFlutterWindowManipulator.setEffect(material: material)
             } else {
                 print("Warning: Transparency effects are not supported for your macOS Deployment Target.")
             }
@@ -170,6 +177,17 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
             break
             
         case "ExitFullscreen":
+            result(true)
+            break
+            
+        case "OverrideMacOSBrightness":
+            if #available(macOS 10.14, *) {
+                let dark = args["dark"] as! Bool
+                
+                MainFlutterWindowManipulator.setAppearance(dark: dark)
+            } else {
+                print("Warning: Transparency effects are not supported for your macOS Deployment Target.")
+            }
             result(true)
             break
             
