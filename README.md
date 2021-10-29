@@ -206,6 +206,10 @@ Depending on your use case, you may want to extend the area of the window that F
 
 To do so, press ⇧ + ⌘ + O and search for `MainMenu.xib`. Click on the `APP_NAME` in the left sidebar. Now, towards the top of the sidebar on the right hand side of the Xcode window, click on the `Show the attributes inspector` icon. Lastly, check the `Full Size Content View` checkbox.
 
+<img width="1143" alt="Screen Shot 2021-10-29 at 22 51 50" src="https://user-images.githubusercontent.com/86920182/139500686-a9269344-7096-4e7a-a13d-c05d70bac2fb.png">
+
+
+
 <br>
 
 ## License
@@ -229,8 +233,16 @@ MIT License. Contributions welcomed.
 
 Aero blur effect.
 
+<br>
+
 ![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/linux_blur.png?raw=true)
 
 ![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/transparent.jpg?raw=true)
 
 Transparent Flutter window.
+
+<br>
+
+![image](https://user-images.githubusercontent.com/86920182/139502224-a1a25c9d-a945-4685-be3b-715d83ce52ae.png)
+
+Transparent Flutter window on macOS Monterey with dark mode enabled.
