@@ -1,5 +1,5 @@
 <h1 align="center"><a href="https://github.com/alexmercerind/flutter_acrylic">flutter_acrylic</a></h1>
-<h4 align="center">Window acrylic, mica & transparency effects for Flutter on Windows & Linux</h4>
+<h4 align="center">Window acrylic, mica & transparency effects for Flutter on Windows, macOS & Linux</h4>
 
 ## Installation
 
@@ -53,8 +53,22 @@ Following effects are available.
 - `WindowEffect.aero`.
 - `WindowEffect.acrylic`.
 - `WindowEffect.mica`.
+- `WindowEffect.titlebar`.
+- `WindowEffect.selection`.
+- `WindowEffect.menu`.
+- `WindowEffect.popover`.
+- `WindowEffect.sidebar`.
+- `WindowEffect.headerView`.
+- `WindowEffect.sheet`.
+- `WindowEffect.windowBackground`.
+- `WindowEffect.hudWindow`.
+- `WindowEffect.fullScreenUI`.
+- `WindowEffect.toolTip`.
+- `WindowEffect.contentBackground`.
+- `WindowEffect.underWindowBackground`.
+- `WindowEffect.underPageBackground`.
 
-Other utility features offered by the plugin.
+**Other utility features offered by the plugin (currently not supported on macOS):**
 
 Enter fullscreen.
 
@@ -82,6 +96,8 @@ Window.showWindowControls();
 
 More features coming soon.
 
+<br>
+
 ## Notes
 
 ### Linux
@@ -106,6 +122,8 @@ However, some desktop environments like KDE Plasma (with KWin compositor) have s
 
 Blur on Linux is more dependent on the compositor, some compositors like compiz or wayfire also seem to support blur effects.
 
+<br>
+
 ### Windows
 
 This plugin exposes the undocumented `SetWindowCompositionAttribute` API from `user32.dll` on Windows 10.
@@ -119,9 +137,82 @@ You can use [bitsdojo_window](https://github.com/bitsdojo/bitsdojo_window) to ma
 
 You can see the [example](https://github.com/alexmercerind/flutter_acrylic/blob/master/example/lib/main.dart) application for further details.
 
+<br>
+
+### macOS
+**Additional setup for macOS:**
+<br>
+Open the `macos/Runner.xcworkspace` folder of your project using Xcode, press ⇧ + ⌘ + O and search for `MainFlutterWindow.swift`.
+
+Insert `import flutter_acrylic` at the top of the line.
+Then, insert the following code above the `super.awakeFromNib()`-line:
+
+```swift
+/* Hide the window titlebar */
+self.titleVisibility = NSWindow.TitleVisibility.hidden;
+self.titlebarAppearsTransparent = true;
+self.isMovableByWindowBackground = true;
+self.standardWindowButton(NSWindow.ButtonType.miniaturizeButton)?.isEnabled = false;
+
+/* Make the window transparent */
+self.isOpaque = false
+self.backgroundColor = .clear
+
+/* Initialize the flutter_acrylic plugin */
+let contentView = contentViewController!.view;
+MainFlutterWindowManipulator.setContentView(contentView: contentView)
+MainFlutterWindowManipulator.setInvalidateShadowFunction(invalidateShadow: self.invalidateShadow)
+```
+
+Assuming you're starting with the default configuration, the finished code should look something like this:
+
+```diff
+import Cocoa
+import FlutterMacOS
++import flutter_acrylic
+
+class MainFlutterWindow: NSWindow {
+  override func awakeFromNib() {
+    let flutterViewController = FlutterViewController.init()
+    let windowFrame = self.frame
+    self.contentViewController = flutterViewController
+    self.setFrame(windowFrame, display: true)
+
+    RegisterGeneratedPlugins(registry: flutterViewController)
+    
++   /* Hide the window titlebar */
++   self.titleVisibility = NSWindow.TitleVisibility.hidden;
++   self.titlebarAppearsTransparent = true;
++   self.isMovableByWindowBackground = true;
++   self.standardWindowButton(NSWindow.ButtonType.miniaturizeButton)?.isEnabled = false;
+
++   /* Make the window transparent */
++   self.isOpaque = false
++   self.backgroundColor = .clear
+    
++   /* Initialize the flutter_acrylic plugin */
++   let contentView = contentViewController!.view;
++   MainFlutterWindowManipulator.setContentView(contentView: contentView)
++   MainFlutterWindowManipulator.setInvalidateShadowFunction(invalidateShadow: self.invalidateShadow)
+
+    super.awakeFromNib()
+  }
+}
+```
+
+Now press ⇧ + ⌘ + O once more and search for `Runner.xcodeproj`. Go to `info` > `Deployment Target` and set the `macOS Deployment Target` to `10.11` or above.
+
+Depending on your use case, you may want to extend the area of the window that Flutter can draw to to the entire window, such that you are able to draw onto the window's title bar as well (for example when you're only trying to make the sidebar transparent while the rest of the window is meant to stay opaque).
+
+To do so, press ⇧ + ⌘ + O and search for `MainMenu.xib`. Click on the `APP_NAME` in the left sidebar. Now, towards the top of the sidebar on the right hand side of the Xcode window, click on the `Show the attributes inspector` icon. Lastly, check the `Full Size Content View` checkbox.
+
+<br>
+
 ## License
 
 MIT License. Contributions welcomed.
+
+<br>
 
 ## More
 
