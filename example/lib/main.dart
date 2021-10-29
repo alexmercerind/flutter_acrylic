@@ -74,8 +74,10 @@ class MyAppBodyState extends State<MyAppBody> {
       effect: value!,
       color: this.color,
       dark: brightness == InterfaceBrightness.dark,
-      doForceMacOSBrightness: brightness != InterfaceBrightness.auto,
     );
+    if (brightness != InterfaceBrightness.auto) {
+      Window.overrideMacOSBrightness(dark: brightness == InterfaceBrightness.dark);
+    }
     this.setState(() => this.effect = value);
   }
 
