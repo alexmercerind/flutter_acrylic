@@ -179,22 +179,22 @@ class Window {
     );
   }
 
-  /// Hides window controls.
+  /// Hides window controls. (Currently not supported on macOS)
   static Future<void> hideWindowControls() async {
     await _kChannel.invokeMethod(_kHideWindowControls);
   }
 
-  /// Shows window controls.
+  /// Shows window controls. (Currently not supported on macOS)
   static Future<void> showWindowControls() async {
     await _kChannel.invokeMethod(_kShowWindowControls);
   }
 
-  /// Makes the Flutter window fullscreen.
+  /// Makes the Flutter window fullscreen. (Currently not supported on macOS)
   static Future<void> enterFullscreen() async {
     await _kChannel.invokeMethod(_kEnterFullscreen);
   }
 
-  /// Restores the Flutter window back to normal from fullscreen mode.
+  /// Restores the Flutter window back to normal from fullscreen mode. (Currently not supported on macOS)
   static Future<void> exitFullscreen() async {
     await _kChannel.invokeMethod(_kExitFullscreen);
   }

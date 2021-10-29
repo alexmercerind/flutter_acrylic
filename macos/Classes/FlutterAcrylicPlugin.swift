@@ -128,14 +128,18 @@ public class MainFlutterWindowManipulator {
 }
 
 public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
+    private var registrar: FlutterPluginRegistrar!;
+    private var channel: FlutterMethodChannel!
+    
+    private static func printUnsupportedMacOSVersionWarning() {
+        print("Warning: Transparency effects are not supported for your macOS Deployment Target.")
+    }
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "com.alexmercerind/flutter_acrylic", binaryMessenger: registrar.messenger)
         let instance = FlutterAcrylicPlugin(registrar, channel)
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-    
-    private var registrar: FlutterPluginRegistrar!;
-    private var channel: FlutterMethodChannel!
     
     public init(_ registrar: FlutterPluginRegistrar, _ channel: FlutterMethodChannel) {
         super.init()
@@ -149,6 +153,13 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
         
         switch (methodName) {
         case "Initialize":
+            if #available(macOS 10.14, *) {
+                let material = EffectIDToMaterialConverter.getMaterialFromEffectID(effectID: 0)
+                
+                MainFlutterWindowManipulator.setEffect(material: material)
+            } else {
+                FlutterAcrylicPlugin.printUnsupportedMacOSVersionWarning()
+            }
             result(true)
             break
             
@@ -159,24 +170,28 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
                 
                 MainFlutterWindowManipulator.setEffect(material: material)
             } else {
-                print("Warning: Transparency effects are not supported for your macOS Deployment Target.")
+                FlutterAcrylicPlugin.printUnsupportedMacOSVersionWarning()
             }
             result(true)
             break
             
         case "HideWindowControls":
+            print("Warning: Hiding window controls is currently not supported on macOS.")
             result(true)
             break
             
         case "ShowWindowControls":
+            print("Warning: Showing window controls is currently not supported on macOS.")
             result(true)
             break
             
         case "EnterFullscreen":
+            print("Warning: Entering fullscreen mode is currently not supported on macOS.")
             result(true)
             break
             
         case "ExitFullscreen":
+            print("Warning: Exiting fullscreen mode is currently not supported on macOS.")
             result(true)
             break
             
@@ -186,7 +201,7 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
                 
                 MainFlutterWindowManipulator.setAppearance(dark: dark)
             } else {
-                print("Warning: Transparency effects are not supported for your macOS Deployment Target.")
+                FlutterAcrylicPlugin.printUnsupportedMacOSVersionWarning()
             }
             result(true)
             break
