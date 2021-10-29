@@ -25,6 +25,48 @@ private class EffectIDToMaterialConverter {
         case 5: // mica
             return NSVisualEffectView.Material.headerView
             
+        case 6: // titlebar
+            return NSVisualEffectView.Material.titlebar
+                    
+        case 7: // selection
+            return NSVisualEffectView.Material.selection
+            
+        case 8: // menu
+            return NSVisualEffectView.Material.menu
+            
+        case 9: // popover
+            return NSVisualEffectView.Material.popover
+            
+        case 10: // sidebar
+            return NSVisualEffectView.Material.sidebar
+            
+        case 11: // headerView
+            return NSVisualEffectView.Material.headerView
+            
+        case 12: // sheet
+            return NSVisualEffectView.Material.sheet
+            
+        case 13: // windowBackground
+            return NSVisualEffectView.Material.windowBackground
+            
+        case 14: // hudWindow
+            return NSVisualEffectView.Material.hudWindow
+            
+        case 15: // fullScreenUI
+            return NSVisualEffectView.Material.fullScreenUI
+            
+        case 16: // toolTip
+            return NSVisualEffectView.Material.toolTip
+            
+        case 17: // contentBackground
+            return NSVisualEffectView.Material.contentBackground
+            
+        case 18: // underWindowBackground
+            return NSVisualEffectView.Material.underWindowBackground
+            
+        case 19: // underPageBackground
+            return NSVisualEffectView.Material.underPageBackground
+            
         default:
             return NSVisualEffectView.Material.windowBackground
         }
@@ -44,14 +86,16 @@ public class MainFlutterWindowManipulator {
     }
     
     @available(macOS 10.14, *)
-    public static func setMaterial(material: NSVisualEffectView.Material, dark: Bool) {
+    public static func setMaterial(material: NSVisualEffectView.Material, dark: Bool, doForceBrightness: Bool) {
         if (self.contentView == nil) {
             print("Warning: The MainFlutterWindowManipulator's contentView has not been set. Please make sure the flutter_acrylic plugin is initialized correctly in your MainFlutterWindow.swift file.")
             return
         }
         
         let superView = contentView!.superview!
-        superView.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
+        if (doForceBrightness) {
+            superView.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
+        }
         
         let blurView = NSVisualEffectView()
         blurView.frame = superView.bounds
@@ -69,8 +113,8 @@ public class MainFlutterWindowManipulator {
     }
     
     @available(macOS 10.14, *)
-    public static func setEffect(material: NSVisualEffectView.Material, dark: Bool) {
-        setMaterial(material: material, dark: dark)
+    public static func setEffect(material: NSVisualEffectView.Material, dark: Bool, doForceBrightness: Bool) {
+        setMaterial(material: material, dark: dark, doForceBrightness: doForceBrightness)
     }
 }
 
@@ -103,8 +147,10 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
             if #available(macOS 10.14, *) {
                 let effectID = args["effect"] as! NSNumber
                 let dark = args["dark"] as! Bool
+                let doForceBrightness = args["doForceBrightness"] as! Bool
                 let material = EffectIDToMaterialConverter.getMaterialFromEffectID(effectID: effectID)
-                MainFlutterWindowManipulator.setEffect(material: material, dark: dark)
+                
+                MainFlutterWindowManipulator.setEffect(material: material, dark: dark, doForceBrightness: doForceBrightness)
             } else {
                 print("Warning: Transparency effects are not supported for your macOS Deployment Target.")
             }

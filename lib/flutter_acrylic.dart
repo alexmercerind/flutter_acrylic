@@ -53,7 +53,63 @@ enum WindowEffect {
 
   /// Mica is an opaque, dynamic material that incorporates theme and desktop wallpaper to paint the background of long-lived windows.
   /// Works only on Windows 11 or greater.
-  mica
+  mica,
+  
+  /// The material for a window’s titlebar.
+  /// Works only on macOS.
+  titlebar,
+  
+  /// The material used to indicate a selection.
+  /// Works only on macOS.
+  selection,
+  
+  /// The material for menus.
+  /// Works only on macOS.
+  menu,
+  
+  /// The material for the background of popover windows.
+  /// Works only on macOS.
+  popover,
+  
+  /// The material for the background of window sidebars.
+  /// Works only on macOS.
+  sidebar,
+  
+  /// The material for in-line header or footer views.
+  /// Works only on macOS.
+  headerView,
+  
+  /// The material for the background of sheet windows.
+  /// Works only on macOS.
+  sheet,
+  
+  /// The material for the background of opaque windows.
+  /// Works only on macOS.
+  windowBackground,
+  
+  /// The material for the background of heads-up display (HUD) windows.
+  /// Works only on macOS.
+  hudWindow,
+  
+  /// The material for the background of a full-screen modal interface.
+  /// Works only on macOS.
+  fullScreenUI,
+  
+  /// The material for the background of a tool tip.
+  /// Works only on macOS.
+  toolTip,
+  
+  /// The material for the background of opaque content.
+  /// Works only on macOS.
+  contentBackground,
+  
+  /// The material to show under a window's background.
+  /// Works only on macOS.
+  underWindowBackground,
+  
+  /// The material for the area behind the pages of a document.
+  /// Works only on macOS.
+  underPageBackground,
 }
 
 /// **Window**
@@ -82,6 +138,10 @@ class Window {
   ///
   /// When using [WindowEffect.acrylic], [WindowEffect.aero], [WindowEffect.disabled], [WindowEffect.solid] or [WindowEffect.transparent],
   /// [color] argument can be used to change the resulting tint (or color) of the window background.
+  /// 
+  /// On macOS, the window will by default respect the system's brightness setting. If [doForceMacOSBrightness] is true, the brightness
+  /// will instead be overriden according to the value of the [dark] argument.
+  /// Warning: Once the brightness has been overriden, it can no longer be restored to its default value.
   ///
   /// _Examples_
   ///
@@ -103,6 +163,7 @@ class Window {
     required WindowEffect effect,
     Color color: Colors.transparent,
     bool dark: true,
+    bool doForceMacOSBrightness: false,
   }) async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(
@@ -116,6 +177,7 @@ class Window {
           'A': color.alpha,
         },
         'dark': dark,
+        'doForceBrightness': doForceMacOSBrightness,
       },
     );
   }
