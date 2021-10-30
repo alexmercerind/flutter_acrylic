@@ -144,7 +144,7 @@ You can see the [example](https://github.com/alexmercerind/flutter_acrylic/blob/
 <br>
 Open the `macos/Runner.xcworkspace` folder of your project using Xcode, press ⇧ + ⌘ + O and search for `MainFlutterWindow.swift`.
 
-Insert `import flutter_acrylic` at the top of the line.
+Insert `import flutter_acrylic` at the top of the file.
 Then, insert the following code above the `super.awakeFromNib()`-line:
 
 ```swift
