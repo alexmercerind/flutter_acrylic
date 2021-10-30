@@ -25,6 +25,9 @@ const _kEnterFullscreen = "EnterFullscreen";
 /// Exits fullscreen.
 const _kExitFullscreen = "ExitFullscreen";
 
+/// Overrides the brightness setting of the window (macOS only).
+const _kOverrideMacOSBrightness = "OverrideMacOSBrightness";
+
 final MethodChannel _kChannel = const MethodChannel(_kChannelName);
 final Completer<void> _kCompleter = new Completer<void>();
 
@@ -53,7 +56,63 @@ enum WindowEffect {
 
   /// Mica is an opaque, dynamic material that incorporates theme and desktop wallpaper to paint the background of long-lived windows.
   /// Works only on Windows 11 or greater.
-  mica
+  mica,
+  
+  /// The material for a window’s titlebar.
+  /// Works only on macOS.
+  titlebar,
+  
+  /// The material used to indicate a selection.
+  /// Works only on macOS.
+  selection,
+  
+  /// The material for menus.
+  /// Works only on macOS.
+  menu,
+  
+  /// The material for the background of popover windows.
+  /// Works only on macOS.
+  popover,
+  
+  /// The material for the background of window sidebars.
+  /// Works only on macOS.
+  sidebar,
+  
+  /// The material for in-line header or footer views.
+  /// Works only on macOS.
+  headerView,
+  
+  /// The material for the background of sheet windows.
+  /// Works only on macOS.
+  sheet,
+  
+  /// The material for the background of opaque windows.
+  /// Works only on macOS.
+  windowBackground,
+  
+  /// The material for the background of heads-up display (HUD) windows.
+  /// Works only on macOS.
+  hudWindow,
+  
+  /// The material for the background of a full-screen modal interface.
+  /// Works only on macOS.
+  fullScreenUI,
+  
+  /// The material for the background of a tool tip.
+  /// Works only on macOS.
+  toolTip,
+  
+  /// The material for the background of opaque content.
+  /// Works only on macOS.
+  contentBackground,
+  
+  /// The material to show under a window's background.
+  /// Works only on macOS.
+  underWindowBackground,
+  
+  /// The material for the area behind the pages of a document.
+  /// Works only on macOS.
+  underPageBackground,
 }
 
 /// **Window**
@@ -120,23 +179,36 @@ class Window {
     );
   }
 
-  /// Hides window controls.
+  /// Hides window controls. (Currently not supported on macOS)
   static Future<void> hideWindowControls() async {
     await _kChannel.invokeMethod(_kHideWindowControls);
   }
 
-  /// Shows window controls.
+  /// Shows window controls. (Currently not supported on macOS)
   static Future<void> showWindowControls() async {
     await _kChannel.invokeMethod(_kShowWindowControls);
   }
 
-  /// Makes the Flutter window fullscreen.
+  /// Makes the Flutter window fullscreen. (Currently not supported on macOS)
   static Future<void> enterFullscreen() async {
     await _kChannel.invokeMethod(_kEnterFullscreen);
   }
 
-  /// Restores the Flutter window back to normal from fullscreen mode.
+  /// Restores the Flutter window back to normal from fullscreen mode. (Currently not supported on macOS)
   static Future<void> exitFullscreen() async {
     await _kChannel.invokeMethod(_kExitFullscreen);
+  }
+  
+  /// Overrides the brightness setting of the window (macOS only).
+  static Future<void> overrideMacOSBrightness({
+    required bool dark,
+  }) async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(
+      _kOverrideMacOSBrightness,
+      {
+        'dark': dark,
+      },
+    );
   }
 }
