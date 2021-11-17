@@ -8,7 +8,7 @@ Mention in your `pubspec.yaml`.
 ```yaml
 dependencies:
   ...
-  flutter_acrylic: ^0.0.2
+  flutter_acrylic: ^0.1.0
 ```
 
 ## Example
@@ -96,8 +96,6 @@ Window.showWindowControls();
 
 More features coming soon.
 
-<br>
-
 ## Notes
 
 ### Linux
@@ -122,8 +120,6 @@ However, some desktop environments like KDE Plasma (with KWin compositor) have s
 
 Blur on Linux is more dependent on the compositor, some compositors like compiz or wayfire also seem to support blur effects.
 
-<br>
-
 ### Windows
 
 This plugin exposes the undocumented `SetWindowCompositionAttribute` API from `user32.dll` on Windows 10.
@@ -137,11 +133,10 @@ You can use [bitsdojo_window](https://github.com/bitsdojo/bitsdojo_window) to ma
 
 You can see the [example](https://github.com/alexmercerind/flutter_acrylic/blob/master/example/lib/main.dart) application for further details.
 
-<br>
-
 ### macOS
+
 **Additional setup for macOS:**
-<br>
+
 Open the `macos/Runner.xcworkspace` folder of your project using Xcode, press ⇧ + ⌘ + O and search for `MainFlutterWindow.swift`.
 
 Insert `import flutter_acrylic` at the top of the file.
@@ -208,15 +203,17 @@ To do so, press ⇧ + ⌘ + O and search for `MainMenu.xib`. Click on the `APP_N
 
 <img width="1143" alt="Screen Shot 2021-10-29 at 22 51 50" src="https://user-images.githubusercontent.com/86920182/139500686-a9269344-7096-4e7a-a13d-c05d70bac2fb.png">
 
+## Platforms
 
-
-<br>
+|Platform|Status|Maintainer                                      |
+|--------|------|------------------------------------------------|
+|Windows |✅    |[Hitesh Kumar Saini](https://github.com/alexmercerind)  |
+|macOS   |✅    |[Adrian Samoticha](https://github.com/Adrian-Samoticha) |
+|Linux   |✅    |[Hitesh Kumar Saini](https://github.com/alexmercerind)  |
 
 ## License
 
 MIT License. Contributions welcomed.
-
-<br>
 
 ## More
 
@@ -233,15 +230,11 @@ MIT License. Contributions welcomed.
 
 Aero blur effect.
 
-<br>
-
 ![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/linux_blur.png?raw=true)
 
 ![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/transparent.jpg?raw=true)
 
 Transparent Flutter window.
-
-<br>
 
 ![image](https://user-images.githubusercontent.com/86920182/139502224-a1a25c9d-a945-4685-be3b-715d83ce52ae.png)
 
