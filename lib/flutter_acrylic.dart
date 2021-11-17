@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
+export 'widgets/titlebar_safe_area.dart';
+
 /// Platform channel name.
 const _kChannelName = "com.alexmercerind/flutter_acrylic";
 
