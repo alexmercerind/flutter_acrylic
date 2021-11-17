@@ -45,10 +45,10 @@ const _kSetRepresentedFile = "SetRepresentedFile";
 const _kSetRepresentedURL = "SetRepresentedURL";
 
 /// (macOS only).
-const _kHideTitlebar = "HideTitlebar";
+const _kHideTitle = "HideTitle";
 
 /// (macOS only).
-const _kShowTitlebar = "ShowTitlebar";
+const _kShowTitle = "ShowTitle";
 
 /// (macOS only).
 const _kMakeTitlebarTransparent = "MakeTitlebarTransparent";
@@ -309,7 +309,7 @@ class Window {
   
   /// Sets the document to be edited.
   /// This method is only available on macOS.
-  static Future<void> setDocumentEdited(bool edited) async {
+  static Future<void> setDocumentEdited() async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kSetDocumentEdited);
   }
@@ -341,16 +341,16 @@ class Window {
   
   /// Hides the titlebar of the window.
   /// This method is only available on macOS.
-  static Future<void> hideTitlebar() async {
+  static Future<void> hideTitle() async {
     await _kCompleter.future;
-    await _kChannel.invokeMethod(_kHideTitlebar);
+    await _kChannel.invokeMethod(_kHideTitle);
   }
   
   /// Shows the titlebar of the window.
   /// This method is only available on macOS.
-  static Future<void> showTitlebar() async {
+  static Future<void> showTitle() async {
     await _kCompleter.future;
-    await _kChannel.invokeMethod(_kShowTitlebar);
+    await _kChannel.invokeMethod(_kShowTitle);
   }
   
   /// Makes the window's titlebar transparent.
@@ -385,7 +385,7 @@ class Window {
   
   /// Zooms the window.
   /// This method is only available on macOS.
-  static Future<void> zoomWindow(double scale) async {
+  static Future<void> zoomWindow() async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kZoomWindow);
   }

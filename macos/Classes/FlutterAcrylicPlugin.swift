@@ -116,14 +116,14 @@ public class MainFlutterWindowManipulator {
     public static func start(mainFlutterWindow: NSWindow) {
         self.mainFlutterWindow = mainFlutterWindow
         
-        showTitlebar()
+        showTitle()
         makeTitlebarOpaque()
         disableFullSizeContentView()
 
         mainFlutterWindow.backgroundColor = .clear
     }
     
-    public static func hideTitlebar() {
+    public static func hideTitle() {
         if (self.mainFlutterWindow == nil) {
             printNotStartedWarning()
             return
@@ -132,7 +132,7 @@ public class MainFlutterWindowManipulator {
         self.mainFlutterWindow!.titleVisibility = NSWindow.TitleVisibility.hidden
     }
     
-    public static func showTitlebar() {
+    public static func showTitle() {
         if (self.mainFlutterWindow == nil) {
             printNotStartedWarning()
             return
@@ -575,13 +575,13 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
             result(titlebarHeight)
             break
             
-        case "HideTitlebar":
-            MainFlutterWindowManipulator.hideTitlebar()
+        case "HideTitle":
+            MainFlutterWindowManipulator.hideTitle()
             result(true)
             break
 
-        case "ShowTitlebar":
-            MainFlutterWindowManipulator.showTitlebar()
+        case "ShowTitle":
+            MainFlutterWindowManipulator.showTitle()
             result(true)
             break
 
