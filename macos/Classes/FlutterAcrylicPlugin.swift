@@ -398,24 +398,6 @@ public class MainFlutterWindowManipulator {
         self.mainFlutterWindow!.alphaValue = alphaValue
     }
     
-    public static func makeWindowRestorable() {
-        if (self.mainFlutterWindow == nil) {
-            printNotStartedWarning()
-            return
-        }
-        
-        self.mainFlutterWindow!.isRestorable = true
-    }
-    
-    public static func makeWindowUnrestorable() {
-        if (self.mainFlutterWindow == nil) {
-            printNotStartedWarning()
-            return
-        }
-        
-        self.mainFlutterWindow!.isRestorable = false
-    }
-    
     public static func isWindowVisible() -> Bool {
         if (self.mainFlutterWindow == nil) {
             printNotStartedWarning()
@@ -693,16 +675,6 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
         case "SetWindowAlphaValue":
             let alphaValue = args["value"] as! NSNumber
             MainFlutterWindowManipulator.setWindowAlphaValue(alphaValue: alphaValue as! CGFloat)
-            result(true)
-            break
-
-        case "MakeWindowRestorable":
-            MainFlutterWindowManipulator.makeWindowRestorable()
-            result(true)
-            break
-
-        case "MakeWindowUnrestorable":
-            MainFlutterWindowManipulator.makeWindowUnrestorable()
             result(true)
             break
 

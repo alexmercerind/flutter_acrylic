@@ -119,12 +119,6 @@ const _kIsWindowInLiveResize = "IsWindowInLiveResize";
 const _kSetWindowAlphaValue = "SetWindowAlphaValue";
 
 /// (macOS only).
-const _kMakeWindowRestorable = "MakeWindowRestorable";
-
-/// (macOS only).
-const _kMakeWindowUnrestorable = "MakeWindowUnrestorable";
-
-/// (macOS only).
 const _kIsWindowVisible = "IsWindowVisible";
 
 
@@ -517,24 +511,6 @@ class Window {
     await _kChannel.invokeMethod(_kSetWindowAlphaValue, <String, dynamic>{
       'value': value,
     });
-  }
-  
-  /// Makes the window restorable.
-  /// If the window is restorable, its configuration will be preserved between
-  /// application launches.
-  /// This method is only available on macOS.
-  static Future<void> makeWindowRestorable() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kMakeWindowRestorable);
-  }
-  
-  /// Makes the window unrestorable.
-  /// If the window is unrestorable, its configuration will be cleared between
-  /// application launches.
-  /// This method is only available on macOS.
-  static Future<void> makeWindowUnrestorable() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kMakeWindowUnrestorable);
   }
   
   /// Gets if the window is visible.
