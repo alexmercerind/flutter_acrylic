@@ -122,6 +122,12 @@ const _kSetWindowAlphaValue = "SetWindowAlphaValue";
 /// (macOS only).
 const _kIsWindowVisible = "IsWindowVisible";
 
+/// (macOS only).
+const _kSetWindowBackgroundColorToDefaultColor = "SetWindowBackgroundColorToDefaultColor";
+
+/// (macOS only).
+const _kSetWindowBackgroundColorToClear = "SetWindowBackgroundColorToClear";
+
 
 final MethodChannel _kChannel = const MethodChannel(_kChannelName);
 final Completer<void> _kCompleter = new Completer<void>();
@@ -541,6 +547,22 @@ class Window {
     
     await _kCompleter.future;
     return await _kChannel.invokeMethod(_kIsWindowVisible);
+  }
+  
+  /// Sets the window background color to the default (opaque) window color.
+  /// This method mainly affects the window's titlebar.
+  /// This method is only available on macOS.
+  static Future<void> setWindowBackgroundColorToDefaultColor() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kSetWindowBackgroundColorToDefaultColor);
+  }
+  
+  /// Sets the window background color to clear.
+  /// This method mainly affects the window's titlebar.
+  /// This method is only available on macOS.
+  static Future<void> setWindowBackgroundColorToClear() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kSetWindowBackgroundColorToClear);
   }
   
   /// Overrides the brightness setting of the window (macOS only).

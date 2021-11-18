@@ -119,8 +119,7 @@ public class MainFlutterWindowManipulator {
         showTitle()
         makeTitlebarOpaque()
         disableFullSizeContentView()
-
-        mainFlutterWindow.backgroundColor = .clear
+        setWindowBackgroundColorToDefaultColor()
     }
     
     public static func hideTitle() {
@@ -407,6 +406,24 @@ public class MainFlutterWindowManipulator {
         return self.mainFlutterWindow!.isVisible
     }
     
+    public static func setWindowBackgroundColorToDefaultColor() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.backgroundColor = .windowBackgroundColor
+    }
+    
+    public static func setWindowBackgroundColorToClear() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.backgroundColor = .clear
+    }
+    
     @available(macOS 10.14, *)
     public static func setAppearance(dark: Bool) {
         if (self.mainFlutterWindow == nil) {
@@ -681,6 +698,16 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
         case "IsWindowVisible":
             let isWindowVisible = MainFlutterWindowManipulator.isWindowVisible()
             result(isWindowVisible)
+            break
+            
+        case "SetWindowBackgroundColorToDefaultColor":
+            MainFlutterWindowManipulator.setWindowBackgroundColorToDefaultColor()
+            result(true)
+            break
+            
+        case "SetWindowBackgroundColorToClear":
+            MainFlutterWindowManipulator.setWindowBackgroundColorToClear()
+            result(true)
             break
             
         default:
