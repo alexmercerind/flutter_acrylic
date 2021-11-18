@@ -1,6 +1,7 @@
 library flutter_acrylic;
 
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
@@ -299,6 +300,10 @@ class Window {
   /// If the full-size content view is disabled, this value will be 0.
   /// This value is only available on macOS.
   static Future<double> getTitlebarHeight() async {
+    if (!Platform.isMacOS) {
+      throw new UnsupportedError('getTitlebarHeight() is only available on macOS.');
+    }
+    
     await _kCompleter.future;
     return await _kChannel.invokeMethod(_kGetTitlebarHeight);
   }
@@ -396,6 +401,10 @@ class Window {
   /// Returns if the window is zoomed.
   /// This method is only available on macOS.
   static Future<bool> isWindowZoomed() async {
+    if (!Platform.isMacOS) {
+      throw new UnsupportedError('isWindowZoomed() is only available on macOS.');
+    }
+    
     await _kCompleter.future;
     return await _kChannel.invokeMethod(_kIsWindowZoomed);
   }
@@ -403,6 +412,10 @@ class Window {
   /// Returns if the window is fullscreened.
   /// This method is only available on macOS.
   static Future<bool> isWindowFullscreened() async {
+    if (!Platform.isMacOS) {
+      throw new UnsupportedError('isWindowFullscreened() is only available on macOS.');
+    }
+    
     await _kCompleter.future;
     return await _kChannel.invokeMethod(_kIsWindowFullscreened);
   }
@@ -500,6 +513,10 @@ class Window {
   /// Gets whether the window is currently being resized by the user.
   /// This method is only available on macOS.
   static Future<bool> isWindowInLiveResize() async {
+    if (!Platform.isMacOS) {
+      throw UnsupportedError('isWindowInLiveResize() is only available on macOS.');
+    }
+    
     await _kCompleter.future;
     return await _kChannel.invokeMethod(_kIsWindowInLiveResize);
   }
@@ -516,6 +533,10 @@ class Window {
   /// Gets if the window is visible.
   /// This method is only available on macOS.
   static Future<bool> isWindowVisible() async {
+    if (!Platform.isMacOS) {
+      throw UnsupportedError('isWindowVisible() is only available on macOS.');
+    }
+    
     await _kCompleter.future;
     return await _kChannel.invokeMethod(_kIsWindowVisible);
   }
