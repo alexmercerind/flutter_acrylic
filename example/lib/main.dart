@@ -223,7 +223,7 @@ class MyAppBodyState extends State<MyAppBody> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+          padding: const EdgeInsets.only(bottom: 4.0, top: 12.0),
           child: Text(
             'macOS actions:',
             style: TextStyle(
