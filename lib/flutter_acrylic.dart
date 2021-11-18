@@ -309,6 +309,7 @@ class Window {
   }
   
   /// Sets the document to be edited.
+  /// This will change the appearance of the close button on the titlebar.
   /// This method is only available on macOS.
   static Future<void> setDocumentEdited() async {
     await _kCompleter.future;
@@ -369,6 +370,7 @@ class Window {
   }
   
   /// Enables the window's full-size content view.
+  /// This expands the area that Flutter can draw to to fill the entire window.
   /// It is recommended to enable the full-size content view when making
   /// the titlebar transparent.
   /// This method is only available on macOS.
