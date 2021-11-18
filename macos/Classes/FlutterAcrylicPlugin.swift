@@ -424,6 +424,16 @@ public class MainFlutterWindowManipulator {
         self.mainFlutterWindow!.backgroundColor = .clear
     }
     
+    public static func setBlurViewState(state: NSVisualEffectView.State) {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        let blurryContainerViewController = self.mainFlutterWindow?.contentViewController as! BlurryContainerViewController;
+        (blurryContainerViewController.view as! NSVisualEffectView).state = state
+    }
+    
     @available(macOS 10.14, *)
     public static func setAppearance(dark: Bool) {
         if (self.mainFlutterWindow == nil) {
@@ -707,6 +717,15 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
             
         case "SetWindowBackgroundColorToClear":
             MainFlutterWindowManipulator.setWindowBackgroundColorToClear()
+            result(true)
+            break
+            
+        case "SetBlurViewState":
+            let blurViewStateString = args["state"] as! String
+            let state = blurViewStateString == "active"   ? NSVisualEffectView.State.active :
+                        blurViewStateString == "inactive" ? NSVisualEffectView.State.inactive :
+                                                            NSVisualEffectView.State.followsWindowActiveState
+            MainFlutterWindowManipulator.setBlurViewState(state: state)
             result(true)
             break
             

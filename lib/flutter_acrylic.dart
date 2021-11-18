@@ -128,6 +128,9 @@ const _kSetWindowBackgroundColorToDefaultColor = "SetWindowBackgroundColorToDefa
 /// (macOS only).
 const _kSetWindowBackgroundColorToClear = "SetWindowBackgroundColorToClear";
 
+/// (macOS only).
+const _kSetBlurViewState = "SetBlurViewState";
+
 
 final MethodChannel _kChannel = const MethodChannel(_kChannelName);
 final Completer<void> _kCompleter = new Completer<void>();
@@ -214,6 +217,18 @@ enum WindowEffect {
   /// The material for the area behind the pages of a document.
   /// Works only on macOS.
   underPageBackground,
+}
+
+/// Available blurView states (macOS only).
+enum MacOSBlurViewState {
+  /// The backdrop should always appear active.
+  active,
+  
+  /// The backdrop should always appear inactive.
+  inactive,
+  
+  /// The backdrop should automatically appear active when the window is active, and inactive when it is not.
+  followsWindowActiveState
 }
 
 /// **Window**
@@ -563,6 +578,15 @@ class Window {
   static Future<void> setWindowBackgroundColorToClear() async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kSetWindowBackgroundColorToClear);
+  }
+  
+  /// Sets the blur view state.
+  /// This method is only available on macOS.
+  static Future<void> setBlurViewState(MacOSBlurViewState state) async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kSetBlurViewState, <String, dynamic>{
+      'state': state.toString().split('.').last,
+    });
   }
   
   /// Overrides the brightness setting of the window (macOS only).
