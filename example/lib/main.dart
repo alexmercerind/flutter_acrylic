@@ -267,6 +267,8 @@ class MyAppBodyState extends State<MyAppBody> {
                 ['Set Window Alpha Value to 0.5', () => Window.setWindowAlphaValue(0.5)],
                 ['Set Window Alpha Value to 0.75', () => Window.setWindowAlphaValue(0.75)],
                 ['Set Window Alpha Value to 1.0', () => Window.setWindowAlphaValue(1.0)],
+                ['Set Window Background Color to Default Color', () => Window.setWindowBackgroundColorToDefaultColor()],
+                ['Set Window Background Color to Clear', () => Window.setWindowBackgroundColorToClear()],
               ].map((e) => MaterialButton(
                   child: Text(
                     e[0] as String,
