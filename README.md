@@ -248,6 +248,18 @@ Get if the window is visible.
 final isWindowVisible = Window.isWindowVisible();
 ```
 
+Sets the window's titlebar to the default (opaque) color.
+
+```dart
+Window.setWindowBackgroundColorToDefaultColor()
+```
+
+Makes the window's titlebar clear.
+
+```dart
+Window.setWindowBackgroundColorToClear()
+```
+
 More features coming soon.
 
 ## Notes
