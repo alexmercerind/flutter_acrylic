@@ -269,6 +269,9 @@ class MyAppBodyState extends State<MyAppBody> {
                 ['Set Window Alpha Value to 1.0', () => Window.setWindowAlphaValue(1.0)],
                 ['Set Window Background Color to Default Color', () => Window.setWindowBackgroundColorToDefaultColor()],
                 ['Set Window Background Color to Clear', () => Window.setWindowBackgroundColorToClear()],
+                ['Set Blur View State to Active', () => Window.setBlurViewState(MacOSBlurViewState.active)],
+                ['Set Blur View State to Inactive', () => Window.setBlurViewState(MacOSBlurViewState.inactive)],
+                ['Set Blur View State to Follows Window Active State', () => Window.setBlurViewState(MacOSBlurViewState.followsWindowActiveState)],
               ].map((e) => MaterialButton(
                   child: Text(
                     e[0] as String,
