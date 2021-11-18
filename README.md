@@ -233,7 +233,7 @@ Window.disableCloseButton();
 Get whether the window is currently being resized by the user.
 
 ```dart
-final isWidowInLiveResize = Window.isWindowInLiveResize();
+final isWindowInLiveResize = Window.isWindowInLiveResize();
 ```
 
 Set the window's alpha value.
