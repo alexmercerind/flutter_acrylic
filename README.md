@@ -108,10 +108,10 @@ Set the document to be edited.
 Window.setDocumentEdited();
 ```
 
-Set the document to not be edited.
+Set the document to be unedited.
 
 ```dart
-Window.setDocumentNotEdited();
+Window.setDocumentUnedited();
 ```
 
 Set the represented file of the window.

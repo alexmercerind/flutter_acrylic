@@ -241,7 +241,7 @@ class MyAppBodyState extends State<MyAppBody> {
             child: Row(
               children: [
                 ['Set Document Edited', () => Window.setDocumentEdited()],
-                ['Set Document Not Edited', () => Window.setDocumentNotEdited()],
+                ['Set Document Unedited', () => Window.setDocumentUnedited()],
                 ['Set Represented Filename', () => Window.setRepresentedFilename('filename')],
                 ['Set Represented Url', () => Window.setRepresentedUrl('url')],
                 ['Hide Title', () => Window.hideTitle()],

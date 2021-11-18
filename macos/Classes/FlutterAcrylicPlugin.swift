@@ -352,7 +352,7 @@ public class MainFlutterWindowManipulator {
         self.mainFlutterWindow!.isDocumentEdited = true
     }
     
-    public static func setDocumentNotEdited() {
+    public static func setDocumentUnedited() {
         if (self.mainFlutterWindow == nil) {
             printNotStartedWarning()
             return
@@ -560,8 +560,8 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
             result(true)
             break
             
-        case "SetDocumentNotEdited":
-            MainFlutterWindowManipulator.setDocumentNotEdited()
+        case "SetDocumentUnedited":
+            MainFlutterWindowManipulator.setDocumentUnedited()
             result(true)
             break
             

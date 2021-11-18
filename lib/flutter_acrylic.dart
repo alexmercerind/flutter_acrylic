@@ -39,7 +39,7 @@ const _kOverrideMacOSBrightness = "OverrideMacOSBrightness";
 const _kSetDocumentEdited = "SetDocumentEdited";
 
 /// (macOS only).
-const _kSetDocumentNotEdited = "SetDocumentNotEdited";
+const _kSetDocumentUnedited = "SetDocumentUnedited";
 
 /// (macOS only).
 const _kSetRepresentedFile = "SetRepresentedFile";
@@ -337,11 +337,11 @@ class Window {
     await _kChannel.invokeMethod(_kSetDocumentEdited);
   }
   
-  /// Sets the document to not be edited.
+  /// Sets the document to be unedited.
   /// This method is only available on macOS.
-  static Future<void> setDocumentNotEdited() async {
+  static Future<void> setDocumentUnedited() async {
     await _kCompleter.future;
-    await _kChannel.invokeMethod(_kSetDocumentNotEdited);
+    await _kChannel.invokeMethod(_kSetDocumentUnedited);
   }
   
   /// Sets the represented file of the window.
