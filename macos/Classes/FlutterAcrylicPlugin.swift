@@ -16,7 +16,7 @@ public class BlurryContainerViewController: NSViewController {
         let blurView = NSVisualEffectView()
         blurView.autoresizingMask = [.width, .height]
         blurView.blendingMode = .behindWindow
-        blurView.state = .active
+        blurView.state = .followsWindowActiveState
         if #available(macOS 10.14, *) {
             blurView.material = .underWindowBackground
         }
