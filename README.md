@@ -260,6 +260,14 @@ Makes the window's titlebar clear.
 Window.setWindowBackgroundColorToClear()
 ```
 
+Sets the window's blur view state.
+
+```dart
+Window.setBlurViewState(MacOSBlurViewState.active);
+Window.setBlurViewState(MacOSBlurViewState.inactive);
+Window.setBlurViewState(MacOSBlurViewState.followsWindowActiveState);
+```
+
 More features coming soon.
 
 ## Notes
