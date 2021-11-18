@@ -248,19 +248,19 @@ Get if the window is visible.
 final isWindowVisible = Window.isWindowVisible();
 ```
 
-Sets the window's titlebar to the default (opaque) color.
+Set the window's titlebar to the default (opaque) color.
 
 ```dart
 Window.setWindowBackgroundColorToDefaultColor()
 ```
 
-Makes the window's titlebar clear.
+Make the window's titlebar clear.
 
 ```dart
 Window.setWindowBackgroundColorToClear()
 ```
 
-Sets the window's blur view state.
+Set the window's blur view state.
 
 ```dart
 Window.setBlurViewState(MacOSBlurViewState.active);
