@@ -68,7 +68,7 @@ Following effects are available.
 - `WindowEffect.underWindowBackground`.
 - `WindowEffect.underPageBackground`.
 
-**Other utility features offered by the plugin (currently not supported on macOS):**
+**Other utility features offered by the plugin:**
 
 Enter fullscreen.
 
@@ -92,6 +92,180 @@ Show controls.
 
 ```dart
 Window.showWindowControls();
+```
+
+**macOS only utility features:**
+
+Get the height of the titlebar when the full-size content view is enabled.
+
+```dart
+final titlebarHeight = Window.getTitlebarHeight();
+```
+
+Set the document to be edited.
+
+```dart
+Window.setDocumentEdited();
+```
+
+Set the document to be unedited.
+
+```dart
+Window.setDocumentUnedited();
+```
+
+Set the represented file of the window.
+
+```dart
+Window.setRepresentedFilename('path/to/file.txt');
+```
+
+Set the represented URL of the window.
+
+```dart
+Window.setRepresentedUrl('https://flutter.dev');
+```
+
+Hide the titlebar of the window.
+
+```dart
+Window.hideTitle();
+```
+
+Show the titlebar of the window.
+
+```dart
+Window.showTitle();
+```
+
+Make the window's titlebar transparent.
+
+```dart
+Window.makeTitlebarTransparent();
+```
+
+Make the window's titlebar opaque.
+
+```dart
+Window.makeTitlebarOpaque();
+```
+
+Enable the window's full-size content view.
+It is recommended to enable the full-size content view when making
+the titlebar transparent.
+
+```dart
+Window.enableFullSizeContentView();
+```
+
+Disable the window's full-size content view.
+
+```dart
+Window.disableFullSizeContentView();
+```
+
+Zoom the window.
+
+```dart
+Window.zoomWindow();
+```
+
+Unzoom the window.
+
+```dart
+Window.unzoomWindow();
+```
+
+Get if the window is zoomed.
+
+```dart
+final isWindowZoomed = Window.isWindowZoomed();
+```
+
+Get if the window is fullscreened.
+
+```dart
+final isWindowFullscreened = Window.isWindowFullscreened();
+```
+
+Hide/Show the window's zoom button.
+
+```dart
+Window.hideZoomButton();
+Window.showZoomButton();
+```
+
+Hide/Show the window's miniaturize button.
+
+```dart
+Window.hideMiniaturizeButton();
+Window.showMiniaturizeButton();
+```
+
+Hides/Show the window's close button.
+
+```dart
+Window.hideCloseButton();
+Window.showCloseButton();
+```
+
+Enable/Disable the window's zoom button.
+
+```dart
+Window.enableZoomButton();
+Window.disableZoomButton();
+```
+
+Enable/Disable the window's miniaturize button.
+
+```dart
+Window.enableMiniaturizeButton();
+Window.disableMiniaturizeButton();
+```
+
+Enable/Disable the window's close button.
+
+```dart
+Window.enableCloseButton();
+Window.disableCloseButton();
+```
+
+Get whether the window is currently being resized by the user.
+
+```dart
+final isWindowInLiveResize = Window.isWindowInLiveResize();
+```
+
+Set the window's alpha value.
+
+```dart
+Window.setWindowAlphaValue(0.75);
+```
+
+Get if the window is visible.
+
+```dart
+final isWindowVisible = Window.isWindowVisible();
+```
+
+Set the window's titlebar to the default (opaque) color.
+
+```dart
+Window.setWindowBackgroundColorToDefaultColor()
+```
+
+Make the window's titlebar clear.
+
+```dart
+Window.setWindowBackgroundColorToClear()
+```
+
+Set the window's blur view state.
+
+```dart
+Window.setBlurViewState(MacOSBlurViewState.active);
+Window.setBlurViewState(MacOSBlurViewState.inactive);
+Window.setBlurViewState(MacOSBlurViewState.followsWindowActiveState);
 ```
 
 More features coming soon.
@@ -140,23 +314,18 @@ You can see the [example](https://github.com/alexmercerind/flutter_acrylic/blob/
 Open the `macos/Runner.xcworkspace` folder of your project using Xcode, press ⇧ + ⌘ + O and search for `MainFlutterWindow.swift`.
 
 Insert `import flutter_acrylic` at the top of the file.
-Then, insert the following code above the `super.awakeFromNib()`-line:
+Then, replace the code above the `super.awakeFromNib()`-line with the following code:
 
 ```swift
-/* Hide the window titlebar */
-self.titleVisibility = NSWindow.TitleVisibility.hidden;
-self.titlebarAppearsTransparent = true;
-self.isMovableByWindowBackground = true;
-self.standardWindowButton(NSWindow.ButtonType.miniaturizeButton)?.isEnabled = false;
-
-/* Make the window transparent */
-self.isOpaque = false
-self.backgroundColor = .clear
+let windowFrame = self.frame
+let blurryContainerViewController = BlurryContainerViewController()
+self.contentViewController = blurryContainerViewController
+self.setFrame(windowFrame, display: true)
 
 /* Initialize the flutter_acrylic plugin */
-let contentView = contentViewController!.view;
-MainFlutterWindowManipulator.setContentView(contentView: contentView)
-MainFlutterWindowManipulator.setInvalidateShadowFunction(invalidateShadow: self.invalidateShadow)
+MainFlutterWindowManipulator.start(mainFlutterWindow: self)
+
+RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)
 ```
 
 Assuming you're starting with the default configuration, the finished code should look something like this:
@@ -168,27 +337,22 @@ import FlutterMacOS
 
 class MainFlutterWindow: NSWindow {
   override func awakeFromNib() {
-    let flutterViewController = FlutterViewController.init()
-    let windowFrame = self.frame
-    self.contentViewController = flutterViewController
-    self.setFrame(windowFrame, display: true)
+-   let flutterViewController = FlutterViewController.init()
+-   let windowFrame = self.frame
+-   self.contentViewController = flutterViewController
+-   self.setFrame(windowFrame, display: true)
 
-    RegisterGeneratedPlugins(registry: flutterViewController)
+-   RegisterGeneratedPlugins(registry: flutterViewController)
     
-+   /* Hide the window titlebar */
-+   self.titleVisibility = NSWindow.TitleVisibility.hidden;
-+   self.titlebarAppearsTransparent = true;
-+   self.isMovableByWindowBackground = true;
-+   self.standardWindowButton(NSWindow.ButtonType.miniaturizeButton)?.isEnabled = false;
++   let windowFrame = self.frame
++   let blurryContainerViewController = BlurryContainerViewController()
++   self.contentViewController = blurryContainerViewController
++   self.setFrame(windowFrame, display: true)
 
-+   /* Make the window transparent */
-+   self.isOpaque = false
-+   self.backgroundColor = .clear
-    
 +   /* Initialize the flutter_acrylic plugin */
-+   let contentView = contentViewController!.view;
-+   MainFlutterWindowManipulator.setContentView(contentView: contentView)
-+   MainFlutterWindowManipulator.setInvalidateShadowFunction(invalidateShadow: self.invalidateShadow)
++   MainFlutterWindowManipulator.start(mainFlutterWindow: self)
+
++   RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)
 
     super.awakeFromNib()
   }
@@ -199,9 +363,22 @@ Now press ⇧ + ⌘ + O once more and search for `Runner.xcodeproj`. Go to `info
 
 Depending on your use case, you may want to extend the area of the window that Flutter can draw to to the entire window, such that you are able to draw onto the window's title bar as well (for example when you're only trying to make the sidebar transparent while the rest of the window is meant to stay opaque).
 
-To do so, press ⇧ + ⌘ + O and search for `MainMenu.xib`. Click on the `APP_NAME` in the left sidebar. Now, towards the top of the sidebar on the right hand side of the Xcode window, click on the `Show the attributes inspector` icon. Lastly, check the `Full Size Content View` checkbox.
+To do so, enable the full-size content view with the following Dart code:
 
-<img width="1143" alt="Screen Shot 2021-10-29 at 22 51 50" src="https://user-images.githubusercontent.com/86920182/139500686-a9269344-7096-4e7a-a13d-c05d70bac2fb.png">
+```dart
+Window.makeTitlebarTransparent();
+Window.enableFullSizeContentView();
+```
+
+When you decide to do this, it is recommended to wrap your application (or parts of it) in a `TitlebarSafeArea` widget as follows:
+
+```dart
+TitlebarSafeArea(
+  child: YourApp(),
+)
+```
+
+This ensures that your app is not covered by the window's title bar.
 
 ## Platforms
 
