@@ -83,159 +83,239 @@ class MyAppBodyState extends State<MyAppBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    // The [TitlebarSafeArea] widget is required when running on macOS and enabling
+    // the full-size content view using [Window.setFullSizeContentView]. It ensures
+    // that its child is not covered by the macOS title bar.
+    return TitlebarSafeArea(
+      child: Stack(
+        children: [
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Flutter Acrylic',
+                        style: TextStyle(
+                          fontSize: 32.0,
+                          color: brightness.getForegroundColor(context)
+                        ),
+                      ),
+                      Text(
+                        'github.com/alexmercerind/flutter_acrylic',
+                        style: TextStyle(
+                          color: brightness.getForegroundColor(context)
+                        )
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: generateEffectMenu(context),
+                ),
+                SizedBox(
+                  height: 48.0,
+                ),
+                generateActionButtonBar(context),
+                generateMacOSActionButtonBar(context),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ButtonBar generateActionButtonBar(BuildContext context) {
+    return ButtonBar(
+              alignment: MainAxisAlignment.start,
+              children: [
+                MaterialButton(
+                  onPressed: () => setState(() {
+                    brightness = brightness == InterfaceBrightness.dark ? InterfaceBrightness.light : InterfaceBrightness.dark;
+                    this.setWindowEffect(this.effect);
+                  }),
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 28.0,
+                    width: 140.0,
+                    child: Text('Dark: ${(() {
+                      switch (brightness) {
+                        case InterfaceBrightness.light: return 'light';
+                        case InterfaceBrightness.dark: return 'dark';
+                        default: return 'auto';
+                      }
+                    })()}',
+                    style: TextStyle(
+                      color: brightness.getForegroundColor(context)
+                    ),),
+                  ),
+                ),
+                MaterialButton(
+                  onPressed: Window.hideWindowControls,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 28.0,
+                    width: 140.0,
+                    child: Text(
+                      'Hide controls',
+                      style: TextStyle(
+                        color: brightness.getForegroundColor(context)
+                      ),
+                    ),
+                  ),
+                ),
+                MaterialButton(
+                  onPressed: Window.showWindowControls,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 28.0,
+                    width: 140.0,
+                    child: Text(
+                      'Show controls',
+                      style: TextStyle(
+                        color: brightness.getForegroundColor(context)
+                      ),
+                    ),
+                  ),
+                ),
+                MaterialButton(
+                  onPressed: Window.enterFullscreen,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 28.0,
+                    width: 140.0,
+                    child: Text(
+                      'Enter fullscreen',
+                      style: TextStyle(
+                        color: brightness.getForegroundColor(context)
+                      ),
+                    ),
+                  ),
+                ),
+                MaterialButton(
+                  onPressed: Window.exitFullscreen,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 28.0,
+                    width: 140.0,
+                    child: Text(
+                      'Exit fullscreen',
+                      style: TextStyle(
+                        color: brightness.getForegroundColor(context)
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+  }
+  
+  Widget generateMacOSActionButtonBar(BuildContext context) {
+    if (!Platform.isMacOS) return const SizedBox();
+    
+    return Column(
       children: [
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Flutter Acrylic',
-                      style: TextStyle(
-                        fontSize: 32.0,
-                        color: brightness.getForegroundColor(context)
-                      ),
-                    ),
-                    Text(
-                      'github.com/alexmercerind/flutter_acrylic',
-                      style: TextStyle(
-                        color: brightness.getForegroundColor(context)
-                      )
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Theme(
-                    data: brightness.getIsDark(context) ? ThemeData.dark() : ThemeData.light(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: WindowEffect.values
-                          .map(
-                            (effect) => RadioListTile<WindowEffect>(
-                              title: Text(
-                                  effect
-                                          .toString()
-                                          .split('.')
-                                          .last[0]
-                                          .toUpperCase() +
-                                      effect
-                                          .toString()
-                                          .split('.')
-                                          .last
-                                          .substring(1),
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      color: brightness.getForegroundColor(context),
-                                    )
-                                  ),
-                              value: effect,
-                              groupValue: this.effect,
-                              onChanged: this.setWindowEffect,
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 48.0,
-              ),
-              ButtonBar(
-                alignment: MainAxisAlignment.start,
-                children: [
-                  MaterialButton(
-                    onPressed: () => setState(() {
-                      brightness = brightness == InterfaceBrightness.dark ? InterfaceBrightness.light : InterfaceBrightness.dark;
-                      this.setWindowEffect(this.effect);
-                    }),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 28.0,
-                      width: 140.0,
-                      child: Text('Dark: ${(() {
-                        switch (brightness) {
-                          case InterfaceBrightness.light: return 'light';
-                          case InterfaceBrightness.dark: return 'dark';
-                          default: return 'auto';
-                        }
-                      })()}',
-                      style: TextStyle(
-                        color: brightness.getForegroundColor(context)
-                      ),),
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: Window.hideWindowControls,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 28.0,
-                      width: 140.0,
-                      child: Text(
-                        'Hide controls',
-                        style: TextStyle(
-                          color: brightness.getForegroundColor(context)
-                        ),
-                      ),
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: Window.showWindowControls,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 28.0,
-                      width: 140.0,
-                      child: Text(
-                        'Show controls',
-                        style: TextStyle(
-                          color: brightness.getForegroundColor(context)
-                        ),
-                      ),
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: Window.enterFullscreen,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 28.0,
-                      width: 140.0,
-                      child: Text(
-                        'Enter fullscreen',
-                        style: TextStyle(
-                          color: brightness.getForegroundColor(context)
-                        ),
-                      ),
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: Window.exitFullscreen,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 28.0,
-                      width: 140.0,
-                      child: Text(
-                        'Exit fullscreen',
-                        style: TextStyle(
-                          color: brightness.getForegroundColor(context)
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+          child: Text(
+            'macOS actions:',
+            style: TextStyle(
+              fontSize: 16.0,
+              color: brightness.getForegroundColor(context),
+              fontWeight: FontWeight.bold,
+            )
           ),
         ),
-      ],
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            
+            child: Row(
+              children: [
+                ['Set Document Edited', () => Window.setDocumentEdited()],
+                ['Set Document Not Edited', () => Window.setDocumentNotEdited()],
+                ['Set Represented Filename', () => Window.setRepresentedFilename('filename')],
+                ['Set Represented Url', () => Window.setRepresentedUrl('url')],
+                ['Hide Title', () => Window.hideTitle()],
+                ['Show Title', () => Window.showTitle()],
+                ['Make Titlebar Transparent', () => Window.makeTitlebarTransparent()],
+                ['Make Titlebar Opaque', () => Window.makeTitlebarOpaque()],
+                ['Enable Full Size Content View', () => Window.enableFullSizeContentView()],
+                ['DisableF ull Size Content View', () => Window.disableFullSizeContentView()],
+                ['Zoom Window', () => Window.zoomWindow()],
+                ['Unzoom Window', () => Window.unzoomWindow()],
+                ['Hide Zoom Button', () => Window.hideZoomButton()],
+                ['Show Zoom Button', () => Window.showZoomButton()],
+                ['HideM iniaturize Button', () => Window.hideMiniaturizeButton()],
+                ['Show Miniaturize Button', () => Window.showMiniaturizeButton()],
+                ['Hide Close Button', () => Window.hideCloseButton()],
+                ['Show Close Button', () => Window.showCloseButton()],
+                ['Enable Zoom Button', () => Window.enableZoomButton()],
+                ['Disable Zoom Button', () => Window.disableZoomButton()],
+                ['Enable Miniaturize Button', () => Window.enableMiniaturizeButton()],
+                ['Disable Miniaturize Button', () => Window.disableMiniaturizeButton()],
+                ['Enable Close Button', () => Window.enableCloseButton()],
+                ['Disable Close Button', () => Window.disableCloseButton()],
+                ['Set Window Alpha Value to 0.5', () => Window.setWindowAlphaValue(0.5)],
+                ['Set Window Alpha Value to 0.75', () => Window.setWindowAlphaValue(0.75)],
+                ['Set Window Alpha Value to 1.0', () => Window.setWindowAlphaValue(1.0)],
+              ].map((e) => MaterialButton(
+                  child: Text(
+                    e[0] as String,
+                    style: TextStyle(
+                      color: brightness.getForegroundColor(context)
+                    ),
+                  ),
+                  onPressed: e[1] as void Function(),
+                )).toList(),
+            ),
+          ),
+        ),
+      ]
+    );
+  }
+
+  SingleChildScrollView generateEffectMenu(BuildContext context) {
+    return SingleChildScrollView(
+      child: Theme(
+        data: brightness.getIsDark(context) ? ThemeData.dark() : ThemeData.light(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: WindowEffect.values
+              .map(
+                (effect) => RadioListTile<WindowEffect>(
+                  title: Text(
+                      effect
+                              .toString()
+                              .split('.')
+                              .last[0]
+                              .toUpperCase() +
+                          effect
+                              .toString()
+                              .split('.')
+                              .last
+                              .substring(1),
+                      style: TextStyle(
+                          fontSize: 14.0,
+                          color: brightness.getForegroundColor(context),
+                        )
+                      ),
+                  value: effect,
+                  groupValue: this.effect,
+                  onChanged: this.setWindowEffect,
+                ),
+              )
+              .toList(),
+        ),
+      ),
     );
   }
 }
