@@ -2,30 +2,31 @@ import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 
-import '../flutter_acrylic.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 
 class _MacOSTitlebarSafeArea extends StatefulWidget {
   final Widget child;
 
-  const _MacOSTitlebarSafeArea({Key? key, required this.child}) : super(key: key);
-  
+  const _MacOSTitlebarSafeArea({Key? key, required this.child})
+      : super(key: key);
+
   @override
   State<_MacOSTitlebarSafeArea> createState() => _MacOSTitlebarSafeAreaState();
 }
 
 class _MacOSTitlebarSafeAreaState extends State<_MacOSTitlebarSafeArea> {
   double titlebarHeight = 0.0;
-  
+
   Future<void> calculateTitlebarHeight() async {
     titlebarHeight = await Window.getTitlebarHeight();
-    
+
     setState(() {});
   }
-  
+
   @override
   Widget build(BuildContext context) {
     calculateTitlebarHeight();
-    
+
     return Padding(
       padding: EdgeInsets.only(top: titlebarHeight),
       child: widget.child,
@@ -47,13 +48,11 @@ class TitlebarSafeArea extends StatelessWidget {
   /// )
   /// ```
   const TitlebarSafeArea({Key? key, required this.child}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     if (!Platform.isMacOS) return child;
-    
-    return _MacOSTitlebarSafeArea(
-      child: child
-    );
+
+    return _MacOSTitlebarSafeArea(child: child);
   }
 }
