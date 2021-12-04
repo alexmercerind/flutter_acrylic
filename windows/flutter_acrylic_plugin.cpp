@@ -180,7 +180,7 @@ void FlutterAcrylicPlugin::HandleMethodCall(
     bool dark = std::get<bool>(arguments[flutter::EncodableValue("dark")]);
     if (effect == 5) {
       if (GetWindowsVersion().dwBuildNumber > 19041) {
-        BOOL enable = true, dark_bool = dark;
+        BOOL enable = TRUE, dark_bool = dark;
         MARGINS margins = {-1};
         ::DwmExtendFrameIntoClientArea(GetParentWindow(), &margins);
         ::DwmSetWindowAttribute(GetParentWindow(), 20, &dark_bool,
@@ -191,8 +191,8 @@ void FlutterAcrylicPlugin::HandleMethodCall(
     } else {
       if (GetWindowsVersion().dwBuildNumber > 19041 &&
           window_effect_last_ == 5) {
-        BOOL enable = false;
-        MARGINS margins = {0};
+        BOOL enable = FALSE;
+        MARGINS margins = {0, 0, 1, 0};
         ::DwmExtendFrameIntoClientArea(GetParentWindow(), &margins);
         ::DwmSetWindowAttribute(GetParentWindow(), 20, &enable, sizeof(enable));
         ::DwmSetWindowAttribute(GetParentWindow(), 1029, &enable,
