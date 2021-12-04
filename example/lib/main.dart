@@ -7,19 +7,19 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Window.initialize();
-  await Window.setEffect(
-    effect: WindowEffect.acrylic,
-    color: Color(0x00222222),
-    dark: true,
-  );
+  if (Platform.isWindows) {
+    await Window.hideWindowControls();
+  }
   runApp(MyApp());
-  doWhenWindowReady(() {
-    final initialSize = Size(1280, 720);
-    appWindow.minSize = initialSize;
-    appWindow.size = initialSize;
-    appWindow.alignment = Alignment.center;
-    appWindow.show();
-  });
+  if (Platform.isWindows) {
+    doWhenWindowReady(() {
+      appWindow
+        ..minSize = Size(640, 360)
+        ..size = Size(720, 540)
+        ..alignment = Alignment.center
+        ..show();
+    });
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -72,14 +72,14 @@ class MyAppBody extends StatefulWidget {
 
 class MyAppBodyState extends State<MyAppBody> {
   WindowEffect effect = WindowEffect.transparent;
-  Color color = Platform.isWindows ? Color(0x00222222) : Colors.transparent;
+  Color color = Platform.isWindows ? Color(0xCC222222) : Colors.transparent;
   InterfaceBrightness brightness =
       Platform.isMacOS ? InterfaceBrightness.auto : InterfaceBrightness.dark;
 
   @override
   void initState() {
     super.initState();
-    // this.setWindowEffect(this.effect);
+    this.setWindowEffect(this.effect);
   }
 
   void setWindowEffect(WindowEffect? value) {
@@ -88,11 +88,23 @@ class MyAppBodyState extends State<MyAppBody> {
       color: this.color,
       dark: brightness == InterfaceBrightness.dark,
     );
-    if (brightness != InterfaceBrightness.auto) {
-      Window.overrideMacOSBrightness(
-          dark: brightness == InterfaceBrightness.dark);
+    if (Platform.isMacOS) {
+      if (brightness != InterfaceBrightness.auto) {
+        Window.overrideMacOSBrightness(
+            dark: brightness == InterfaceBrightness.dark);
+      }
     }
     this.setState(() => this.effect = value);
+  }
+
+  void setBrightness(InterfaceBrightness brightness) {
+    this.brightness = brightness;
+    if (this.brightness == InterfaceBrightness.dark) {
+      color = Platform.isWindows ? Color(0xCC222222) : Colors.transparent;
+    } else {
+      color = Platform.isWindows ? Color(0x22DDDDDD) : Colors.transparent;
+    }
+    this.setWindowEffect(this.effect);
   }
 
   @override
@@ -109,6 +121,9 @@ class MyAppBodyState extends State<MyAppBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                WindowTitleBar(
+                  brightness: brightness,
+                ),
                 Padding(
                   padding: EdgeInsets.only(
                     left: 20.0,
@@ -134,8 +149,11 @@ class MyAppBodyState extends State<MyAppBody> {
                 Expanded(
                   child: generateEffectMenu(context),
                 ),
-                SizedBox(
-                  height: 48.0,
+                Divider(
+                  height: 1.0,
+                  color: brightness == InterfaceBrightness.dark
+                      ? Colors.white12
+                      : Colors.black12,
                 ),
                 generateActionButtonBar(context),
                 generateMacOSActionButtonBar(context),
@@ -151,77 +169,63 @@ class MyAppBodyState extends State<MyAppBody> {
     return ButtonBar(
       alignment: MainAxisAlignment.start,
       children: [
-        MaterialButton(
+        ElevatedButton(
           onPressed: () => setState(() {
-            brightness = brightness == InterfaceBrightness.dark
-                ? InterfaceBrightness.light
-                : InterfaceBrightness.dark;
-            this.setWindowEffect(this.effect);
+            setBrightness(
+              brightness == InterfaceBrightness.dark
+                  ? InterfaceBrightness.light
+                  : InterfaceBrightness.dark,
+            );
           }),
-          child: Container(
-            alignment: Alignment.center,
-            height: 28.0,
-            width: 140.0,
-            child: Text(
-              'Dark: ${(() {
-                switch (brightness) {
-                  case InterfaceBrightness.light:
-                    return 'light';
-                  case InterfaceBrightness.dark:
-                    return 'dark';
-                  default:
-                    return 'auto';
-                }
-              })()}',
-              style: TextStyle(color: brightness.getForegroundColor(context)),
+          child: Text(
+            'Dark: ${(() {
+              switch (brightness) {
+                case InterfaceBrightness.light:
+                  return 'light';
+                case InterfaceBrightness.dark:
+                  return 'dark';
+                default:
+                  return 'auto';
+              }
+            })()}',
+            style: TextStyle(
+              color: Colors.white,
             ),
           ),
         ),
-        MaterialButton(
+        ElevatedButton(
           onPressed: Window.hideWindowControls,
-          child: Container(
-            alignment: Alignment.center,
-            height: 28.0,
-            width: 140.0,
-            child: Text(
-              'Hide controls',
-              style: TextStyle(color: brightness.getForegroundColor(context)),
+          child: Text(
+            'Hide controls',
+            style: TextStyle(
+              color: Colors.white,
             ),
           ),
         ),
-        MaterialButton(
+        ElevatedButton(
           onPressed: Window.showWindowControls,
-          child: Container(
-            alignment: Alignment.center,
-            height: 28.0,
-            width: 140.0,
-            child: Text(
-              'Show controls',
-              style: TextStyle(color: brightness.getForegroundColor(context)),
+          child: Text(
+            'Show controls',
+            style: TextStyle(
+              color: Colors.white,
             ),
           ),
         ),
-        MaterialButton(
+        ElevatedButton(
           onPressed: Window.enterFullscreen,
-          child: Container(
-            alignment: Alignment.center,
-            height: 28.0,
-            width: 140.0,
-            child: Text(
-              'Enter fullscreen',
-              style: TextStyle(color: brightness.getForegroundColor(context)),
+          child: Text(
+            'Enter fullscreen',
+            style: TextStyle(
+              color: Colors.white,
             ),
           ),
         ),
-        MaterialButton(
+        ElevatedButton(
           onPressed: Window.exitFullscreen,
-          child: Container(
-            alignment: Alignment.center,
-            height: 28.0,
-            width: 140.0,
-            child: Text(
-              'Exit fullscreen',
-              style: TextStyle(color: brightness.getForegroundColor(context)),
+          child: Text(
+            'Exit fullscreen',
+            style: TextStyle(
+              color: Colors.white,
             ),
           ),
         ),
@@ -347,7 +351,9 @@ class MyAppBodyState extends State<MyAppBody> {
             : ThemeData.light(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: WindowEffect.values
+          children: (Platform.isWindows
+                  ? WindowEffect.values.take(6)
+                  : WindowEffect.values)
               .map(
                 (effect) => RadioListTile<WindowEffect>(
                   title: Text(effect.toString(),
@@ -364,5 +370,94 @@ class MyAppBodyState extends State<MyAppBody> {
         ),
       ),
     );
+  }
+}
+
+class WindowTitleBar extends StatelessWidget {
+  final InterfaceBrightness brightness;
+  const WindowTitleBar({Key? key, required this.brightness}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Platform.isWindows
+        ? Container(
+            width: MediaQuery.of(context).size.width,
+            height: 32.0,
+            color: Colors.transparent,
+            child: MoveWindow(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(),
+                  ),
+                  MinimizeWindowButton(
+                    colors: WindowButtonColors(
+                      iconNormal: brightness == InterfaceBrightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      iconMouseDown: brightness == InterfaceBrightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      iconMouseOver: brightness == InterfaceBrightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      normal: Colors.transparent,
+                      mouseOver: brightness == InterfaceBrightness.light
+                          ? Colors.black.withOpacity(0.04)
+                          : Colors.white.withOpacity(0.04),
+                      mouseDown: brightness == InterfaceBrightness.light
+                          ? Colors.black.withOpacity(0.08)
+                          : Colors.white.withOpacity(0.08),
+                    ),
+                  ),
+                  MaximizeWindowButton(
+                    colors: WindowButtonColors(
+                      iconNormal: brightness == InterfaceBrightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      iconMouseDown: brightness == InterfaceBrightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      iconMouseOver: brightness == InterfaceBrightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      normal: Colors.transparent,
+                      mouseOver: brightness == InterfaceBrightness.light
+                          ? Colors.black.withOpacity(0.04)
+                          : Colors.white.withOpacity(0.04),
+                      mouseDown: brightness == InterfaceBrightness.light
+                          ? Colors.black.withOpacity(0.08)
+                          : Colors.white.withOpacity(0.08),
+                    ),
+                  ),
+                  CloseWindowButton(
+                    onPressed: () {
+                      appWindow.close();
+                    },
+                    colors: WindowButtonColors(
+                      iconNormal: brightness == InterfaceBrightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      iconMouseDown: brightness == InterfaceBrightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      iconMouseOver: brightness == InterfaceBrightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      normal: Colors.transparent,
+                      mouseOver: brightness == InterfaceBrightness.light
+                          ? Colors.black.withOpacity(0.04)
+                          : Colors.white.withOpacity(0.04),
+                      mouseDown: brightness == InterfaceBrightness.light
+                          ? Colors.black.withOpacity(0.08)
+                          : Colors.white.withOpacity(0.08),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : Container();
   }
 }
