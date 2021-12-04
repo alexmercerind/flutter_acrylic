@@ -13,9 +13,7 @@ dependencies:
 
 ## Example
 
-![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/flutter_acrylic_0.png?raw=true)
-![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/flutter_acrylic_1.png?raw=true)
-![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/flutter_acrylic_2.png?raw=true)
+![](https://github.com/alexmercerind/flutter_acrylic/blob/assets/mug8J4efWu.gif?raw=true)
 
 ## Documentation
 
