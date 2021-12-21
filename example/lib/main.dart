@@ -352,7 +352,7 @@ class MyAppBodyState extends State<MyAppBody> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: (Platform.isWindows
-                  ? WindowEffect.values.take(6)
+                  ? WindowEffect.values.take(7)
                   : WindowEffect.values)
               .map(
                 (effect) => RadioListTile<WindowEffect>(
