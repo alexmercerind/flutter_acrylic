@@ -57,47 +57,50 @@ private class EffectIDToMaterialConverter {
             
         case 5: // mica
             return NSVisualEffectView.Material.headerView
-            
-        case 6: // titlebar
-            return NSVisualEffectView.Material.titlebar
-                    
-        case 7: // selection
-            return NSVisualEffectView.Material.selection
-            
-        case 8: // menu
-            return NSVisualEffectView.Material.menu
-            
-        case 9: // popover
-            return NSVisualEffectView.Material.popover
-            
-        case 10: // sidebar
-            return NSVisualEffectView.Material.sidebar
-            
-        case 11: // headerView
+
+        case 6: // tabbed
             return NSVisualEffectView.Material.headerView
             
-        case 12: // sheet
+        case 7: // titlebar
+            return NSVisualEffectView.Material.titlebar
+                    
+        case 8: // selection
+            return NSVisualEffectView.Material.selection
+            
+        case 9: // menu
+            return NSVisualEffectView.Material.menu
+            
+        case 10: // popover
+            return NSVisualEffectView.Material.popover
+            
+        case 11: // sidebar
+            return NSVisualEffectView.Material.sidebar
+            
+        case 12: // headerView
+            return NSVisualEffectView.Material.headerView
+            
+        case 13: // sheet
             return NSVisualEffectView.Material.sheet
             
-        case 13: // windowBackground
+        case 14: // windowBackground
             return NSVisualEffectView.Material.windowBackground
             
-        case 14: // hudWindow
+        case 15: // hudWindow
             return NSVisualEffectView.Material.hudWindow
             
-        case 15: // fullScreenUI
+        case 16: // fullScreenUI
             return NSVisualEffectView.Material.fullScreenUI
             
-        case 16: // toolTip
+        case 17: // toolTip
             return NSVisualEffectView.Material.toolTip
             
-        case 17: // contentBackground
+        case 18: // contentBackground
             return NSVisualEffectView.Material.contentBackground
             
-        case 18: // underWindowBackground
+        case 19: // underWindowBackground
             return NSVisualEffectView.Material.underWindowBackground
             
-        case 19: // underPageBackground
+        case 20: // underPageBackground
             return NSVisualEffectView.Material.underPageBackground
             
         default:
