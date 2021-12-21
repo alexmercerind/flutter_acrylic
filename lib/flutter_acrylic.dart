@@ -161,6 +161,10 @@ enum WindowEffect {
   /// Works only on Windows 11 or greater.
   mica,
 
+  /// Tabbed is a Mica like material that incorporates theme and desktop wallpaper, but having more transparency.
+  /// Works only on later Windows 11 versions (builds higher than 22523).
+  tabbed,
+
   /// The material for a window’s titlebar.
   /// Works only on macOS.
   titlebar,
