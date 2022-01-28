@@ -1,3 +1,7 @@
+## 1.0.0+1
+
+- Hotfix: Update Linux method call handler to match new channel & method names.
+
 ## 1.0.0
 
 - Fixed `WindowEffect.mica` not working on Windows 11 builds higher or equal to 22523 (@alexmercerind).
