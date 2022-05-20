@@ -18,9 +18,12 @@ class _MacOSTitlebarSafeAreaState extends State<_MacOSTitlebarSafeArea> {
   double titlebarHeight = 0.0;
 
   Future<void> calculateTitlebarHeight() async {
-    titlebarHeight = await Window.getTitlebarHeight();
-
-    setState(() {});
+    final newTitlebarHeight = await Window.getTitlebarHeight();
+    if (titlebarHeight != newTitlebarHeight) {
+      setState(() {
+        titlebarHeight = newTitlebarHeight;
+      });
+    }
   }
 
   @override
