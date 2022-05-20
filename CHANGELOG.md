@@ -1,3 +1,7 @@
+## 1.0.0+2
+
+- Hotfix: Fixes a problem with too many rebuilds in TitlebarSafeArea.
+
 ## 1.0.0+1
 
 - Hotfix: Update Linux method call handler to match new channel & method names.
