@@ -1,6 +1,7 @@
 ## 1.0.0+2
 
 - Hotfix: Fixes a problem with too many rebuilds in TitlebarSafeArea.
+- Using the latest version of [bitsdojo_window](https://github.com/bitsdojo/bitsdojo_window) to fix Flutter 3 compatibility issues.
 
 ## 1.0.0+1
 
