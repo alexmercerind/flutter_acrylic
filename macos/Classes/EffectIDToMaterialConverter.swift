@@ -33,7 +33,8 @@ public class EffectIDToMaterialConverter {
 
         case 6: // tabbed
             return NSVisualEffectView.Material.headerView
-            
+        
+        /* The following effects are macOS-only: */
         case 7: // titlebar
             return NSVisualEffectView.Material.titlebar
                     
