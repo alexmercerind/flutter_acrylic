@@ -10,7 +10,7 @@ import Foundation
 public class EffectIDToMaterialConverter {
     @available(macOS 10.14, *)
     public static func getMaterialFromEffectID(effectID: NSNumber) -> NSVisualEffectView.Material {
-        switch(effectID) {
+        switch (effectID) {
         /* Try to mimic the behavior of the following effects as
            closely as possible: */
         case 0: // disabled
