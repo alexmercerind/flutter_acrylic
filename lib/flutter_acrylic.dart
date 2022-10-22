@@ -131,6 +131,15 @@ const _kSetWindowBackgroundColorToClear = "SetWindowBackgroundColorToClear";
 /// (macOS only).
 const _kSetBlurViewState = "SetBlurViewState";
 
+/// (macOS only).
+const _kAddVisualEffectSubview = "AddVisualEffectSubview";
+
+/// (macOS only).
+const _kUpdateVisualEffectSubviewProperties = "UpdateVisualEffectSubviewProperties";
+
+/// (macOS only).
+const _kRemoveVisualEffectSubview = "RemoveVisualEffectSubview";
+
 final MethodChannel _kChannel = const MethodChannel(_kChannelName);
 final Completer<void> _kCompleter = new Completer<void>();
 
@@ -232,6 +241,76 @@ enum MacOSBlurViewState {
 
   /// The backdrop should automatically appear active when the window is active, and inactive when it is not.
   followsWindowActiveState
+}
+
+/// Visual effect subview properties (macOS only). All values may be set to null if they should not be
+/// overwritten.
+class VisualEffectSubviewProperties {
+  /// The width of the subview's frame.
+  final double? frameWidth;
+  
+  /// The height of the subview's frame.
+  final double? frameHeight;
+  
+  /// The x position of the subview's frame.
+  final double? frameX;
+  
+  /// The y position of the subview's frame, starting at the bottom of the window.
+  final double? frameY;
+  
+  /// The alpha value of the subview.
+  final double? alphaValue;
+  
+  /// The corner Radius of the subview.
+  final double? cornerRadius;
+  
+  /// A bitmask indicating which corners should follow the `cornerRadius` property.
+  final int? cornerMask;
+  
+  /// The effect/material of the subview.
+  final WindowEffect? effect;
+
+  VisualEffectSubviewProperties({this.frameWidth, this.frameHeight, this.frameX, this.frameY, this.alphaValue, this.cornerRadius, this.cornerMask, this.effect});
+  
+  /// Create a map in which the properties of this instance are contained.
+  /// Only non-null properties will be present in that map.
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+    
+    if (frameWidth != null) {
+      result["frameWidth"] = frameWidth;
+    }
+    
+    if (frameHeight != null) {
+      result["frameHeight"] = frameHeight;
+    }
+    
+    if (frameX != null) {
+      result["frameX"] = frameX;
+    }
+    
+    if (frameY != null) {
+      result["frameY"] = frameY;
+    }
+    
+    if (alphaValue != null) {
+      result["alphaValue"] = alphaValue;
+    }
+    
+    if (cornerRadius != null) {
+      result["cornerRadius"] = cornerRadius;
+    }
+    
+    if (cornerMask != null) {
+      result["cornerMask"] = cornerMask;
+    }
+    
+    if (effect != null) {
+      result["effect"] = effect!.index;
+    }
+    
+    return result;
+  }
 }
 
 /// **Window**
@@ -593,6 +672,32 @@ class Window {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kSetBlurViewState, <String, dynamic>{
       'state': state.toString().split('.').last,
+    });
+  }
+
+  /// Adds a visual effect subview to the application's window and returns its ID.
+  /// This method is only available on macOS.
+  static Future<int> addVisualEffectSubview(VisualEffectSubviewProperties properties) async {
+    await _kCompleter.future;
+    return await _kChannel.invokeMethod(_kAddVisualEffectSubview, properties.toMap());
+  }
+
+  /// Updates the properties of a visual effect subview.
+  /// This method is only available on macOS.
+  static Future<void> updateVisualEffectSubviewProperties(int visualEffectsSubviewId, VisualEffectSubviewProperties properties) async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kUpdateVisualEffectSubviewProperties, <String, dynamic>{
+      'visualEffectSubviewId' : visualEffectsSubviewId,
+      ...properties.toMap(),
+    });
+  }
+
+  /// Removes a visual effect subview from the application's window.
+  /// This method is only available on macOS.
+  static Future<void> removeVisualEffectSubview(int visualEffectsSubviewId) async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kRemoveVisualEffectSubview, <String, dynamic>{
+      'visualEffectSubviewId' : visualEffectsSubviewId,
     });
   }
 
