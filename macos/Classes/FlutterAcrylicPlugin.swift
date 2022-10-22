@@ -258,6 +258,43 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
             result(true)
             break
             
+        case "AddVisualEffectSubview":
+            let visualEffectSubview = VisualEffectSubview()
+            let visualEffectSubviewId = MainFlutterWindowManipulator.addVisualEffectSubview(visualEffectSubview)
+            
+            if #available(macOS 10.14, *) {
+                let properties = VisualEffectSubviewProperties.fromArgs(args)
+                properties.applyToVisualEffectSubview(visualEffectSubview)
+            } else {
+                FlutterAcrylicPlugin.printUnsupportedMacOSVersionWarning()
+            }
+            
+            result(visualEffectSubviewId)
+            break
+            
+        case "UpdateVisualEffectSubviewProperties":
+            let visualEffectSubviewId = args["visualEffectSubviewId"] as! UInt
+            let visualEffectSubview = MainFlutterWindowManipulator.getVisualEffectSubview(visualEffectSubviewId)
+            
+            if (visualEffectSubview != nil) {
+                if #available(macOS 10.14, *) {
+                    let properties = VisualEffectSubviewProperties.fromArgs(args)
+                    properties.applyToVisualEffectSubview(visualEffectSubview!)
+                } else {
+                    FlutterAcrylicPlugin.printUnsupportedMacOSVersionWarning()
+                }
+            }
+            
+            result(visualEffectSubview != nil)
+            break
+            
+        case "RemoveVisualEffectSubview":
+            let visualEffectSubviewId = args["visualEffectSubviewId"] as! UInt
+            MainFlutterWindowManipulator.removeVisualEffectSubview(visualEffectSubviewId)
+            
+            result(true)
+            break
+            
         default:
             result(FlutterMethodNotImplemented)
             break

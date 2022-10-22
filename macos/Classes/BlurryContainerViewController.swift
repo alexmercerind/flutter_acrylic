@@ -10,6 +10,7 @@ import FlutterMacOS
 
 public class BlurryContainerViewController: NSViewController {
     public let flutterViewController = FlutterViewController()
+    private var visualEffectSubviewRegistry = VisualEffectSubviewRegistry()
 
     public init() {
         super.init(nibName: nil, bundle: nil)
@@ -38,5 +39,20 @@ public class BlurryContainerViewController: NSViewController {
         flutterViewController.view.frame = self.view.bounds
         flutterViewController.view.autoresizingMask = [.width, .height]
         self.view.addSubview(flutterViewController.view)
+    }
+    
+    public func addVisualEffectSubview(_ visualEffectSubview: VisualEffectSubview) -> UInt {
+        self.view.addSubview(visualEffectSubview, positioned: .below, relativeTo: flutterViewController.view)
+        return visualEffectSubviewRegistry.registerSubview(visualEffectSubview)
+    }
+    
+    public func getVisualEffectSubview(_ subviewId: UInt) -> VisualEffectSubview? {
+        return visualEffectSubviewRegistry.getSubviewFromId(subviewId)
+    }
+    
+    public func removeVisualEffectSubview(_ subviewId: UInt) {
+        let visualEffectSubview = visualEffectSubviewRegistry.getSubviewFromId(subviewId)
+        visualEffectSubview?.removeFromSuperview()
+        visualEffectSubviewRegistry.deregisterSubview(subviewId)
     }
 }

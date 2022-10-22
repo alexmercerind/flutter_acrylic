@@ -371,4 +371,19 @@ public class MainFlutterWindowManipulator {
         let fullSizeContentViewNoContentAreaHeight = windowFrameHeight - contentLayoutRectHeight
         return fullSizeContentViewNoContentAreaHeight
     }
+    
+    public static func addVisualEffectSubview(_ visualEffectSubview: VisualEffectSubview) -> UInt {
+        let blurryContainerViewController = self.mainFlutterWindow?.contentViewController as! BlurryContainerViewController;
+        return blurryContainerViewController.addVisualEffectSubview(visualEffectSubview)
+    }
+    
+    public static func getVisualEffectSubview(_ subviewId: UInt) -> VisualEffectSubview? {
+        let blurryContainerViewController = self.mainFlutterWindow?.contentViewController as! BlurryContainerViewController;
+        return blurryContainerViewController.getVisualEffectSubview(subviewId)
+    }
+    
+    public static func removeVisualEffectSubview(_ subviewId: UInt) {
+        let blurryContainerViewController = self.mainFlutterWindow?.contentViewController as! BlurryContainerViewController;
+        blurryContainerViewController.removeVisualEffectSubview(subviewId)
+    }
 }
