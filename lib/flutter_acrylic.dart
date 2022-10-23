@@ -684,20 +684,20 @@ class Window {
 
   /// Updates the properties of a visual effect subview.
   /// This method is only available on macOS.
-  static Future<void> updateVisualEffectSubviewProperties(int visualEffectsSubviewId, VisualEffectSubviewProperties properties) async {
+  static Future<void> updateVisualEffectSubviewProperties(int visualEffectSubviewId, VisualEffectSubviewProperties properties) async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kUpdateVisualEffectSubviewProperties, <String, dynamic>{
-      'visualEffectSubviewId' : visualEffectsSubviewId,
+      'visualEffectSubviewId' : visualEffectSubviewId,
       ...properties.toMap(),
     });
   }
 
   /// Removes a visual effect subview from the application's window.
   /// This method is only available on macOS.
-  static Future<void> removeVisualEffectSubview(int visualEffectsSubviewId) async {
+  static Future<void> removeVisualEffectSubview(int visualEffectSubviewId) async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kRemoveVisualEffectSubview, <String, dynamic>{
-      'visualEffectSubviewId' : visualEffectsSubviewId,
+      'visualEffectSubviewId' : visualEffectSubviewId,
     });
   }
 
