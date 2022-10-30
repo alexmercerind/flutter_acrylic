@@ -272,6 +272,20 @@ class VisualEffectSubviewProperties {
 
   VisualEffectSubviewProperties({this.frameWidth, this.frameHeight, this.frameX, this.frameY, this.alphaValue, this.cornerRadius, this.cornerMask, this.effect});
   
+  static const topLeftCorner = 1 << 0;
+  static const topRightCorner = 1 << 1;
+  static const bottomRightCorner = 1 << 2;
+  static const bottomLeftCorner = 1 << 3;
+  
+  bool get isEmpty => frameHeight == null &&
+    frameHeight == null &&
+    frameX == null &&
+    frameY == null &&
+    alphaValue == null &&
+    cornerRadius == null &&
+    cornerMask == null &&
+    effect == null;
+  
   /// Create a map in which the properties of this instance are contained.
   /// Only non-null properties will be present in that map.
   Map<String, dynamic> toMap() {
