@@ -244,8 +244,9 @@ enum MacOSBlurViewState {
   followsWindowActiveState
 }
 
-/// Visual effect subview properties (macOS only). All values may be set to null if they should not be
-/// overwritten.
+/// Visual effect subview properties (macOS only).
+/// 
+/// All values may be set to null if they should not be overwritten.
 class VisualEffectSubviewProperties {
   /// The width of the subview's frame.
   final double? frameWidth;
@@ -291,7 +292,8 @@ class VisualEffectSubviewProperties {
     effect == null &&
     state == null;
   
-  /// Create a map in which the properties of this instance are contained.
+  /// Creates a map in which the properties of this instance are contained.
+  /// 
   /// Only non-null properties will be present in that map.
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
