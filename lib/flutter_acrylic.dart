@@ -2,6 +2,7 @@ library flutter_acrylic;
 
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
@@ -269,8 +270,11 @@ class VisualEffectSubviewProperties {
   
   /// The effect/material of the subview.
   final WindowEffect? effect;
+  
+  /// The state of the subview.
+  final MacOSBlurViewState? state;
 
-  VisualEffectSubviewProperties({this.frameWidth, this.frameHeight, this.frameX, this.frameY, this.alphaValue, this.cornerRadius, this.cornerMask, this.effect});
+  VisualEffectSubviewProperties({this.frameWidth, this.frameHeight, this.frameX, this.frameY, this.alphaValue, this.cornerRadius, this.cornerMask, this.effect, this.state});
   
   static const topLeftCorner = 1 << 0;
   static const topRightCorner = 1 << 1;
@@ -284,7 +288,8 @@ class VisualEffectSubviewProperties {
     alphaValue == null &&
     cornerRadius == null &&
     cornerMask == null &&
-    effect == null;
+    effect == null &&
+    state == null;
   
   /// Create a map in which the properties of this instance are contained.
   /// Only non-null properties will be present in that map.
@@ -323,6 +328,10 @@ class VisualEffectSubviewProperties {
       result["effect"] = effect!.index;
     }
     
+    if (state != null) {
+      result["state"] = state!.name;
+    }
+    
     return result;
   }
   
@@ -336,7 +345,8 @@ class VisualEffectSubviewProperties {
       alphaValue == other.alphaValue &&
       cornerRadius == other.cornerRadius &&
       cornerMask == other.cornerMask &&
-      effect == other.effect;
+      effect == other.effect &&
+      state == other.state;
   }
   
   @override
@@ -348,12 +358,13 @@ class VisualEffectSubviewProperties {
       alphaValue.hashCode ^
       cornerRadius.hashCode ^
       cornerMask.hashCode ^
-      effect.hashCode;
+      effect.hashCode ^
+      state.hashCode;
   }
   
   @override
   String toString() {
-    return '$frameWidth $frameHeight $frameX $frameY $alphaValue $cornerRadius $cornerMask $effect';
+    return '$frameWidth $frameHeight $frameX $frameY $alphaValue $cornerRadius $cornerMask $effect $state';
   }
 }
 

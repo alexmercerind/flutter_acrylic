@@ -16,14 +16,16 @@ class VisualEffectSubviewProperties {
     public let cornerRadius: CGFloat?
     public let maskedCorners: CACornerMask?
     public let material: NSVisualEffectView.Material?
+    public let state: NSVisualEffectView.State?
     
-    init(frameSize: NSSize?, frameOrigin: NSPoint?, alphaValue: CGFloat?, cornerRadius: CGFloat?, maskedCorners: CACornerMask?, material: NSVisualEffectView.Material?) {
+    init(frameSize: NSSize?, frameOrigin: NSPoint?, alphaValue: CGFloat?, cornerRadius: CGFloat?, maskedCorners: CACornerMask?, material: NSVisualEffectView.Material?, state: NSVisualEffectView.State?) {
         self.frameSize = frameSize
         self.frameOrigin = frameOrigin
         self.alphaValue = alphaValue
         self.cornerRadius = cornerRadius
         self.maskedCorners = maskedCorners
         self.material = material
+        self.state = state
     }
     
     /// Decodes the args and returns an instance of CACornerMask if the “cornerMask” argument is not nil. Returns nil otherwise.
@@ -60,6 +62,20 @@ class VisualEffectSubviewProperties {
         return EffectIDToMaterialConverter.getMaterialFromEffectID(effectID: effectID)
     }
     
+    private static func getStateFromArgs(_ args: [String: Any]) -> NSVisualEffectView.State? {
+        let stateArgument = args["state"]
+        
+        if (stateArgument == nil) {
+            return nil
+        }
+        
+        let stateString = stateArgument as! String
+        let state = stateString == "active"   ? NSVisualEffectView.State.active :
+                    stateString == "inactive" ? NSVisualEffectView.State.inactive :
+                                                NSVisualEffectView.State.followsWindowActiveState
+        return state;
+    }
+    
     /// Produces a VisualEffectSubviewProperties instance from an argument dictionary.
     public static func fromArgs(_ args: [String: Any]) -> VisualEffectSubviewProperties {
         let frameSize = args["frameWidth"] != nil && args["frameHeight"] != nil ? NSSize(
@@ -74,8 +90,9 @@ class VisualEffectSubviewProperties {
         let cornerRadius = args["cornerRadius"] as? CGFloat
         let maskedCorners = getCornerMaskFromArgs(args)
         let material = getMaterialFromArgs(args)
+        let state = getStateFromArgs(args)
         
-        return VisualEffectSubviewProperties(frameSize: frameSize, frameOrigin: frameOrigin, alphaValue: alphaValue, cornerRadius: cornerRadius, maskedCorners: maskedCorners, material: material)
+        return VisualEffectSubviewProperties(frameSize: frameSize, frameOrigin: frameOrigin, alphaValue: alphaValue, cornerRadius: cornerRadius, maskedCorners: maskedCorners, material: material, state: state)
     }
     
     /// Applies the stored properties to a provided VisualEffectSubview.
@@ -110,6 +127,10 @@ class VisualEffectSubviewProperties {
         
         if (material != nil) {
             visualEffectSubview.material = material!
+        }
+        
+        if (state != nil) {
+            visualEffectSubview.state = state!
         }
     }
 }
