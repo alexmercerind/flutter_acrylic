@@ -311,6 +311,36 @@ class VisualEffectSubviewProperties {
     
     return result;
   }
+  
+  @override
+  operator ==(Object other) {
+    return other is VisualEffectSubviewProperties &&
+      frameWidth == other.frameWidth &&
+      frameHeight == other.frameHeight &&
+      frameX == other.frameX &&
+      frameY == other.frameY &&
+      alphaValue == other.alphaValue &&
+      cornerRadius == other.cornerRadius &&
+      cornerMask == other.cornerMask &&
+      effect == other.effect;
+  }
+  
+  @override
+  int get hashCode {
+    return frameWidth.hashCode ^
+      frameHeight.hashCode ^
+      frameX.hashCode ^
+      frameY.hashCode ^
+      alphaValue.hashCode ^
+      cornerRadius.hashCode ^
+      cornerMask.hashCode ^
+      effect.hashCode;
+  }
+  
+  @override
+  String toString() {
+    return '$frameWidth $frameHeight $frameX $frameY $alphaValue $cornerRadius $cornerMask $effect';
+  }
 }
 
 /// **Window**
