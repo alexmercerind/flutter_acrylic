@@ -1,22 +1,31 @@
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 
 /// Storage for an [VisualEffectSubviewProperties] instance.
-/// 
+///
 /// Provides methods to identify changes in said instance that need to be transmitted to the
 /// Swift side.
 class VisualEffectSubviewContainerPropertyStorage {
-  VisualEffectSubviewProperties _currentProperties = VisualEffectSubviewProperties();
-  
+  VisualEffectSubviewProperties _currentProperties =
+      VisualEffectSubviewProperties();
+
   /// Returns which properties have changed.
-  _VisualEffectSubviewContainerPropertyChange _getPropertyChange(VisualEffectSubviewProperties newProperties) {
-    final hasFrameSizeChanged = newProperties.frameWidth != _currentProperties.frameWidth || newProperties.frameHeight != _currentProperties.frameHeight;
-    final hasFramePositionChanged = newProperties.frameX != _currentProperties.frameX || newProperties.frameY != _currentProperties.frameY;
-    final hasAlphaValueChanged = newProperties.alphaValue != _currentProperties.alphaValue;
-    final hasCornerRadiusChanged = newProperties.cornerRadius != _currentProperties.cornerRadius;
-    final hasCornerMaskChanged = newProperties.cornerMask != _currentProperties.cornerMask;
+  _VisualEffectSubviewContainerPropertyChange _getPropertyChange(
+      VisualEffectSubviewProperties newProperties) {
+    final hasFrameSizeChanged =
+        newProperties.frameWidth != _currentProperties.frameWidth ||
+            newProperties.frameHeight != _currentProperties.frameHeight;
+    final hasFramePositionChanged =
+        newProperties.frameX != _currentProperties.frameX ||
+            newProperties.frameY != _currentProperties.frameY;
+    final hasAlphaValueChanged =
+        newProperties.alphaValue != _currentProperties.alphaValue;
+    final hasCornerRadiusChanged =
+        newProperties.cornerRadius != _currentProperties.cornerRadius;
+    final hasCornerMaskChanged =
+        newProperties.cornerMask != _currentProperties.cornerMask;
     final hasEffectChanged = newProperties.effect != _currentProperties.effect;
     final hasStateChanged = newProperties.state != _currentProperties.state;
-    
+
     return _VisualEffectSubviewContainerPropertyChange(
       hasFrameSizeChanged: hasFrameSizeChanged,
       hasFramePositionChanged: hasFramePositionChanged,
@@ -27,33 +36,39 @@ class VisualEffectSubviewContainerPropertyStorage {
       hasStateChanged: hasStateChanged,
     );
   }
-  
+
   /// Returns a [VisualEffectSubviewProperties] instance in which only the fields whose values
   /// need to be transmitted to the Swift side are populated.
-  /// 
+  ///
   /// Note that the frame's size and position are represented as an [NSSize] or an [NSPoint]
   /// object respectively. For this reason, those two properties are treated as a single value.
-  VisualEffectSubviewProperties getDeltaProperties(VisualEffectSubviewProperties newProperties) {
+  VisualEffectSubviewProperties getDeltaProperties(
+      VisualEffectSubviewProperties newProperties) {
     final propertyChange = _getPropertyChange(newProperties);
-    
+
     double? frameWidth, frameHeight;
     if (propertyChange.hasFrameSizeChanged) {
       frameWidth = newProperties.frameWidth;
       frameHeight = newProperties.frameHeight;
     }
-    
+
     double? frameX, frameY;
     if (propertyChange.hasFramePositionChanged) {
       frameX = newProperties.frameX;
       frameY = newProperties.frameY;
     }
-    
-    final alphaValue = propertyChange.hasAlphaValueChanged ? newProperties.alphaValue : null;
-    final cornerRadius = propertyChange.hasCornerRadiusChanged ? newProperties.cornerRadius : null;
-    final cornerMask = propertyChange.hasCornerMaskChanged ? newProperties.cornerMask : null;
-    final effect = propertyChange.hasEffectChanged ? newProperties.effect : null;
+
+    final alphaValue =
+        propertyChange.hasAlphaValueChanged ? newProperties.alphaValue : null;
+    final cornerRadius = propertyChange.hasCornerRadiusChanged
+        ? newProperties.cornerRadius
+        : null;
+    final cornerMask =
+        propertyChange.hasCornerMaskChanged ? newProperties.cornerMask : null;
+    final effect =
+        propertyChange.hasEffectChanged ? newProperties.effect : null;
     final state = propertyChange.hasStateChanged ? newProperties.state : null;
-    
+
     return VisualEffectSubviewProperties(
       frameWidth: frameWidth,
       frameHeight: frameHeight,
@@ -66,9 +81,9 @@ class VisualEffectSubviewContainerPropertyStorage {
       state: state,
     );
   }
-  
+
   /// Updates the internal [VisualEffectSubviewProperties] instance.
-  /// 
+  ///
   /// The value of a
   /// property only gets overwritten if its value in the [newProperties] object is
   /// non-null.
@@ -79,7 +94,8 @@ class VisualEffectSubviewContainerPropertyStorage {
       frameX: newProperties.frameX ?? _currentProperties.frameX,
       frameY: newProperties.frameY ?? _currentProperties.frameY,
       alphaValue: newProperties.alphaValue ?? _currentProperties.alphaValue,
-      cornerRadius: newProperties.cornerRadius ?? _currentProperties.cornerRadius,
+      cornerRadius:
+          newProperties.cornerRadius ?? _currentProperties.cornerRadius,
       cornerMask: newProperties.cornerMask ?? _currentProperties.cornerMask,
       effect: newProperties.effect ?? _currentProperties.effect,
       state: newProperties.state ?? _currentProperties.state,
@@ -88,7 +104,7 @@ class VisualEffectSubviewContainerPropertyStorage {
 }
 
 /// A change in a [VisualEffectSubviewContainer]'s [VisualEffectSubviewProperties].
-/// 
+///
 /// Each field corresponds to a property whose value
 /// may have changed.
 class _VisualEffectSubviewContainerPropertyChange {
@@ -100,5 +116,12 @@ class _VisualEffectSubviewContainerPropertyChange {
   final bool hasEffectChanged;
   final bool hasStateChanged;
 
-  _VisualEffectSubviewContainerPropertyChange({required this.hasFrameSizeChanged, required this.hasFramePositionChanged, required this.hasAlphaValueChanged, required this.hasCornerRadiusChanged, required this.hasCornerMaskChanged, required this.hasEffectChanged, required this.hasStateChanged});
+  _VisualEffectSubviewContainerPropertyChange(
+      {required this.hasFrameSizeChanged,
+      required this.hasFramePositionChanged,
+      required this.hasAlphaValueChanged,
+      required this.hasCornerRadiusChanged,
+      required this.hasCornerMaskChanged,
+      required this.hasEffectChanged,
+      required this.hasStateChanged});
 }

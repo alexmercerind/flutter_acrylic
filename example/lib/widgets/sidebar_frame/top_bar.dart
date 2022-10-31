@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class TopBar extends StatelessWidget {
   final void Function() onSidebarToggleButtonPressed;
 
-  const TopBar({Key? key, required this.onSidebarToggleButtonPressed}) : super(key: key);
-  
+  const TopBar({Key? key, required this.onSidebarToggleButtonPressed})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,9 +23,7 @@ class TopBar extends StatelessWidget {
                     Icons.view_sidebar_outlined,
                   ),
                   const SizedBox(width: 6.0),
-                  Text(
-                    'Toggle sidebar'
-                  ),
+                  Text('Toggle sidebar'),
                 ],
               ),
             ),

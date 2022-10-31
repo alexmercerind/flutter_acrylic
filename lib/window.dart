@@ -135,7 +135,8 @@ const _kSetBlurViewState = "SetBlurViewState";
 const _kAddVisualEffectSubview = "AddVisualEffectSubview";
 
 /// (macOS only).
-const _kUpdateVisualEffectSubviewProperties = "UpdateVisualEffectSubviewProperties";
+const _kUpdateVisualEffectSubviewProperties =
+    "UpdateVisualEffectSubviewProperties";
 
 /// (macOS only).
 const _kRemoveVisualEffectSubview = "RemoveVisualEffectSubview";
@@ -228,7 +229,7 @@ class Window {
   }
 
   /// Gets the height of the titlebar.
-  /// 
+  ///
   /// This value is used to determine the [[TitlebarSafeArea]] widget.
   /// If the full-size content view is enabled, this value will be the height of the titlebar.
   /// If the full-size content view is disabled, this value will be 0.
@@ -244,7 +245,7 @@ class Window {
   }
 
   /// Sets the document to be edited.
-  /// 
+  ///
   /// This will change the appearance of the close button on the titlebar.
   /// This method is only available on macOS.
   static Future<void> setDocumentEdited() async {
@@ -253,7 +254,7 @@ class Window {
   }
 
   /// Sets the document to be unedited.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> setDocumentUnedited() async {
     await _kCompleter.future;
@@ -261,7 +262,7 @@ class Window {
   }
 
   /// Sets the represented file of the window.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> setRepresentedFilename(String filename) async {
     await _kCompleter.future;
@@ -271,7 +272,7 @@ class Window {
   }
 
   /// Sets the represented URL of the window.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> setRepresentedUrl(String url) async {
     await _kCompleter.future;
@@ -281,7 +282,7 @@ class Window {
   }
 
   /// Hides the titlebar of the window.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> hideTitle() async {
     await _kCompleter.future;
@@ -289,7 +290,7 @@ class Window {
   }
 
   /// Shows the titlebar of the window.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> showTitle() async {
     await _kCompleter.future;
@@ -297,7 +298,7 @@ class Window {
   }
 
   /// Makes the window's titlebar transparent.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> makeTitlebarTransparent() async {
     await _kCompleter.future;
@@ -305,7 +306,7 @@ class Window {
   }
 
   /// Makes the window's titlebar opaque.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> makeTitlebarOpaque() async {
     await _kCompleter.future;
@@ -313,7 +314,7 @@ class Window {
   }
 
   /// Enables the window's full-size content view.
-  /// 
+  ///
   /// This expands the area that Flutter can draw to to fill the entire window.
   /// It is recommended to enable the full-size content view when making
   /// the titlebar transparent.
@@ -324,7 +325,7 @@ class Window {
   }
 
   /// Disables the window's full-size content view.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> disableFullSizeContentView() async {
     await _kCompleter.future;
@@ -332,7 +333,7 @@ class Window {
   }
 
   /// Zooms the window.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> zoomWindow() async {
     await _kCompleter.future;
@@ -340,7 +341,7 @@ class Window {
   }
 
   /// Unzooms the window.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> unzoomWindow() async {
     await _kCompleter.future;
@@ -348,7 +349,7 @@ class Window {
   }
 
   /// Returns if the window is zoomed.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<bool> isWindowZoomed() async {
     if (!Platform.isMacOS) {
@@ -361,7 +362,7 @@ class Window {
   }
 
   /// Returns if the window is fullscreened.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<bool> isWindowFullscreened() async {
     if (!Platform.isMacOS) {
@@ -374,7 +375,7 @@ class Window {
   }
 
   /// Hides the window's zoom button.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> hideZoomButton() async {
     await _kCompleter.future;
@@ -382,7 +383,7 @@ class Window {
   }
 
   /// Shows the window's zoom button.
-  /// 
+  ///
   /// The zoom button is visible by default.
   /// This method is only available on macOS.
   static Future<void> showZoomButton() async {
@@ -391,7 +392,7 @@ class Window {
   }
 
   /// Hides the window's miniaturize button.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> hideMiniaturizeButton() async {
     await _kCompleter.future;
@@ -399,7 +400,7 @@ class Window {
   }
 
   /// Shows the window's miniaturize button.
-  /// 
+  ///
   /// The miniaturize button is visible by default.
   /// This method is only available on macOS.
   static Future<void> showMiniaturizeButton() async {
@@ -408,7 +409,7 @@ class Window {
   }
 
   /// Hides the window's close button.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> hideCloseButton() async {
     await _kCompleter.future;
@@ -416,7 +417,7 @@ class Window {
   }
 
   /// Shows the window's close button.
-  /// 
+  ///
   /// The close button is visible by default.
   /// This method is only available on macOS.
   static Future<void> showCloseButton() async {
@@ -425,7 +426,7 @@ class Window {
   }
 
   /// Enables the window's zoom button.
-  /// 
+  ///
   /// The zoom button is enabled by default.
   /// This method is only available on macOS.
   static Future<void> enableZoomButton() async {
@@ -434,7 +435,7 @@ class Window {
   }
 
   /// Disables the window's zoom button.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> disableZoomButton() async {
     await _kCompleter.future;
@@ -442,7 +443,7 @@ class Window {
   }
 
   /// Enables the window's miniaturize button.
-  /// 
+  ///
   /// The miniaturize button is enabled by default.
   /// This method is only available on macOS.
   static Future<void> enableMiniaturizeButton() async {
@@ -451,7 +452,7 @@ class Window {
   }
 
   /// Disables the window's miniaturize button.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> disableMiniaturizeButton() async {
     await _kCompleter.future;
@@ -459,7 +460,7 @@ class Window {
   }
 
   /// Enables the window's close button.
-  /// 
+  ///
   /// The close button is enabled by default.
   /// This method is only available on macOS.
   static Future<void> enableCloseButton() async {
@@ -468,7 +469,7 @@ class Window {
   }
 
   /// Disables the window's close button.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> disableCloseButton() async {
     await _kCompleter.future;
@@ -476,7 +477,7 @@ class Window {
   }
 
   /// Gets whether the window is currently being resized by the user.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<bool> isWindowInLiveResize() async {
     if (!Platform.isMacOS) {
@@ -489,7 +490,7 @@ class Window {
   }
 
   /// Sets the window's alpha value.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> setWindowAlphaValue(double value) async {
     await _kCompleter.future;
@@ -499,7 +500,7 @@ class Window {
   }
 
   /// Gets if the window is visible.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<bool> isWindowVisible() async {
     if (!Platform.isMacOS) {
@@ -511,7 +512,7 @@ class Window {
   }
 
   /// Sets the window background color to the default (opaque) window color.
-  /// 
+  ///
   /// This method mainly affects the window's titlebar.
   /// This method is only available on macOS.
   static Future<void> setWindowBackgroundColorToDefaultColor() async {
@@ -520,7 +521,7 @@ class Window {
   }
 
   /// Sets the window background color to clear.
-  /// 
+  ///
   /// This method mainly affects the window's titlebar.
   /// This method is only available on macOS.
   static Future<void> setWindowBackgroundColorToClear() async {
@@ -529,7 +530,7 @@ class Window {
   }
 
   /// Sets the blur view state.
-  /// 
+  ///
   /// This method is only available on macOS.
   static Future<void> setBlurViewState(MacOSBlurViewState state) async {
     await _kCompleter.future;
@@ -539,31 +540,37 @@ class Window {
   }
 
   /// Adds a visual effect subview to the application's window and returns its ID.
-  /// 
+  ///
   /// This method is only available on macOS.
-  static Future<int> addVisualEffectSubview(VisualEffectSubviewProperties properties) async {
+  static Future<int> addVisualEffectSubview(
+      VisualEffectSubviewProperties properties) async {
     await _kCompleter.future;
-    return await _kChannel.invokeMethod(_kAddVisualEffectSubview, properties.toMap());
+    return await _kChannel.invokeMethod(
+        _kAddVisualEffectSubview, properties.toMap());
   }
 
   /// Updates the properties of a visual effect subview.
-  /// 
+  ///
   /// This method is only available on macOS.
-  static Future<void> updateVisualEffectSubviewProperties(int visualEffectSubviewId, VisualEffectSubviewProperties properties) async {
+  static Future<void> updateVisualEffectSubviewProperties(
+      int visualEffectSubviewId,
+      VisualEffectSubviewProperties properties) async {
     await _kCompleter.future;
-    await _kChannel.invokeMethod(_kUpdateVisualEffectSubviewProperties, <String, dynamic>{
-      'visualEffectSubviewId' : visualEffectSubviewId,
+    await _kChannel
+        .invokeMethod(_kUpdateVisualEffectSubviewProperties, <String, dynamic>{
+      'visualEffectSubviewId': visualEffectSubviewId,
       ...properties.toMap(),
     });
   }
 
   /// Removes a visual effect subview from the application's window.
-  /// 
+  ///
   /// This method is only available on macOS.
-  static Future<void> removeVisualEffectSubview(int visualEffectSubviewId) async {
+  static Future<void> removeVisualEffectSubview(
+      int visualEffectSubviewId) async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kRemoveVisualEffectSubview, <String, dynamic>{
-      'visualEffectSubviewId' : visualEffectSubviewId,
+      'visualEffectSubviewId': visualEffectSubviewId,
     });
   }
 

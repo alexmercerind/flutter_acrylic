@@ -79,7 +79,8 @@ class MyAppBodyState extends State<MyAppBody> {
   Color color = Platform.isWindows ? Color(0xCC222222) : Colors.transparent;
   InterfaceBrightness brightness =
       Platform.isMacOS ? InterfaceBrightness.auto : InterfaceBrightness.dark;
-  MacOSBlurViewState macOSBlurViewState = MacOSBlurViewState.followsWindowActiveState;
+  MacOSBlurViewState macOSBlurViewState =
+      MacOSBlurViewState.followsWindowActiveState;
 
   @override
   void initState() {
@@ -111,13 +112,13 @@ class MyAppBodyState extends State<MyAppBody> {
     }
     this.setWindowEffect(this.effect);
   }
-  
+
   /// Lets the madness begin! (macOS only.)
-  /// 
+  ///
   /// This method plays a silly little effect that is achieved using visual effect subviews.
   /// It is designed to showcase a low-level approach to using visual effect subviews without
   /// relying on the [VisualEffectSubviewContainer] widget.
-  /// 
+  ///
   /// In most cases, using the container widget is preferable, though, due to its ease of use.
   void letTheMadnessBegin() async {
     final random = Random();
@@ -129,9 +130,10 @@ class MyAppBodyState extends State<MyAppBody> {
       final speed = random.nextDouble() * 2.0 + 2.0;
       var frameX = -size - random.nextDouble() * 32.0;
       final frameY = random.nextDouble() * windowHeight;
-      
+
       // Remember to store its ID.
-      final subviewId = await Window.addVisualEffectSubview(VisualEffectSubviewProperties(
+      final subviewId =
+          await Window.addVisualEffectSubview(VisualEffectSubviewProperties(
         effect: WindowEffect.hudWindow,
         alphaValue: random.nextDouble(),
         cornerRadius: random.nextDouble() * 48.0,
@@ -141,15 +143,17 @@ class MyAppBodyState extends State<MyAppBody> {
         frameWidth: size,
         frameHeight: size,
       ));
-      
+
       Timer.periodic(const Duration(milliseconds: 8), (timer) {
         // Now, let's periodically update its position:
         frameX += speed;
-        Window.updateVisualEffectSubviewProperties(subviewId, VisualEffectSubviewProperties(
-          frameX: frameX,
-          frameY: frameY + sin(frameX * 0.01) * 32.0,
-        ));
-        
+        Window.updateVisualEffectSubviewProperties(
+            subviewId,
+            VisualEffectSubviewProperties(
+              frameX: frameX,
+              frameY: frameY + sin(frameX * 0.01) * 32.0,
+            ));
+
         if (frameX > windowWidth) {
           // Remember to remove the visual effect subview when you no longer need it.
           Window.removeVisualEffectSubview(subviewId);
@@ -186,7 +190,8 @@ class MyAppBodyState extends State<MyAppBody> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 12.0),
                     child: Text(
                       'This is an example of a sidebar that has been implemented using the TransparentMacOSSidebar widget.',
                       style: TextStyle(
@@ -195,7 +200,8 @@ class MyAppBodyState extends State<MyAppBody> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 12.0),
                     child: Text(
                       'Check out the sidebar_frame.dart file to see how it has been implemented!',
                       style: TextStyle(
@@ -205,7 +211,8 @@ class MyAppBodyState extends State<MyAppBody> {
                   ),
                   const SizedBox(height: 16.0),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 12.0),
                     child: Text(
                       'Press the following button if you would like to see some visual effect subview madness:',
                       style: TextStyle(
@@ -214,7 +221,8 @@ class MyAppBodyState extends State<MyAppBody> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 12.0),
                     child: Center(
                       child: ElevatedButton(
                         onPressed: letTheMadnessBegin,
@@ -454,10 +462,11 @@ class MyAppBodyState extends State<MyAppBody> {
                 'Set Blur View State to Follows Window Active State',
                 () {
                   setState(() {
-                    macOSBlurViewState = MacOSBlurViewState.followsWindowActiveState;
+                    macOSBlurViewState =
+                        MacOSBlurViewState.followsWindowActiveState;
                   });
                   return Window.setBlurViewState(
-                    MacOSBlurViewState.followsWindowActiveState);
+                      MacOSBlurViewState.followsWindowActiveState);
                 }
               ],
             ]
