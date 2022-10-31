@@ -40,7 +40,7 @@ class VisualEffectSubviewContainerPropertyStorage {
   /// Returns a [VisualEffectSubviewProperties] instance in which only the fields whose values
   /// need to be transmitted to the Swift side are populated.
   ///
-  /// Note that the frame's size and position are represented as an [NSSize] or an [NSPoint]
+  /// Note that the frame's size and position are represented as an `NSSize` or an `NSPoint`
   /// object respectively. For this reason, those two properties are treated as a single value.
   VisualEffectSubviewProperties getDeltaProperties(
       VisualEffectSubviewProperties newProperties) {
