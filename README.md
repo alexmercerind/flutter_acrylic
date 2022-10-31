@@ -404,7 +404,10 @@ This ensures that your app is not covered by the window's title bar.
 
 Additionally, it may be worth considering to split your sidebar and your main view into multiple `NSVisualEffectView`'s inside your
 app. This is because macOS has a feature called “wallpaper tinting,” which is enabled by default. This feature allows windows to
-blend in with the desktop wallpaper.
+blend in with the desktop wallpaper:
+
+![macos_wallpaper_tint_70%](https://user-images.githubusercontent.com/86920182/199122746-ccbc61a6-b5cf-4f36-bd37-7b63b4426a28.jpg)
+
 
 To achieve the same effect in your Flutter application, you can set the window's window effect to `WindowEffect.solid` and wrap
 your sidebar widget with a `TransparentMacOSSidebar` widget like so:
