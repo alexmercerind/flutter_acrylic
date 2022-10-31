@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// This class holds properties that can be applied to an VisualEffectSubview.
+/// This class holds properties that can be applied to a VisualEffectSubview.
 @available(macOS 10.14, *)
 class VisualEffectSubviewProperties {
     public let frameSize: NSSize?
@@ -62,6 +62,7 @@ class VisualEffectSubviewProperties {
         return EffectIDToMaterialConverter.getMaterialFromEffectID(effectID: effectID)
     }
     
+    /// Decodes the “state” argument and returns the associated NSVisualEffectView.State if it is not nil. Returns nil otherwise.
     private static func getStateFromArgs(_ args: [String: Any]) -> NSVisualEffectView.State? {
         let stateArgument = args["state"]
         
