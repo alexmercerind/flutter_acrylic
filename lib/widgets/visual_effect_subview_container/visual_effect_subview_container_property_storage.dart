@@ -84,9 +84,8 @@ class VisualEffectSubviewContainerPropertyStorage {
 
   /// Updates the internal [VisualEffectSubviewProperties] instance.
   ///
-  /// The value of a
-  /// property only gets overwritten if its value in the [newProperties] object is
-  /// non-null.
+  /// The value of a property only gets overwritten if its value in the
+  /// [newProperties] object is non-null.
   void updateProperties(VisualEffectSubviewProperties newProperties) {
     _currentProperties = VisualEffectSubviewProperties(
       frameWidth: newProperties.frameWidth ?? _currentProperties.frameWidth,
@@ -105,8 +104,7 @@ class VisualEffectSubviewContainerPropertyStorage {
 
 /// A change in a [VisualEffectSubviewContainer]'s [VisualEffectSubviewProperties].
 ///
-/// Each field corresponds to a property whose value
-/// may have changed.
+/// Each field corresponds to a property whose value may have changed.
 class _VisualEffectSubviewContainerPropertyChange {
   final bool hasFrameSizeChanged;
   final bool hasFramePositionChanged;
