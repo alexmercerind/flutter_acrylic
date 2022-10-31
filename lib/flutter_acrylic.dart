@@ -298,39 +298,39 @@ class VisualEffectSubviewProperties {
     final result = <String, dynamic>{};
     
     if (frameWidth != null) {
-      result["frameWidth"] = frameWidth;
+      result['frameWidth'] = frameWidth;
     }
     
     if (frameHeight != null) {
-      result["frameHeight"] = frameHeight;
+      result['frameHeight'] = frameHeight;
     }
     
     if (frameX != null) {
-      result["frameX"] = frameX;
+      result['frameX'] = frameX;
     }
     
     if (frameY != null) {
-      result["frameY"] = frameY;
+      result['frameY'] = frameY;
     }
     
     if (alphaValue != null) {
-      result["alphaValue"] = alphaValue;
+      result['alphaValue'] = alphaValue;
     }
     
     if (cornerRadius != null) {
-      result["cornerRadius"] = cornerRadius;
+      result['cornerRadius'] = cornerRadius;
     }
     
     if (cornerMask != null) {
-      result["cornerMask"] = cornerMask;
+      result['cornerMask'] = cornerMask;
     }
     
     if (effect != null) {
-      result["effect"] = effect!.index;
+      result['effect'] = effect!.index;
     }
     
     if (state != null) {
-      result["state"] = state!.name;
+      result['state'] = state!.name;
     }
     
     return result;
