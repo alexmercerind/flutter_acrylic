@@ -1,6 +1,6 @@
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 
-/// Storage for an [VisualEffectSubviewProperties] instance.
+/// Storage for a [VisualEffectSubviewProperties] instance.
 ///
 /// Provides methods to identify changes in said instance that need to be transmitted to the
 /// Swift side.
