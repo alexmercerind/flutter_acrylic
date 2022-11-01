@@ -1,8 +1,12 @@
+import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:flutter_acrylic/widgets/visual_effect_subview_container/visual_effect_subview_container.dart';
+import 'package:flutter_acrylic_example/widgets/sidebar_frame/sidebar_frame.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,6 +79,8 @@ class MyAppBodyState extends State<MyAppBody> {
   Color color = Platform.isWindows ? Color(0xCC222222) : Colors.transparent;
   InterfaceBrightness brightness =
       Platform.isMacOS ? InterfaceBrightness.auto : InterfaceBrightness.dark;
+  MacOSBlurViewState macOSBlurViewState =
+      MacOSBlurViewState.followsWindowActiveState;
 
   @override
   void initState() {
@@ -107,60 +113,177 @@ class MyAppBodyState extends State<MyAppBody> {
     this.setWindowEffect(this.effect);
   }
 
+  /// Lets the madness begin! (macOS only.)
+  ///
+  /// This method plays a silly little effect that is achieved using visual effect subviews.
+  /// It is designed to showcase a low-level approach to using visual effect subviews without
+  /// relying on the [VisualEffectSubviewContainer] widget.
+  ///
+  /// In most cases, using the container widget is preferable, though, due to its ease of use.
+  void letTheMadnessBegin() async {
+    final random = Random();
+    final windowWidth = MediaQuery.of(context).size.width;
+    final windowHeight = MediaQuery.of(context).size.height;
+    for (var i = 0; i < 10; i += 1) {
+      // Create some random visual effect view.
+      final size = random.nextDouble() * 64.0 + 32.0;
+      final speed = random.nextDouble() * 2.0 + 2.0;
+      var frameX = -size - random.nextDouble() * 32.0;
+      final frameY = random.nextDouble() * windowHeight;
+
+      // Remember to store its ID.
+      final subviewId =
+          await Window.addVisualEffectSubview(VisualEffectSubviewProperties(
+        effect: WindowEffect.hudWindow,
+        alphaValue: random.nextDouble(),
+        cornerRadius: random.nextDouble() * 48.0,
+        cornerMask: random.nextInt(16),
+        frameX: frameX,
+        frameY: frameY,
+        frameWidth: size,
+        frameHeight: size,
+      ));
+
+      Timer.periodic(const Duration(milliseconds: 8), (timer) {
+        // Now, let's periodically update its position:
+        frameX += speed;
+        Window.updateVisualEffectSubviewProperties(
+            subviewId,
+            VisualEffectSubviewProperties(
+              frameX: frameX,
+              frameY: frameY + sin(frameX * 0.01) * 32.0,
+            ));
+
+        if (frameX > windowWidth) {
+          // Remember to remove the visual effect subview when you no longer need it.
+          Window.removeVisualEffectSubview(subviewId);
+          timer.cancel();
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // The [TitlebarSafeArea] widget is required when running on macOS and enabling
     // the full-size content view using [Window.setFullSizeContentView]. It ensures
     // that its child is not covered by the macOS title bar.
     return TitlebarSafeArea(
-      child: Stack(
-        children: [
-          Scaffold(
+      child: SidebarFrame(
+        macOSBlurViewState: macOSBlurViewState,
+        sidebar: SizedBox.expand(
+          child: Scaffold(
             backgroundColor: Colors.transparent,
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                WindowTitleBar(
-                  brightness: brightness,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 20.0,
-                    bottom: 20.0,
-                    top: 12.0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Flutter Acrylic',
-                        style: TextStyle(
-                            fontSize: 32.0,
-                            color: brightness.getForegroundColor(context)),
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Text(
+                      'Sidebar',
+                      style: TextStyle(
+                        color: brightness.getForegroundColor(context),
+                        fontWeight: FontWeight.bold,
                       ),
-                      SizedBox(height: 4.0),
-                      Text('github.com/alexmercerind/flutter_acrylic',
-                          style: TextStyle(
-                              color: brightness.getForegroundColor(context))),
-                    ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: generateEffectMenu(context),
-                ),
-                Divider(
-                  height: 1.0,
-                  color: brightness == InterfaceBrightness.dark
-                      ? Colors.white12
-                      : Colors.black12,
-                ),
-                generateActionButtonBar(context),
-                generateMacOSActionButtonBar(context),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 12.0),
+                    child: Text(
+                      'This is an example of a sidebar that has been implemented using the TransparentMacOSSidebar widget.',
+                      style: TextStyle(
+                        color: brightness.getForegroundColor(context),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 12.0),
+                    child: Text(
+                      'Check out the sidebar_frame.dart file to see how it has been implemented!',
+                      style: TextStyle(
+                        color: brightness.getForegroundColor(context),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 12.0),
+                    child: Text(
+                      'Press the following button if you would like to see some visual effect subview madness:',
+                      style: TextStyle(
+                        color: brightness.getForegroundColor(context),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 12.0),
+                    child: Center(
+                      child: ElevatedButton(
+                        onPressed: letTheMadnessBegin,
+                        child: Text('Let the madness begin!'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ],
+        ),
+        child: Stack(
+          children: [
+            Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  WindowTitleBar(
+                    brightness: brightness,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 20.0,
+                      bottom: 20.0,
+                      top: 12.0,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Flutter Acrylic',
+                          style: TextStyle(
+                              fontSize: 32.0,
+                              color: brightness.getForegroundColor(context)),
+                        ),
+                        SizedBox(height: 4.0),
+                        Text('github.com/alexmercerind/flutter_acrylic',
+                            style: TextStyle(
+                                color: brightness.getForegroundColor(context))),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: generateEffectMenu(context),
+                  ),
+                  Divider(
+                    height: 1.0,
+                    color: brightness == InterfaceBrightness.dark
+                        ? Colors.white12
+                        : Colors.black12,
+                  ),
+                  generateActionButtonBar(context),
+                  generateMacOSActionButtonBar(context),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -168,6 +291,7 @@ class MyAppBodyState extends State<MyAppBody> {
   ButtonBar generateActionButtonBar(BuildContext context) {
     return ButtonBar(
       alignment: MainAxisAlignment.start,
+      overflowButtonSpacing: 4.0,
       children: [
         ElevatedButton(
           onPressed: () => setState(() {
@@ -234,7 +358,9 @@ class MyAppBodyState extends State<MyAppBody> {
   }
 
   Widget generateMacOSActionButtonBar(BuildContext context) {
-    if (!Platform.isMacOS) return const SizedBox();
+    if (!Platform.isMacOS) {
+      return const SizedBox();
+    }
 
     return Column(children: [
       Padding(
@@ -316,16 +442,32 @@ class MyAppBodyState extends State<MyAppBody> {
               ],
               [
                 'Set Blur View State to Active',
-                () => Window.setBlurViewState(MacOSBlurViewState.active)
+                () {
+                  setState(() {
+                    macOSBlurViewState = MacOSBlurViewState.active;
+                  });
+                  return Window.setBlurViewState(MacOSBlurViewState.active);
+                }
               ],
               [
                 'Set Blur View State to Inactive',
-                () => Window.setBlurViewState(MacOSBlurViewState.inactive)
+                () {
+                  setState(() {
+                    macOSBlurViewState = MacOSBlurViewState.inactive;
+                  });
+                  return Window.setBlurViewState(MacOSBlurViewState.inactive);
+                }
               ],
               [
                 'Set Blur View State to Follows Window Active State',
-                () => Window.setBlurViewState(
-                    MacOSBlurViewState.followsWindowActiveState)
+                () {
+                  setState(() {
+                    macOSBlurViewState =
+                        MacOSBlurViewState.followsWindowActiveState;
+                  });
+                  return Window.setBlurViewState(
+                      MacOSBlurViewState.followsWindowActiveState);
+                }
               ],
             ]
                 .map((e) => MaterialButton(

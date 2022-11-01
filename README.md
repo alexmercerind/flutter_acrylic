@@ -282,6 +282,30 @@ Window.setBlurViewState(MacOSBlurViewState.inactive);
 Window.setBlurViewState(MacOSBlurViewState.followsWindowActiveState);
 ```
 
+Add a visual effect subview to the application's window.
+
+```dart
+final visualEffectSubviewId = Window.addVisualEffectSubview();
+```
+
+Update the properties of a visual effect subview.
+
+```dart
+Window.updateVisualEffectSubviewProperties(visualEffectSubviewId, VisualEffectSubviewProperties());
+```
+
+Removes a visual effect subview from the application's window.
+
+```dart
+Window.removeVisualEffectSubview(visualEffectSubviewId);
+```
+
+Override the brightness setting of the window.
+
+```dart
+Window.overrideMacOSBrightness(dark: true);
+```
+
 More features coming soon.
 
 ## Notes
@@ -377,6 +401,27 @@ TitlebarSafeArea(
 ```
 
 This ensures that your app is not covered by the window's title bar.
+
+Additionally, it may be worth considering to split your sidebar and your main view into multiple `NSVisualEffectView`'s inside your
+app. This is because macOS has a feature called “wallpaper tinting,” which is enabled by default. This feature allows windows to
+blend in with the desktop wallpaper:
+
+![macos_wallpaper_tint_70%](https://user-images.githubusercontent.com/86920182/199122746-ccbc61a6-b5cf-4f36-bd37-7b63b4426a28.jpg)
+
+
+To achieve the same effect in your Flutter application, you can set the window's window effect to `WindowEffect.solid` and wrap
+your sidebar widget with a `TransparentMacOSSidebar` widget like so:
+
+```dart
+TransparentMacOSSidebar(
+  child: YourSidebarWidget(),
+)
+```
+
+**Note:** The widget will automatically resize the `NSVisualEffectView` when a resize is detected in the widget's `build` method.
+If you are animating your sidebar's size using a `TweenAnimationBuilder`, please make sure that the `TransparentMacOSSidebar` widget
+is built *within* the `TweenAnimationBuilder`'s `build` method, in order to guarantee that a rebuild is triggered when the size
+changes. For reference, there is a working example in the `sidebar_frame.dart` file of the `example` project.
 
 ### Linux
 
