@@ -295,6 +295,34 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
             result(true)
             break
             
+        case "AddToolbar":
+            MainFlutterWindowManipulator.addToolbar()
+            
+            result(true)
+            break
+            
+        case "RemoveToolbar":
+            MainFlutterWindowManipulator.removeToolbar()
+            
+            result(true)
+            break
+            
+        case "SetToolbarStyle":
+            let toolbarStyleName = args["toolbarStyle"] as! String
+            
+            if #available(macOS 11.0, *) {
+                let toolbarStyle = ToolbarStyleNameToEnumConverter.getToolbarStyleFromName(name: toolbarStyleName)
+                
+                if toolbarStyle != nil {
+                    MainFlutterWindowManipulator.setToolbarStyle(toolbarStyle: toolbarStyle!)
+                }
+            } else {
+                FlutterAcrylicPlugin.printUnsupportedMacOSVersionWarning()
+            }
+            
+            result(true)
+            break
+            
         default:
             result(FlutterMethodNotImplemented)
             break
