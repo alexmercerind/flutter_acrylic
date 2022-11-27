@@ -294,7 +294,7 @@ Update the properties of a visual effect subview.
 Window.updateVisualEffectSubviewProperties(visualEffectSubviewId, VisualEffectSubviewProperties());
 ```
 
-Removes a visual effect subview from the application's window.
+Remove a visual effect subview from the application's window.
 
 ```dart
 Window.removeVisualEffectSubview(visualEffectSubviewId);
@@ -304,6 +304,18 @@ Override the brightness setting of the window.
 
 ```dart
 Window.overrideMacOSBrightness(dark: true);
+```
+
+Add a toolbar and set its style.
+
+```dart
+Window.addToolbar();
+
+Window.setToolbarStyle(MacOSToolbarStyle.automatic);
+Window.setToolbarStyle(MacOSToolbarStyle.expanded);
+Window.setToolbarStyle(MacOSToolbarStyle.preference);
+Window.setToolbarStyle(MacOSToolbarStyle.unified);
+Window.setToolbarStyle(MacOSToolbarStyle.unifiedCompact);
 ```
 
 More features coming soon.
