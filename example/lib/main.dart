@@ -469,6 +469,39 @@ class MyAppBodyState extends State<MyAppBody> {
                       MacOSBlurViewState.followsWindowActiveState);
                 }
               ],
+              [
+                'Add Toolbar',
+                () => Window.addToolbar(),
+              ],
+              [
+                'Remove Toolbar',
+                () => Window.removeToolbar(),
+              ],
+              [
+                'Set Toolbar Style to Automatic',
+                () => Window.setToolbarStyle(
+                    toolbarStyle: MacOSToolbarStyle.automatic),
+              ],
+              [
+                'Set Toolbar Style to Expanded',
+                () => Window.setToolbarStyle(
+                    toolbarStyle: MacOSToolbarStyle.expanded),
+              ],
+              [
+                'Set Toolbar Style to Preference',
+                () => Window.setToolbarStyle(
+                    toolbarStyle: MacOSToolbarStyle.preference),
+              ],
+              [
+                'Set Toolbar Style to Unified',
+                () => Window.setToolbarStyle(
+                    toolbarStyle: MacOSToolbarStyle.unified),
+              ],
+              [
+                'Set Toolbar Style to Unified Compact',
+                () => Window.setToolbarStyle(
+                    toolbarStyle: MacOSToolbarStyle.unifiedCompact),
+              ],
             ]
                 .map((e) => MaterialButton(
                       child: Text(

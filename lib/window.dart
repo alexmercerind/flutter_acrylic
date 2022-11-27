@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_acrylic/macos/macos_blur_view_state.dart';
+import 'package:flutter_acrylic/macos/macos_toolbar_style.dart';
 import 'package:flutter_acrylic/macos/visual_effect_view_properties.dart';
 import 'package:flutter_acrylic/window_effect.dart';
 
@@ -140,6 +141,15 @@ const _kUpdateVisualEffectSubviewProperties =
 
 /// (macOS only).
 const _kRemoveVisualEffectSubview = "RemoveVisualEffectSubview";
+
+/// (macOS only).
+const _kAddToolbar = "AddToolbar";
+
+/// (macOS only).
+const _kRemoveToolbar = "RemoveToolbar";
+
+/// (macOS only).
+const _kSetToolbarStyle = "SetToolbarStyle";
 
 final MethodChannel _kChannel = const MethodChannel(_kChannelName);
 final Completer<void> _kCompleter = new Completer<void>();
@@ -585,5 +595,35 @@ class Window {
         'dark': dark,
       },
     );
+  }
+
+  /// Adds a toolbar to the window (macOS only).
+  static Future<void> addToolbar() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kAddToolbar, {});
+  }
+
+  /// Removes the window's toolbar (macOS only).
+  static Future<void> removeToolbar() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kRemoveToolbar, {});
+  }
+
+  /// Sets the window's toolbar style (macOS only).
+  ///
+  /// For this method to have an effect, the window needs to have had a toolbar
+  /// added with the `addToolbar` method beforehand.
+  ///
+  /// Usage example:
+  /// ```dart
+  /// Window.addToolbar();
+  /// Window.setToolbarStyle(MacOSToolbarStyle.unified);
+  /// ```
+  static Future<void> setToolbarStyle(
+      {required MacOSToolbarStyle toolbarStyle}) async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kSetToolbarStyle, {
+      'toolbarStyle': toolbarStyle.name,
+    });
   }
 }

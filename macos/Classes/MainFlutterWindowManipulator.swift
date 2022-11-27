@@ -386,4 +386,19 @@ public class MainFlutterWindowManipulator {
         let blurryContainerViewController = self.mainFlutterWindow?.contentViewController as! BlurryContainerViewController;
         blurryContainerViewController.removeVisualEffectSubview(subviewId)
     }
+    
+    public static func addToolbar() {
+        let newToolbar = NSToolbar()
+        
+        self.mainFlutterWindow?.toolbar = newToolbar
+    }
+    
+    public static func removeToolbar() {
+        self.mainFlutterWindow?.toolbar = nil
+    }
+    
+    @available(macOS 11.0, *)
+    public static func setToolbarStyle(toolbarStyle: NSWindow.ToolbarStyle) {
+        self.mainFlutterWindow?.toolbarStyle = toolbarStyle
+    }
 }
