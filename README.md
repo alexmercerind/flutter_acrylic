@@ -393,7 +393,7 @@ class MainFlutterWindow: NSWindow {
 }
 ```
 
-Now press ⇧ + ⌘ + O once more and search for `Runner.xcodeproj`. Go to `info` > `Deployment Target` and set the `macOS Deployment Target` to `10.11` or above.
+Now press ⇧ + ⌘ + O once more and search for `Runner.xcodeproj`. Go to `info` > `Deployment Target` and set the `macOS Deployment Target` to `10.13` or above.
 
 Depending on your use case, you may want to extend the area of the window that Flutter can draw to to the entire window, such that you are able to draw onto the window's title bar as well (for example when you're only trying to make the sidebar transparent while the rest of the window is meant to stay opaque).
 
