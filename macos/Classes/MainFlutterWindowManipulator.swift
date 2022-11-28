@@ -388,9 +388,11 @@ public class MainFlutterWindowManipulator {
     }
     
     public static func addToolbar() {
-        let newToolbar = NSToolbar()
-        
-        self.mainFlutterWindow?.toolbar = newToolbar
+        if #available(macOS 10.13, *) {
+            let newToolbar = NSToolbar()
+
+            self.mainFlutterWindow?.toolbar = newToolbar
+        }
     }
     
     public static func removeToolbar() {
