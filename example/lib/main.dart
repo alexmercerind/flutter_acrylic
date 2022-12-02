@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter_acrylic/widgets/visual_effect_subview_container/visual_effect_subview_container.dart';
+import 'package:flutter_acrylic_example/widgets/macos_action_menu/macos_action_menu.dart';
 import 'package:flutter_acrylic_example/widgets/sidebar_frame/sidebar_frame.dart';
 
 Future<void> main() async {
@@ -362,160 +363,240 @@ class MyAppBodyState extends State<MyAppBody> {
       return const SizedBox();
     }
 
-    return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(bottom: 4.0, top: 12.0),
-        child: Text('macOS actions:',
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0, top: 12.0, left: 12.0),
+      child: Row(
+        children: [
+          Text(
+            'macOS actions:',
             style: TextStyle(
               fontSize: 16.0,
               color: brightness.getForegroundColor(context),
               fontWeight: FontWeight.bold,
-            )),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              ['Set Document Edited', () => Window.setDocumentEdited()],
-              ['Set Document Unedited', () => Window.setDocumentUnedited()],
-              [
-                'Set Represented Filename',
-                () => Window.setRepresentedFilename('filename')
-              ],
-              ['Set Represented Url', () => Window.setRepresentedUrl('url')],
-              ['Hide Title', () => Window.hideTitle()],
-              ['Show Title', () => Window.showTitle()],
-              [
-                'Make Titlebar Transparent',
-                () => Window.makeTitlebarTransparent()
-              ],
-              ['Make Titlebar Opaque', () => Window.makeTitlebarOpaque()],
-              [
-                'Enable Full Size Content View',
-                () => Window.enableFullSizeContentView()
-              ],
-              [
-                'Disable Full Size Content View',
-                () => Window.disableFullSizeContentView()
-              ],
-              ['Zoom Window', () => Window.zoomWindow()],
-              ['Unzoom Window', () => Window.unzoomWindow()],
-              ['Hide Zoom Button', () => Window.hideZoomButton()],
-              ['Show Zoom Button', () => Window.showZoomButton()],
-              ['Hide Miniaturize Button', () => Window.hideMiniaturizeButton()],
-              ['Show Miniaturize Button', () => Window.showMiniaturizeButton()],
-              ['Hide Close Button', () => Window.hideCloseButton()],
-              ['Show Close Button', () => Window.showCloseButton()],
-              ['Enable Zoom Button', () => Window.enableZoomButton()],
-              ['Disable Zoom Button', () => Window.disableZoomButton()],
-              [
-                'Enable Miniaturize Button',
-                () => Window.enableMiniaturizeButton()
-              ],
-              [
-                'Disable Miniaturize Button',
-                () => Window.disableMiniaturizeButton()
-              ],
-              ['Enable Close Button', () => Window.enableCloseButton()],
-              ['Disable Close Button', () => Window.disableCloseButton()],
-              [
-                'Set Window Alpha Value to 0.5',
-                () => Window.setWindowAlphaValue(0.5)
-              ],
-              [
-                'Set Window Alpha Value to 0.75',
-                () => Window.setWindowAlphaValue(0.75)
-              ],
-              [
-                'Set Window Alpha Value to 1.0',
-                () => Window.setWindowAlphaValue(1.0)
-              ],
-              [
-                'Set Window Background Color to Default Color',
-                () => Window.setWindowBackgroundColorToDefaultColor()
-              ],
-              [
-                'Set Window Background Color to Clear',
-                () => Window.setWindowBackgroundColorToClear()
-              ],
-              [
-                'Set Blur View State to Active',
-                () {
-                  setState(() {
-                    macOSBlurViewState = MacOSBlurViewState.active;
-                  });
-                  return Window.setBlurViewState(MacOSBlurViewState.active);
-                }
-              ],
-              [
-                'Set Blur View State to Inactive',
-                () {
-                  setState(() {
-                    macOSBlurViewState = MacOSBlurViewState.inactive;
-                  });
-                  return Window.setBlurViewState(MacOSBlurViewState.inactive);
-                }
-              ],
-              [
-                'Set Blur View State to Follows Window Active State',
-                () {
-                  setState(() {
-                    macOSBlurViewState =
-                        MacOSBlurViewState.followsWindowActiveState;
-                  });
-                  return Window.setBlurViewState(
-                      MacOSBlurViewState.followsWindowActiveState);
-                }
-              ],
-              [
-                'Add Toolbar',
-                () => Window.addToolbar(),
-              ],
-              [
-                'Remove Toolbar',
-                () => Window.removeToolbar(),
-              ],
-              [
-                'Set Toolbar Style to Automatic',
-                () => Window.setToolbarStyle(
-                    toolbarStyle: MacOSToolbarStyle.automatic),
-              ],
-              [
-                'Set Toolbar Style to Expanded',
-                () => Window.setToolbarStyle(
-                    toolbarStyle: MacOSToolbarStyle.expanded),
-              ],
-              [
-                'Set Toolbar Style to Preference',
-                () => Window.setToolbarStyle(
-                    toolbarStyle: MacOSToolbarStyle.preference),
-              ],
-              [
-                'Set Toolbar Style to Unified',
-                () => Window.setToolbarStyle(
-                    toolbarStyle: MacOSToolbarStyle.unified),
-              ],
-              [
-                'Set Toolbar Style to Unified Compact',
-                () => Window.setToolbarStyle(
-                    toolbarStyle: MacOSToolbarStyle.unifiedCompact),
-              ],
-            ]
-                .map((e) => MaterialButton(
-                      child: Text(
-                        e[0] as String,
-                        style: TextStyle(
-                            color: brightness.getForegroundColor(context)),
-                      ),
-                      onPressed: e[1] as void Function(),
-                    ))
-                .toList(),
+            ),
           ),
-        ),
+          const SizedBox(width: 16.0),
+          OutlinedButton(
+            child: Text('show all actions'),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return Theme(
+                      data: brightness.getIsDark(context)
+                          ? ThemeData.dark()
+                          : ThemeData.light(),
+                      child: LayoutBuilder(builder: (_, constraints) {
+                        return Center(
+                          child: SizedBox(
+                            width: min(512.0, constraints.maxWidth - 32.0),
+                            height: constraints.maxHeight - 32.0,
+                            child: MacOSActionMenu(
+                              items: [
+                                MacOSActionMenuItem(
+                                  name: 'Set Document Edited',
+                                  function: () => Window.setDocumentEdited(),
+                                  description:
+                                      'This will change the appearance of the close button on the titlebar.',
+                                ),
+                                MacOSActionMenuItem(
+                                    name: 'Set Document Unedited',
+                                    function: () =>
+                                        Window.setDocumentUnedited()),
+                                MacOSActionMenuItem(
+                                    name: 'Set Represented Filename',
+                                    function: () =>
+                                        Window.setRepresentedFilename(
+                                            'filename')),
+                                MacOSActionMenuItem(
+                                    name: 'Set Represented URL',
+                                    function: () =>
+                                        Window.setRepresentedUrl('url')),
+                                MacOSActionMenuItem(
+                                    name: 'Hide Title',
+                                    function: () => Window.hideTitle()),
+                                MacOSActionMenuItem(
+                                    name: 'Show Title',
+                                    function: () => Window.showTitle()),
+                                MacOSActionMenuItem(
+                                    name: 'Make Titlebar Transparent',
+                                    function: () =>
+                                        Window.makeTitlebarTransparent()),
+                                MacOSActionMenuItem(
+                                    name: 'Make Titlebar Opaque',
+                                    function: () =>
+                                        Window.makeTitlebarOpaque()),
+                                MacOSActionMenuItem(
+                                    name: 'Enable Full Size Content View',
+                                    function: () =>
+                                        Window.enableFullSizeContentView(),
+                                    description:
+                                        'This expands the area that Flutter can draw to to fill the entire window. It is recommended to enable the full-size content view when making the titlebar transparent.'),
+                                MacOSActionMenuItem(
+                                    name: 'Disable Full Size Content View',
+                                    function: () =>
+                                        Window.disableFullSizeContentView()),
+                                MacOSActionMenuItem(
+                                    name: 'Zoom Window',
+                                    function: () => Window.zoomWindow()),
+                                MacOSActionMenuItem(
+                                    name: 'Unzoom Window',
+                                    function: () => Window.unzoomWindow()),
+                                MacOSActionMenuItem(
+                                    name: 'Hide Zoom Button',
+                                    function: () => Window.hideZoomButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Show Zoom Button',
+                                    function: () => Window.showZoomButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Hide Miniaturize Button',
+                                    function: () =>
+                                        Window.hideMiniaturizeButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Show Miniaturize Button',
+                                    function: () =>
+                                        Window.showMiniaturizeButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Hide Close Button',
+                                    function: () => Window.hideCloseButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Show Close Button',
+                                    function: () => Window.showCloseButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Enable Zoom Button',
+                                    function: () => Window.enableZoomButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Disable Zoom Button',
+                                    function: () => Window.disableZoomButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Enable Miniaturize Button',
+                                    function: () =>
+                                        Window.enableMiniaturizeButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Disable Miniaturize Button',
+                                    function: () =>
+                                        Window.disableMiniaturizeButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Enable Close Button',
+                                    function: () => Window.enableCloseButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Disable Close Button',
+                                    function: () =>
+                                        Window.disableCloseButton()),
+                                MacOSActionMenuItem(
+                                    name: 'Set Window Alpha Value to 0.5',
+                                    function: () =>
+                                        Window.setWindowAlphaValue(0.5)),
+                                MacOSActionMenuItem(
+                                    name: 'Set Window Alpha Value to 0.75',
+                                    function: () =>
+                                        Window.setWindowAlphaValue(0.75)),
+                                MacOSActionMenuItem(
+                                    name: 'Set Window Alpha Value to 1.0',
+                                    function: () =>
+                                        Window.setWindowAlphaValue(1.0)),
+                                MacOSActionMenuItem(
+                                    name:
+                                        'Set Window Background Color to Default Color',
+                                    function: () => Window
+                                        .setWindowBackgroundColorToDefaultColor(),
+                                    description:
+                                        'Sets the window background color to the default (opaque) window color.'),
+                                MacOSActionMenuItem(
+                                    name:
+                                        'Set Window Background Color to Clear',
+                                    function: () => Window
+                                        .setWindowBackgroundColorToClear()),
+                                MacOSActionMenuItem(
+                                    name: 'Set Blur View State to Active',
+                                    function: () {
+                                      setState(() {
+                                        macOSBlurViewState =
+                                            MacOSBlurViewState.active;
+                                      });
+                                      Window.setBlurViewState(
+                                          MacOSBlurViewState.active);
+                                    }),
+                                MacOSActionMenuItem(
+                                    name: 'Set Blur View State to Inactive',
+                                    function: () {
+                                      setState(() {
+                                        macOSBlurViewState =
+                                            MacOSBlurViewState.inactive;
+                                      });
+                                      Window.setBlurViewState(
+                                          MacOSBlurViewState.inactive);
+                                    }),
+                                MacOSActionMenuItem(
+                                    name:
+                                        'Set Blur View State to Follows Window Active State',
+                                    function: () {
+                                      setState(() {
+                                        macOSBlurViewState = MacOSBlurViewState
+                                            .followsWindowActiveState;
+                                      });
+                                      Window.setBlurViewState(MacOSBlurViewState
+                                          .followsWindowActiveState);
+                                    }),
+                                MacOSActionMenuItem(
+                                  name: 'Add Toolbar',
+                                  function: () => Window.addToolbar(),
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Remove Toolbar',
+                                  function: () => Window.removeToolbar(),
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Set Toolbar Style to Automatic',
+                                  function: () => Window.setToolbarStyle(
+                                      toolbarStyle:
+                                          MacOSToolbarStyle.automatic),
+                                  description:
+                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand.',
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Set Toolbar Style to Expanded',
+                                  function: () => Window.setToolbarStyle(
+                                    toolbarStyle: MacOSToolbarStyle.expanded,
+                                  ),
+                                  description:
+                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand.',
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Set Toolbar Style to Preference',
+                                  function: () => Window.setToolbarStyle(
+                                      toolbarStyle:
+                                          MacOSToolbarStyle.preference),
+                                  description:
+                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand.',
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Set Toolbar Style to Unified',
+                                  function: () => Window.setToolbarStyle(
+                                      toolbarStyle: MacOSToolbarStyle.unified),
+                                  description:
+                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand.',
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Set Toolbar Style to Unified Compact',
+                                  function: () => Window.setToolbarStyle(
+                                      toolbarStyle:
+                                          MacOSToolbarStyle.unifiedCompact),
+                                  description:
+                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand.',
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                    );
+                  });
+            },
+          ),
+        ],
       ),
-    ]);
+    );
   }
 
   SingleChildScrollView generateEffectMenu(BuildContext context) {
