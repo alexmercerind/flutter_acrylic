@@ -323,6 +323,36 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
             result(true)
             break
             
+        case "EnableShadow":
+            MainFlutterWindowManipulator.enableShadow()
+
+            result(true)
+            break
+
+        case "DisableShadow":
+            MainFlutterWindowManipulator.disableShadow()
+
+            result(true)
+            break
+
+        case "InvalidateShadows":
+            MainFlutterWindowManipulator.invalidateShadows()
+
+            result(true)
+            break
+
+        case "AddEmptyMaskImage":
+            MainFlutterWindowManipulator.addEmptyMaskImage()
+
+            result(true)
+            break
+
+        case "RemoveMaskImage":
+            MainFlutterWindowManipulator.removeMaskImage()
+
+            result(true)
+            break
+            
         default:
             result(FlutterMethodNotImplemented)
             break

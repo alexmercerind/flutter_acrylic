@@ -151,6 +151,21 @@ const _kRemoveToolbar = "RemoveToolbar";
 /// (macOS only).
 const _kSetToolbarStyle = "SetToolbarStyle";
 
+/// (macOS only)
+const _kEnableShadow = "EnableShadow";
+
+/// (macOS only)
+const _kDisableShadow = "DisableShadow";
+
+/// (macOS only)
+const _kInvalidateShadows = "InvalidateShadows";
+
+/// (macOS only)
+const _kAddEmptyMaskImage = "AddEmptyMaskImage";
+
+/// (macOS only)
+const _kRemoveMaskImage = "RemoveMaskImage";
+
 final MethodChannel _kChannel = const MethodChannel(_kChannelName);
 final Completer<void> _kCompleter = new Completer<void>();
 
@@ -625,5 +640,37 @@ class Window {
     await _kChannel.invokeMethod(_kSetToolbarStyle, {
       'toolbarStyle': toolbarStyle.name,
     });
+  }
+
+  /// Enables the window's shadow (macOS only).
+  static Future<void> enableShadow() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kEnableShadow, {});
+  }
+
+  /// Disables the window's shadow (macOS only).
+  static Future<void> disableShadow() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kDisableShadow, {});
+  }
+
+  /// Invalidates the window's shadow (macOS only).
+  static Future<void> invalidateShadows() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kInvalidateShadows, {});
+  }
+
+  /// Adds an empty mask image to the window's view (macOS only).
+  ///
+  /// This will effectively disable the `NSVisualEffectView`'s effect.
+  static Future<void> addEmptyMaskImage() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kAddEmptyMaskImage, {});
+  }
+
+  /// Removes the window's mask image (macOS only).
+  static Future<void> removeMaskImage() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kRemoveMaskImage, {});
   }
 }
