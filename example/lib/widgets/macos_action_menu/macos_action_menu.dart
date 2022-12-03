@@ -107,7 +107,9 @@ class _MacOSActionMenuState extends State<MacOSActionMenu> {
                 ],
               ),
               DescriptionDisplay(
-                description: _filteredItems[_legalSelectedIndex].description,
+                description: _filteredItems.isEmpty
+                    ? null
+                    : _filteredItems[_legalSelectedIndex].description,
               ),
             ],
           ),
