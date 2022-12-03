@@ -585,6 +585,26 @@ class MyAppBodyState extends State<MyAppBody> {
                                   description:
                                       'For this method to have an effect, the window needs to have had a toolbar added beforehand.',
                                 ),
+                                MacOSActionMenuItem(
+                                  name: 'Enable Shadow',
+                                  function: () => Window.enableShadow(),
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Disable Shadow',
+                                  function: () => Window.disableShadow(),
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Invalidate Shadows',
+                                  function: () => Window.invalidateShadows(),
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Add Empty Mask Image',
+                                  function: () => Window.addEmptyMaskImage(),
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Remove Mask Image',
+                                  function: () => Window.removeMaskImage(),
+                                ),
                               ],
                             ),
                           ),
