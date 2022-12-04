@@ -669,6 +669,11 @@ class Window {
   /// Adds an empty mask image to the window's view (macOS only).
   ///
   /// This will effectively disable the `NSVisualEffectView`'s effect.
+  ///
+  /// **Warning:** It is recommended to disable the window's shadow using
+  /// `Window.disableShadow()` when using this method. Keeping the shadow
+  /// enabled when using an empty mask image can cause visual artifacts
+  /// and performance issues.
   static Future<void> addEmptyMaskImage() async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kAddEmptyMaskImage, {});
