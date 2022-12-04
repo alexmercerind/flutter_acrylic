@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 /// A widget that displays an action menu item's description at the bottom
 /// of the action menu.
@@ -17,7 +18,7 @@ class DescriptionDisplay extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.all(8.0),
+        constraints: BoxConstraints(maxHeight: 128),
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
           borderRadius: const BorderRadius.only(
@@ -32,7 +33,12 @@ class DescriptionDisplay extends StatelessWidget {
             ),
           ],
         ),
-        child: Text(description!),
+        // child: Text(description!),
+        child: Markdown(
+          data: description!,
+          shrinkWrap: true,
+          padding: EdgeInsets.all(8.0),
+        ),
       ),
     );
   }

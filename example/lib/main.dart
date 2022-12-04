@@ -610,7 +610,7 @@ class MyAppBodyState extends State<MyAppBody> {
                                   function: () =>
                                       Window.makeWindowFullyTransparent(),
                                   description:
-                                      'Makes a window fully transparent (with no blur effect). This is a convenience function which executes:\n\tsetWindowBackgroundColorToClear();\n\tmakeTitlebarTransparent();\n\taddEmptyMaskImage();\n\tdisableShadow();\n**Warning:** When the window is fully transparent, its highlight effect (the thin white line at the top of the window) is still visible. This is considered a bug and may change in a future version.',
+                                      'Makes a window fully transparent (with no blur effect). This is a convenience function which executes:\n```dart\nsetWindowBackgroundColorToClear();\nmakeTitlebarTransparent();\naddEmptyMaskImage();\ndisableShadow();\n```\n**Warning:** When the window is fully transparent, its highlight effect (the thin white line at the top of the window) is still visible. This is considered a bug and may change in a future version.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Ignore Mouse Events',
