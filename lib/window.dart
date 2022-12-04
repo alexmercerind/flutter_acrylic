@@ -166,6 +166,12 @@ const _kAddEmptyMaskImage = "AddEmptyMaskImage";
 /// (macOS only)
 const _kRemoveMaskImage = "RemoveMaskImage";
 
+/// (macOS only)
+const _kIgnoreMouseEvents = "IgnoreMouseEvents";
+
+/// (macOS only)
+const _kAcknowledgeMouseEvents = "AcknowledgeMouseEvents";
+
 final MethodChannel _kChannel = const MethodChannel(_kChannelName);
 final Completer<void> _kCompleter = new Completer<void>();
 
@@ -672,5 +678,17 @@ class Window {
   static Future<void> removeMaskImage() async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kRemoveMaskImage, {});
+  }
+
+  /// Makes the window ignore mouse events (macOS only).
+  static Future<void> ignoreMouseEvents() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kIgnoreMouseEvents, {});
+  }
+
+  /// Makes the window acknowledge mouse events (macOS only).
+  static Future<void> acknowledgeMouseEvents() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kAcknowledgeMouseEvents, {});
   }
 }

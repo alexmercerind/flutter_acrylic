@@ -21,6 +21,20 @@ public class MainFlutterWindowManipulator {
         makeTitlebarOpaque()
         disableFullSizeContentView()
         setWindowBackgroundColorToDefaultColor()
+        
+        /*if #available(macOS 11.0, *) {
+            self.mainFlutterWindow!.subtitle = "subtitle"
+        } else {
+            // Fallback on earlier versions
+        }
+        //self.mainFlutterWindow!.ignoresMouseEvents = true
+        if #available(macOS 11.0, *) {
+            self.mainFlutterWindow!.titlebarSeparatorStyle = NSTitlebarSeparatorStyle.none
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        self.mainFlutterWindow!.*/
     }
     
     public static func hideTitle() {
@@ -464,5 +478,23 @@ public class MainFlutterWindowManipulator {
         
         let blurryContainerViewController = self.mainFlutterWindow!.contentViewController as! BlurryContainerViewController;
         (blurryContainerViewController.view as! NSVisualEffectView).maskImage = nil
+    }
+    
+    public static func ignoreMouseEvents() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.ignoresMouseEvents = true
+    }
+    
+    public static func acknowledgeMouseEvents() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.ignoresMouseEvents = false
     }
 }

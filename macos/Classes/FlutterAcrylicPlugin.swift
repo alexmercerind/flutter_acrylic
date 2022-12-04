@@ -353,6 +353,18 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
             result(true)
             break
             
+        case "IgnoreMouseEvents":
+            MainFlutterWindowManipulator.ignoreMouseEvents()
+
+            result(true)
+            break
+            
+        case "AcknowledgeMouseEvents":
+            MainFlutterWindowManipulator.acknowledgeMouseEvents()
+
+            result(true)
+            break
+            
         default:
             result(FlutterMethodNotImplemented)
             break
