@@ -21,20 +21,6 @@ public class MainFlutterWindowManipulator {
         makeTitlebarOpaque()
         disableFullSizeContentView()
         setWindowBackgroundColorToDefaultColor()
-        
-        /*if #available(macOS 11.0, *) {
-            self.mainFlutterWindow!.subtitle = "subtitle"
-        } else {
-            // Fallback on earlier versions
-        }
-        //self.mainFlutterWindow!.ignoresMouseEvents = true
-        if #available(macOS 11.0, *) {
-            self.mainFlutterWindow!.titlebarSeparatorStyle = NSTitlebarSeparatorStyle.none
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        self.mainFlutterWindow!.*/
     }
     
     public static func hideTitle() {
