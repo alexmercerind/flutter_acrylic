@@ -605,6 +605,19 @@ class MyAppBodyState extends State<MyAppBody> {
                                   name: 'Remove Mask Image',
                                   function: () => Window.removeMaskImage(),
                                 ),
+                                MacOSActionMenuItem(
+                                  name: 'Ignore Mouse Events',
+                                  function: () {
+                                    Window.ignoreMouseEvents();
+                                    Timer(const Duration(seconds: 5),
+                                        () => Window.acknowledgeMouseEvents());
+                                  },
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Acknowledge Mouse Events',
+                                  function: () =>
+                                      Window.acknowledgeMouseEvents(),
+                                ),
                               ],
                             ),
                           ),
