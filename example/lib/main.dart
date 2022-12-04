@@ -642,7 +642,7 @@ class MyAppBodyState extends State<MyAppBody> {
                                   name: 'Remove Subtitle',
                                   function: () => Window.setSubtitle(''),
                                   description:
-                                      'The action works by setting the subtitle to an empty string using `Window.setSubtitle(\'\')`.',
+                                      'The action works by setting the subtitle to an empty string using `Window.setSubtitle(\'\')`. There is no method called `Window.removeSubtitle()`.',
                                 ),
                               ],
                             ),
