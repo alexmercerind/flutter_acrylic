@@ -732,6 +732,8 @@ class Window {
   }
 
   /// Sets the subtitle of the window (macOS only).
+  ///
+  /// To remove the subtitle, pass an empty string to this method.
   static Future<void> setSubtitle(String subtitle) async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kSetSubtitle, {
