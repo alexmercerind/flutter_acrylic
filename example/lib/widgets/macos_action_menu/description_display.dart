@@ -4,6 +4,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 /// A widget that displays an action menu item's description at the bottom
 /// of the action menu.
 class DescriptionDisplay extends StatelessWidget {
+  static const maxHeight = 150.0;
+
   const DescriptionDisplay({Key? key, this.description}) : super(key: key);
 
   final String? description;
@@ -18,7 +20,7 @@ class DescriptionDisplay extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         width: double.infinity,
-        constraints: BoxConstraints(maxHeight: 128),
+        constraints: BoxConstraints(maxHeight: maxHeight),
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
           borderRadius: const BorderRadius.only(

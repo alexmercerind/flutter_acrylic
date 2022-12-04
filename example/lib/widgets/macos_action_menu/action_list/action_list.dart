@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_acrylic_example/widgets/macos_action_menu/description_display.dart';
 
 import '../macos_action_menu.dart';
 import 'action_list_item.dart';
@@ -39,7 +40,7 @@ class ActionList extends StatelessWidget {
             .toList(),
         // This SizedBox allows for a “scroll past end” effect and is necessary to prevent
         // the DescriptionDisplay from covering the ActionList.
-        const SizedBox(height: 128),
+        const SizedBox(height: DescriptionDisplay.maxHeight),
       ],
     );
   }
