@@ -483,4 +483,14 @@ public class MainFlutterWindowManipulator {
         
         self.mainFlutterWindow!.ignoresMouseEvents = false
     }
+    
+    @available(macOS 11.0, *)
+    public static func setSubtitle(_ subtitle: String) {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.subtitle = subtitle
+    }
 }

@@ -365,6 +365,17 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
             result(true)
             break
             
+        case "SetSubtitle":
+            let subtitle = args["subtitle"] as! String
+            if #available(macOS 11.0, *) {
+                MainFlutterWindowManipulator.setSubtitle(subtitle)
+            } else {
+                FlutterAcrylicPlugin.printUnsupportedMacOSVersionWarning()
+            }
+
+            result(true)
+            break
+            
         default:
             result(FlutterMethodNotImplemented)
             break

@@ -172,6 +172,9 @@ const _kIgnoreMouseEvents = "IgnoreMouseEvents";
 /// (macOS only)
 const _kAcknowledgeMouseEvents = "AcknowledgeMouseEvents";
 
+/// (macOS only)
+const _kSetSubtitle = "SetSubtitle";
+
 final MethodChannel _kChannel = const MethodChannel(_kChannelName);
 final Completer<void> _kCompleter = new Completer<void>();
 
@@ -726,5 +729,13 @@ class Window {
   static Future<void> acknowledgeMouseEvents() async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kAcknowledgeMouseEvents, {});
+  }
+
+  /// Sets the subtitle of the window (macOS only).
+  static Future<void> setSubtitle(String subtitle) async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kSetSubtitle, {
+      'subtitle': subtitle,
+    });
   }
 }
