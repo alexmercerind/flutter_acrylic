@@ -661,6 +661,9 @@ class Window {
   }
 
   /// Invalidates the window's shadow (macOS only).
+  ///
+  /// This is a fairly technical method and is included here for
+  /// completeness' sake. Normally, it should not be necessary to use it.
   static Future<void> invalidateShadows() async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kInvalidateShadows, {});
@@ -706,12 +709,20 @@ class Window {
   }
 
   /// Makes the window ignore mouse events (macOS only).
+  ///
+  /// This method can be used to make parts of the window click-through, which
+  /// may be desirable when used in conjunction with
+  /// `Window.makeWindowFullyTransparent()`.
   static Future<void> ignoreMouseEvents() async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kIgnoreMouseEvents, {});
   }
 
   /// Makes the window acknowledge mouse events (macOS only).
+  ///
+  /// This method can be used to make parts of the window click-through, which
+  /// may be desirable when used in conjunction with
+  /// `Window.makeWindowFullyTransparent()`.
   static Future<void> acknowledgeMouseEvents() async {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kAcknowledgeMouseEvents, {});
