@@ -680,6 +680,26 @@ class Window {
     await _kChannel.invokeMethod(_kRemoveMaskImage, {});
   }
 
+  /// Makes a window fully transparent (with no blur effect) (macOS only).
+  ///
+  /// This is a convenience method which executes:
+  /// ```dart
+  /// setWindowBackgroundColorToClear();
+  /// makeTitlebarTransparent();
+  /// addEmptyMaskImage();
+  /// disableShadow();
+  /// ```
+  ///
+  /// **Warning:** When the window is fully transparent, its highlight effect
+  /// (the thin white line at the top of the window) is still visible. This is
+  /// considered a bug and may change in a future version.
+  static Future<void> makeWindowFullyTransparent() async {
+    setWindowBackgroundColorToClear();
+    makeTitlebarTransparent();
+    addEmptyMaskImage();
+    disableShadow();
+  }
+
   /// Makes the window ignore mouse events (macOS only).
   static Future<void> ignoreMouseEvents() async {
     await _kCompleter.future;
