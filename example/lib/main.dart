@@ -633,6 +633,17 @@ class MyAppBodyState extends State<MyAppBody> {
                                   description:
                                       'This action is included here for completeness\' sake, however it is technically impossible to run it after performing the “Ignore Mouse Events” action, since the “show all actions” button can then no longer be clicked.',
                                 ),
+                                MacOSActionMenuItem(
+                                  name: 'Set Subtitle',
+                                  function: () =>
+                                      Window.setSubtitle('subtitle'),
+                                ),
+                                MacOSActionMenuItem(
+                                  name: 'Remove Subtitle',
+                                  function: () => Window.setSubtitle(''),
+                                  description:
+                                      'The action works by setting the subtitle to an empty string using `Window.setSubtitle(\'\')`.',
+                                ),
                               ],
                             ),
                           ),
