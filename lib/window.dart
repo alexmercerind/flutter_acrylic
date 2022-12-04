@@ -693,7 +693,7 @@ class Window {
   /// **Warning:** When the window is fully transparent, its highlight effect
   /// (the thin white line at the top of the window) is still visible. This is
   /// considered a bug and may change in a future version.
-  static Future<void> makeWindowFullyTransparent() async {
+  static void makeWindowFullyTransparent() {
     setWindowBackgroundColorToClear();
     makeTitlebarTransparent();
     addEmptyMaskImage();
