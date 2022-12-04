@@ -270,7 +270,7 @@ class MyAppBodyState extends State<MyAppBody> {
                     ),
                   ),
                   Expanded(
-                    child: generateEffectMenu(context),
+                    child: buildEffectMenu(context),
                   ),
                   Divider(
                     height: 1.0,
@@ -278,8 +278,8 @@ class MyAppBodyState extends State<MyAppBody> {
                         ? Colors.white12
                         : Colors.black12,
                   ),
-                  generateActionButtonBar(context),
-                  generateMacOSActionButtonBar(context),
+                  buildActionButtonBar(context),
+                  buildMacOSActionMenuOpener(context),
                 ],
               ),
             ),
@@ -289,7 +289,7 @@ class MyAppBodyState extends State<MyAppBody> {
     );
   }
 
-  ButtonBar generateActionButtonBar(BuildContext context) {
+  ButtonBar buildActionButtonBar(BuildContext context) {
     return ButtonBar(
       alignment: MainAxisAlignment.start,
       overflowButtonSpacing: 4.0,
@@ -358,7 +358,7 @@ class MyAppBodyState extends State<MyAppBody> {
     );
   }
 
-  Widget generateMacOSActionButtonBar(BuildContext context) {
+  Widget buildMacOSActionMenuOpener(BuildContext context) {
     if (!Platform.isMacOS) {
       return const SizedBox();
     }
@@ -647,7 +647,7 @@ class MyAppBodyState extends State<MyAppBody> {
     );
   }
 
-  SingleChildScrollView generateEffectMenu(BuildContext context) {
+  SingleChildScrollView buildEffectMenu(BuildContext context) {
     return SingleChildScrollView(
       child: Theme(
         data: brightness.getIsDark(context)
