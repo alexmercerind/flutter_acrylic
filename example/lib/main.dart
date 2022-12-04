@@ -552,7 +552,7 @@ class MyAppBodyState extends State<MyAppBody> {
                                       toolbarStyle:
                                           MacOSToolbarStyle.automatic),
                                   description:
-                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand.',
+                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand. This can be achieved using the “Add Toolbar” action.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Set Toolbar Style to Expanded',
@@ -560,7 +560,7 @@ class MyAppBodyState extends State<MyAppBody> {
                                     toolbarStyle: MacOSToolbarStyle.expanded,
                                   ),
                                   description:
-                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand.',
+                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand. This can be achieved using the “Add Toolbar” action.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Set Toolbar Style to Preference',
@@ -568,14 +568,14 @@ class MyAppBodyState extends State<MyAppBody> {
                                       toolbarStyle:
                                           MacOSToolbarStyle.preference),
                                   description:
-                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand.',
+                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand. This can be achieved using the “Add Toolbar” action.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Set Toolbar Style to Unified',
                                   function: () => Window.setToolbarStyle(
                                       toolbarStyle: MacOSToolbarStyle.unified),
                                   description:
-                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand.',
+                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand. This can be achieved using the “Add Toolbar” action.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Set Toolbar Style to Unified Compact',
@@ -583,7 +583,7 @@ class MyAppBodyState extends State<MyAppBody> {
                                       toolbarStyle:
                                           MacOSToolbarStyle.unifiedCompact),
                                   description:
-                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand.',
+                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand. This can be achieved using the “Add Toolbar” action.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Enable Shadow',
@@ -596,10 +596,14 @@ class MyAppBodyState extends State<MyAppBody> {
                                 MacOSActionMenuItem(
                                   name: 'Invalidate Shadows',
                                   function: () => Window.invalidateShadows(),
+                                  description:
+                                      'This is a fairly technical action and is included here for completeness\' sake. Normally, it should not be necessary to use it.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Add Empty Mask Image',
                                   function: () => Window.addEmptyMaskImage(),
+                                  description:
+                                      'This will effectively disable the `NSVisualEffectView`\'s effect.\n\n**Warning:** It is recommended to disable the window\'s shadow using `Window.disableShadow()` when using this method. Keeping the shadow enabled when using an empty mask image can cause visual artifacts and performance issues.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Remove Mask Image',
@@ -619,11 +623,15 @@ class MyAppBodyState extends State<MyAppBody> {
                                     Timer(const Duration(seconds: 5),
                                         () => Window.acknowledgeMouseEvents());
                                   },
+                                  description:
+                                      'This action can be used to make parts of the window click-through, which may be desirable when used in conjunction with `Window.makeWindowFullyTransparent()`.\n\n**Note:** Executing this action will make this widow click-through, thus making it impossible to perform the “Acknowledge Mouse Events” again. For this reason, the example app automatically starts acknowledging mouse events again after five seconds.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Acknowledge Mouse Events',
                                   function: () =>
                                       Window.acknowledgeMouseEvents(),
+                                  description:
+                                      'This action is included here for completeness\' sake, however it is technically impossible to run it after performing the “Ignore Mouse Events” action, since the “show all actions” button can then no longer be clicked.',
                                 ),
                               ],
                             ),
