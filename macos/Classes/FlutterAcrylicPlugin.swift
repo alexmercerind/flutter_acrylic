@@ -323,6 +323,59 @@ public class FlutterAcrylicPlugin: NSObject, FlutterPlugin {
             result(true)
             break
             
+        case "EnableShadow":
+            MainFlutterWindowManipulator.enableShadow()
+
+            result(true)
+            break
+
+        case "DisableShadow":
+            MainFlutterWindowManipulator.disableShadow()
+
+            result(true)
+            break
+
+        case "InvalidateShadows":
+            MainFlutterWindowManipulator.invalidateShadows()
+
+            result(true)
+            break
+
+        case "AddEmptyMaskImage":
+            MainFlutterWindowManipulator.addEmptyMaskImage()
+
+            result(true)
+            break
+
+        case "RemoveMaskImage":
+            MainFlutterWindowManipulator.removeMaskImage()
+
+            result(true)
+            break
+            
+        case "IgnoreMouseEvents":
+            MainFlutterWindowManipulator.ignoreMouseEvents()
+
+            result(true)
+            break
+            
+        case "AcknowledgeMouseEvents":
+            MainFlutterWindowManipulator.acknowledgeMouseEvents()
+
+            result(true)
+            break
+            
+        case "SetSubtitle":
+            let subtitle = args["subtitle"] as! String
+            if #available(macOS 11.0, *) {
+                MainFlutterWindowManipulator.setSubtitle(subtitle)
+            } else {
+                FlutterAcrylicPlugin.printUnsupportedMacOSVersionWarning()
+            }
+
+            result(true)
+            break
+            
         default:
             result(FlutterMethodNotImplemented)
             break

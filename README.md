@@ -19,11 +19,11 @@ _Example app running on Microsoft Windows 11 (pre-compiled release mode x64 exec
 
 ## Platforms
 
-|Platform|Status|Maintainer                                      |
-|--------|------|------------------------------------------------|
-|Windows |✅    |[Hitesh Kumar Saini](https://github.com/alexmercerind)  |
-|macOS   |✅    |[Adrian Samoticha](https://github.com/Adrian-Samoticha) |
-|Linux   |✅    |[Hitesh Kumar Saini](https://github.com/alexmercerind)  |
+| Platform | Status | Maintainer                                              |
+| -------- | ------ | ------------------------------------------------------- |
+| Windows  | ✅      | [Hitesh Kumar Saini](https://github.com/alexmercerind)  |
+| macOS    | ✅      | [Adrian Samoticha](https://github.com/Adrian-Samoticha) |
+| Linux    | ✅      | [Hitesh Kumar Saini](https://github.com/alexmercerind)  |
 
 ## Docs
 
@@ -57,26 +57,26 @@ await Window.setEffect(
 
 | Effect                               | Description                                                                                                                                                                                               | Windows | macOS | Linux |
 | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ----- | ----- |
-| `WindowEffect.transparent`           | Transparent window background.                                                                                                                                                                            | ✅      | ✅    | ✅    |
-| `WindowEffect.disabled`              | Default window background.                                                                                                                                                                                | ✅      | ✅    | ✅    |
-| `WindowEffect.solid`                 | Solid colored window background.                                                                                                                                                                          | ✅      | ✅    | ✅    |
-| `WindowEffect.aero`                  | Aero glass effect. Windows Vista & Windows 7 like glossy blur effect.                                                                                                                                     | ✅      | ✅    |       |
-| `WindowEffect.acrylic`               | Acrylic is a type of brush that creates a translucent texture. You can apply acrylic to app surfaces to add depth and help establish a visual hierarchy. Works only on Windows 10 version 1803 or higher. | ✅      | ✅    |       |
-| `WindowEffect.mica`                  | Mica is an opaque, dynamic material that incorporates theme and desktop wallpaper to paint the background of long-lived windows. Works only on Windows 11 or greater.                                     | ✅      | ✅    |       |
-| `WindowEffect.tabbed`                | Tabbed is a Mica like material that incorporates theme and desktop wallpaper, but is more sensitive to desktop wallpaper color. Works only on later Windows 11 versions (builds higher than 22523).       | ✅      | ✅    |       |
-| `WindowEffect.titlebar`              | The material for a window’s titlebar.                                                                                                                                                                     |         | ✅    |       |
-| `WindowEffect.menu`                  | The material for menus.                                                                                                                                                                                   |         | ✅    |       |
-| `WindowEffect.popover`               | The material for the background of popover windows.                                                                                                                                                       |         | ✅    |       |
-| `WindowEffect.sidebar`               | The material for the background of window sidebars.                                                                                                                                                       |         | ✅    |       |
-| `WindowEffect.headerView`            | The material for in-line header or footer views.                                                                                                                                                          |         | ✅    |       |
-| `WindowEffect.sheet`                 | The material for the background of sheet windows.                                                                                                                                                         |         | ✅    |       |
-| `WindowEffect.windowBackground`      | The material for the background of opaque windows.                                                                                                                                                        |         | ✅    |       |
-| `WindowEffect.hudWindow`             | The material for the background of heads-up display (HUD) windows.                                                                                                                                        |         | ✅    |       |
-| `WindowEffect.fullScreenUI`          | The material for the background of a full-screen modal interface.                                                                                                                                         |         | ✅    |       |
-| `WindowEffect.toolTip`               | The material for the background of a tool tip.                                                                                                                                                            |         | ✅    |       |
-| `WindowEffect.contentBackground`     | The material for the background of opaque content.                                                                                                                                                        |         | ✅    |       |
-| `WindowEffect.underWindowBackground` | The material to show under a window's background.                                                                                                                                                         |         | ✅    |       |
-| `WindowEffect.underPageBackground`   | The material for the area behind the pages of a document.                                                                                                                                                 |         | ✅    |       |
+| `WindowEffect.transparent`           | Transparent window background.                                                                                                                                                                            | ✅       | ✅     | ✅     |
+| `WindowEffect.disabled`              | Default window background.                                                                                                                                                                                | ✅       | ✅     | ✅     |
+| `WindowEffect.solid`                 | Solid colored window background.                                                                                                                                                                          | ✅       | ✅     | ✅     |
+| `WindowEffect.aero`                  | Aero glass effect. Windows Vista & Windows 7 like glossy blur effect.                                                                                                                                     | ✅       | ✅     |       |
+| `WindowEffect.acrylic`               | Acrylic is a type of brush that creates a translucent texture. You can apply acrylic to app surfaces to add depth and help establish a visual hierarchy. Works only on Windows 10 version 1803 or higher. | ✅       | ✅     |       |
+| `WindowEffect.mica`                  | Mica is an opaque, dynamic material that incorporates theme and desktop wallpaper to paint the background of long-lived windows. Works only on Windows 11 or greater.                                     | ✅       | ✅     |       |
+| `WindowEffect.tabbed`                | Tabbed is a Mica like material that incorporates theme and desktop wallpaper, but is more sensitive to desktop wallpaper color. Works only on later Windows 11 versions (builds higher than 22523).       | ✅       | ✅     |       |
+| `WindowEffect.titlebar`              | The material for a window’s titlebar.                                                                                                                                                                     |         | ✅     |       |
+| `WindowEffect.menu`                  | The material for menus.                                                                                                                                                                                   |         | ✅     |       |
+| `WindowEffect.popover`               | The material for the background of popover windows.                                                                                                                                                       |         | ✅     |       |
+| `WindowEffect.sidebar`               | The material for the background of window sidebars.                                                                                                                                                       |         | ✅     |       |
+| `WindowEffect.headerView`            | The material for in-line header or footer views.                                                                                                                                                          |         | ✅     |       |
+| `WindowEffect.sheet`                 | The material for the background of sheet windows.                                                                                                                                                         |         | ✅     |       |
+| `WindowEffect.windowBackground`      | The material for the background of opaque windows.                                                                                                                                                        |         | ✅     |       |
+| `WindowEffect.hudWindow`             | The material for the background of heads-up display (HUD) windows.                                                                                                                                        |         | ✅     |       |
+| `WindowEffect.fullScreenUI`          | The material for the background of a full-screen modal interface.                                                                                                                                         |         | ✅     |       |
+| `WindowEffect.toolTip`               | The material for the background of a tool tip.                                                                                                                                                            |         | ✅     |       |
+| `WindowEffect.contentBackground`     | The material for the background of opaque content.                                                                                                                                                        |         | ✅     |       |
+| `WindowEffect.underWindowBackground` | The material to show under a window's background.                                                                                                                                                         |         | ✅     |       |
+| `WindowEffect.underPageBackground`   | The material for the area behind the pages of a document.                                                                                                                                                 |         | ✅     |       |
 
 
 _Windows 10 versions higher than 1803 & all Windows 11 versions are supported by the plugin, although not all effects might be available to a particular Windows version. See [pinned issues](https://github.com/alexmercerind/flutter_acrylic/issues) if you encounter some problem or feel free to file one yourself._
@@ -316,6 +316,32 @@ Window.setToolbarStyle(MacOSToolbarStyle.expanded);
 Window.setToolbarStyle(MacOSToolbarStyle.preference);
 Window.setToolbarStyle(MacOSToolbarStyle.unified);
 Window.setToolbarStyle(MacOSToolbarStyle.unifiedCompact);
+```
+
+Enable and disable window shadow.
+
+```dart
+Window.enableShadow();
+Window.disableShadow();
+```
+
+Make window fully transparent (with no blur effect):
+
+```dart
+Window.makeWindowFullyTransparent();
+```
+
+Acknowledge or ignore mouse events:
+
+```dart
+Window.acknowledgeMouseEvents();
+Window.ignoreMouseEvents();
+```
+
+Set the window's subtitle:
+
+```dart
+Window.setSubtitle('subtitle');
 ```
 
 More features coming soon.

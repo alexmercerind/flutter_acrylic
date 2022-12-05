@@ -151,6 +151,30 @@ const _kRemoveToolbar = "RemoveToolbar";
 /// (macOS only).
 const _kSetToolbarStyle = "SetToolbarStyle";
 
+/// (macOS only)
+const _kEnableShadow = "EnableShadow";
+
+/// (macOS only)
+const _kDisableShadow = "DisableShadow";
+
+/// (macOS only)
+const _kInvalidateShadows = "InvalidateShadows";
+
+/// (macOS only)
+const _kAddEmptyMaskImage = "AddEmptyMaskImage";
+
+/// (macOS only)
+const _kRemoveMaskImage = "RemoveMaskImage";
+
+/// (macOS only)
+const _kIgnoreMouseEvents = "IgnoreMouseEvents";
+
+/// (macOS only)
+const _kAcknowledgeMouseEvents = "AcknowledgeMouseEvents";
+
+/// (macOS only)
+const _kSetSubtitle = "SetSubtitle";
+
 final MethodChannel _kChannel = const MethodChannel(_kChannelName);
 final Completer<void> _kCompleter = new Completer<void>();
 
@@ -624,6 +648,96 @@ class Window {
     await _kCompleter.future;
     await _kChannel.invokeMethod(_kSetToolbarStyle, {
       'toolbarStyle': toolbarStyle.name,
+    });
+  }
+
+  /// Enables the window's shadow (macOS only).
+  static Future<void> enableShadow() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kEnableShadow, {});
+  }
+
+  /// Disables the window's shadow (macOS only).
+  static Future<void> disableShadow() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kDisableShadow, {});
+  }
+
+  /// Invalidates the window's shadow (macOS only).
+  ///
+  /// This is a fairly technical method and is included here for
+  /// completeness' sake. Normally, it should not be necessary to use it.
+  static Future<void> invalidateShadows() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kInvalidateShadows, {});
+  }
+
+  /// Adds an empty mask image to the window's view (macOS only).
+  ///
+  /// This will effectively disable the `NSVisualEffectView`'s effect.
+  ///
+  /// **Warning:** It is recommended to disable the window's shadow using
+  /// `Window.disableShadow()` when using this method. Keeping the shadow
+  /// enabled when using an empty mask image can cause visual artifacts
+  /// and performance issues.
+  static Future<void> addEmptyMaskImage() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kAddEmptyMaskImage, {});
+  }
+
+  /// Removes the window's mask image (macOS only).
+  static Future<void> removeMaskImage() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kRemoveMaskImage, {});
+  }
+
+  /// Makes a window fully transparent (with no blur effect) (macOS only).
+  ///
+  /// This is a convenience method which executes:
+  /// ```dart
+  /// setWindowBackgroundColorToClear();
+  /// makeTitlebarTransparent();
+  /// addEmptyMaskImage();
+  /// disableShadow();
+  /// ```
+  ///
+  /// **Warning:** When the window is fully transparent, its highlight effect
+  /// (the thin white line at the top of the window) is still visible. This is
+  /// considered a bug and may change in a future version.
+  static void makeWindowFullyTransparent() {
+    setWindowBackgroundColorToClear();
+    makeTitlebarTransparent();
+    addEmptyMaskImage();
+    disableShadow();
+  }
+
+  /// Makes the window ignore mouse events (macOS only).
+  ///
+  /// This method can be used to make parts of the window click-through, which
+  /// may be desirable when used in conjunction with
+  /// `Window.makeWindowFullyTransparent()`.
+  static Future<void> ignoreMouseEvents() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kIgnoreMouseEvents, {});
+  }
+
+  /// Makes the window acknowledge mouse events (macOS only).
+  ///
+  /// This method can be used to make parts of the window click-through, which
+  /// may be desirable when used in conjunction with
+  /// `Window.makeWindowFullyTransparent()`.
+  static Future<void> acknowledgeMouseEvents() async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kAcknowledgeMouseEvents, {});
+  }
+
+  /// Sets the subtitle of the window (macOS only).
+  ///
+  /// To remove the subtitle, pass an empty string to this method.
+  static Future<void> setSubtitle(String subtitle) async {
+    await _kCompleter.future;
+    await _kChannel.invokeMethod(_kSetSubtitle, {
+      'subtitle': subtitle,
     });
   }
 }

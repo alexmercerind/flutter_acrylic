@@ -342,9 +342,9 @@ public class MainFlutterWindowManipulator {
             return
         }
         
-        self.mainFlutterWindow?.contentView?.superview?.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
+        self.mainFlutterWindow!.contentView?.superview?.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
         
-        self.mainFlutterWindow?.invalidateShadow()
+        self.mainFlutterWindow!.invalidateShadow()
     }
     
     @available(macOS 10.14, *)
@@ -354,10 +354,10 @@ public class MainFlutterWindowManipulator {
             return
         }
         
-        let blurryContainerViewController = self.mainFlutterWindow?.contentViewController as! BlurryContainerViewController;
+        let blurryContainerViewController = self.mainFlutterWindow!.contentViewController as! BlurryContainerViewController;
         (blurryContainerViewController.view as! NSVisualEffectView).material = material
         
-        self.mainFlutterWindow?.invalidateShadow()
+        self.mainFlutterWindow!.invalidateShadow()
     }
     
     @available(macOS 10.14, *)
@@ -388,19 +388,109 @@ public class MainFlutterWindowManipulator {
     }
     
     public static func addToolbar() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
         if #available(macOS 10.13, *) {
             let newToolbar = NSToolbar()
 
-            self.mainFlutterWindow?.toolbar = newToolbar
+            self.mainFlutterWindow!.toolbar = newToolbar
         }
     }
     
     public static func removeToolbar() {
-        self.mainFlutterWindow?.toolbar = nil
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.toolbar = nil
     }
     
     @available(macOS 11.0, *)
     public static func setToolbarStyle(toolbarStyle: NSWindow.ToolbarStyle) {
-        self.mainFlutterWindow?.toolbarStyle = toolbarStyle
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.toolbarStyle = toolbarStyle
+    }
+    
+    public static func enableShadow() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.hasShadow = true
+    }
+    
+    public static func disableShadow() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.hasShadow = false
+    }
+    
+    public static func invalidateShadows() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.invalidateShadow()
+    }
+    
+    public static func addEmptyMaskImage() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        let blurryContainerViewController = self.mainFlutterWindow!.contentViewController as! BlurryContainerViewController;
+        (blurryContainerViewController.view as! NSVisualEffectView).maskImage = NSImage()
+    }
+    
+    public static func removeMaskImage() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        let blurryContainerViewController = self.mainFlutterWindow!.contentViewController as! BlurryContainerViewController;
+        (blurryContainerViewController.view as! NSVisualEffectView).maskImage = nil
+    }
+    
+    public static func ignoreMouseEvents() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.ignoresMouseEvents = true
+    }
+    
+    public static func acknowledgeMouseEvents() {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.ignoresMouseEvents = false
+    }
+    
+    @available(macOS 11.0, *)
+    public static func setSubtitle(_ subtitle: String) {
+        if (self.mainFlutterWindow == nil) {
+            printNotStartedWarning()
+            return
+        }
+        
+        self.mainFlutterWindow!.subtitle = subtitle
     }
 }
