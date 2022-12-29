@@ -179,7 +179,10 @@ class Window {
 
   /// Sets the document to be edited.
   ///
-  /// This will change the appearance of the close button on the titlebar.
+  /// This will change the appearance of the close button on the titlebar:
+  ///
+  /// <img width="78" alt="image" src="https://user-images.githubusercontent.com/86920182/209436903-0a6c1f5a-4ab6-454f-a37d-78a5d699f3df.png">
+  ///
   /// This method is only available on macOS.
   static Future<void> setDocumentEdited() async {
     WindowManipulator.setDocumentEdited();
