@@ -200,10 +200,14 @@ class Window {
 
   /// Sets specified effect for the window.
   ///
-  /// When using [WindowEffect.mica], [dark] argument can be used to switch between light or dark mode of Mica.
+  /// When using [WindowEffect.mica], [dark] argument can be used to switch
+  /// between light or dark mode of Mica.
   ///
-  /// When using [WindowEffect.acrylic], [WindowEffect.aero], [WindowEffect.disabled], [WindowEffect.solid] or [WindowEffect.transparent],
-  /// [color] argument can be used to change the resulting tint (or color) of the window background.
+  /// When using [WindowEffect.acrylic], [WindowEffect.aero],
+  /// [WindowEffect.disabled], [WindowEffect.solid] or
+  /// [WindowEffect.transparent],
+  /// [color] argument can be used to change the resulting tint (or color) of
+  /// the window background.
   ///
   /// _Examples_
   ///
@@ -265,7 +269,8 @@ class Window {
   /// Gets the height of the titlebar.
   ///
   /// This value is used to determine the [[TitlebarSafeArea]] widget.
-  /// If the full-size content view is enabled, this value will be the height of the titlebar.
+  /// If the full-size content view is enabled, this value will be the height
+  /// of the titlebar.
   /// If the full-size content view is disabled, this value will be 0.
   /// This value is only available on macOS.
   static Future<double> getTitlebarHeight() async {
@@ -573,7 +578,8 @@ class Window {
     });
   }
 
-  /// Adds a visual effect subview to the application's window and returns its ID.
+  /// Adds a visual effect subview to the application's window and returns its
+  /// ID.
   ///
   /// This method is only available on macOS.
   static Future<int> addVisualEffectSubview(

@@ -13,7 +13,8 @@ class VisualEffectSubviewProperties {
   /// The x position of the subview's frame.
   final double? frameX;
 
-  /// The y position of the subview's frame, starting at the bottom of the window.
+  /// The y position of the subview's frame, starting at the bottom of the
+  /// window.
   final double? frameY;
 
   /// The alpha value of the subview.
@@ -22,7 +23,8 @@ class VisualEffectSubviewProperties {
   /// The corner Radius of the subview.
   final double? cornerRadius;
 
-  /// A bitmask indicating which corners should follow the `cornerRadius` property.
+  /// A bitmask indicating which corners should follow the `cornerRadius`
+  /// property.
   final int? cornerMask;
 
   /// The effect/material of the subview.
@@ -132,6 +134,7 @@ class VisualEffectSubviewProperties {
 
   @override
   String toString() {
-    return '$frameWidth $frameHeight $frameX $frameY $alphaValue $cornerRadius $cornerMask $effect $state';
+    return '$frameWidth $frameHeight $frameX $frameY $alphaValue $cornerRadius'
+        '$cornerMask $effect $state';
   }
 }

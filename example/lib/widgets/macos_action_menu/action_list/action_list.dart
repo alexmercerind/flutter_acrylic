@@ -38,8 +38,8 @@ class ActionList extends StatelessWidget {
             }))
             .values
             .toList(),
-        // This SizedBox allows for a “scroll past end” effect and is necessary to prevent
-        // the DescriptionDisplay from covering the ActionList.
+        // This SizedBox allows for a “scroll past end” effect and is necessary
+        // to prevent the DescriptionDisplay from covering the ActionList.
         const SizedBox(height: DescriptionDisplay.maxHeight),
       ],
     );

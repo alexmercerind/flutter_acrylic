@@ -116,11 +116,13 @@ class MyAppBodyState extends State<MyAppBody> {
 
   /// Lets the madness begin! (macOS only.)
   ///
-  /// This method plays a silly little effect that is achieved using visual effect subviews.
-  /// It is designed to showcase a low-level approach to using visual effect subviews without
-  /// relying on the [VisualEffectSubviewContainer] widget.
+  /// This method plays a silly little effect that is achieved using visual
+  /// effect subviews. It is designed to showcase a low-level approach to using
+  /// visual effect subviews without relying on the
+  /// [VisualEffectSubviewContainer] widget.
   ///
-  /// In most cases, using the container widget is preferable, though, due to its ease of use.
+  /// In most cases, using the container widget is preferable, though, due to
+  /// its ease of use.
   void letTheMadnessBegin() async {
     final random = Random();
     final windowWidth = MediaQuery.of(context).size.width;
@@ -156,7 +158,8 @@ class MyAppBodyState extends State<MyAppBody> {
             ));
 
         if (frameX > windowWidth) {
-          // Remember to remove the visual effect subview when you no longer need it.
+          // Remember to remove the visual effect subview when you no longer
+          // need it.
           Window.removeVisualEffectSubview(subviewId);
           timer.cancel();
         }
@@ -166,9 +169,10 @@ class MyAppBodyState extends State<MyAppBody> {
 
   @override
   Widget build(BuildContext context) {
-    // The [TitlebarSafeArea] widget is required when running on macOS and enabling
-    // the full-size content view using [Window.setFullSizeContentView]. It ensures
-    // that its child is not covered by the macOS title bar.
+    // The [TitlebarSafeArea] widget is required when running on macOS and
+    // enabling the full-size content view using
+    // [Window.setFullSizeContentView]. It ensures that its child is not covered
+    // by the macOS title bar.
     return TitlebarSafeArea(
       child: SidebarFrame(
         macOSBlurViewState: macOSBlurViewState,
@@ -194,7 +198,8 @@ class MyAppBodyState extends State<MyAppBody> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 8.0, horizontal: 12.0),
                     child: Text(
-                      'This is an example of a sidebar that has been implemented using the TransparentMacOSSidebar widget.',
+                      'This is an example of a sidebar that has been '
+                      'implemented using the TransparentMacOSSidebar widget.',
                       style: TextStyle(
                         color: brightness.getForegroundColor(context),
                       ),
@@ -204,7 +209,8 @@ class MyAppBodyState extends State<MyAppBody> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 4.0, horizontal: 12.0),
                     child: Text(
-                      'Check out the sidebar_frame.dart file to see how it has been implemented!',
+                      'Check out the sidebar_frame.dart file to see how it '
+                      'has been implemented!',
                       style: TextStyle(
                         color: brightness.getForegroundColor(context),
                       ),
@@ -215,7 +221,8 @@ class MyAppBodyState extends State<MyAppBody> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 4.0, horizontal: 12.0),
                     child: Text(
-                      'Press the following button if you would like to see some visual effect subview madness:',
+                      'Press the following button if you would like to see '
+                      'some visual effect subview madness:',
                       style: TextStyle(
                         color: brightness.getForegroundColor(context),
                       ),
@@ -431,7 +438,11 @@ class MyAppBodyState extends State<MyAppBody> {
                                     function: () =>
                                         Window.enableFullSizeContentView(),
                                     description:
-                                        'This expands the area that Flutter can draw to to fill the entire window. It is recommended to enable the full-size content view when making the titlebar transparent.'),
+                                        'This expands the area that Flutter '
+                                        'can draw to to fill the entire '
+                                        'window. It is recommended to enable '
+                                        'the full-size content view when '
+                                        'making the titlebar transparent.'),
                                 MacOSActionMenuItem(
                                     name: 'Disable Full Size Content View',
                                     function: () =>
@@ -501,7 +512,8 @@ class MyAppBodyState extends State<MyAppBody> {
                                     function: () => Window
                                         .setWindowBackgroundColorToDefaultColor(),
                                     description:
-                                        'Sets the window background color to the default (opaque) window color.'),
+                                        'Sets the window background color to '
+                                        'the default (opaque) window color.'),
                                 MacOSActionMenuItem(
                                     name:
                                         'Set Window Background Color to Clear',
@@ -528,8 +540,8 @@ class MyAppBodyState extends State<MyAppBody> {
                                           MacOSBlurViewState.inactive);
                                     }),
                                 MacOSActionMenuItem(
-                                    name:
-                                        'Set Blur View State to Follows Window Active State',
+                                    name: 'Set Blur View State to Follows '
+                                        'Window Active State',
                                     function: () {
                                       setState(() {
                                         macOSBlurViewState = MacOSBlurViewState
@@ -552,7 +564,10 @@ class MyAppBodyState extends State<MyAppBody> {
                                       toolbarStyle:
                                           MacOSToolbarStyle.automatic),
                                   description:
-                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand. This can be achieved using the “Add Toolbar” action.',
+                                      'For this method to have an effect, the '
+                                      'window needs to have had a toolbar '
+                                      'added beforehand. This can be achieved '
+                                      'using the “Add Toolbar” action.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Set Toolbar Style to Expanded',
@@ -560,7 +575,10 @@ class MyAppBodyState extends State<MyAppBody> {
                                     toolbarStyle: MacOSToolbarStyle.expanded,
                                   ),
                                   description:
-                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand. This can be achieved using the “Add Toolbar” action.',
+                                      'For this method to have an effect, '
+                                      'the window needs to have had a toolbar '
+                                      'added beforehand. This can be achieved '
+                                      'using the “Add Toolbar” action.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Set Toolbar Style to Preference',
@@ -568,14 +586,20 @@ class MyAppBodyState extends State<MyAppBody> {
                                       toolbarStyle:
                                           MacOSToolbarStyle.preference),
                                   description:
-                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand. This can be achieved using the “Add Toolbar” action.',
+                                      'For this method to have an effect, the '
+                                      'window needs to have had a toolbar '
+                                      'added beforehand. This can be achieved '
+                                      'using the “Add Toolbar” action.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Set Toolbar Style to Unified',
                                   function: () => Window.setToolbarStyle(
                                       toolbarStyle: MacOSToolbarStyle.unified),
                                   description:
-                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand. This can be achieved using the “Add Toolbar” action.',
+                                      'For this method to have an effect, the '
+                                      'window needs to have had a toolbar '
+                                      'added beforehand. This can be achieved '
+                                      'using the “Add Toolbar” action.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Set Toolbar Style to Unified Compact',
@@ -583,7 +607,10 @@ class MyAppBodyState extends State<MyAppBody> {
                                       toolbarStyle:
                                           MacOSToolbarStyle.unifiedCompact),
                                   description:
-                                      'For this method to have an effect, the window needs to have had a toolbar added beforehand. This can be achieved using the “Add Toolbar” action.',
+                                      'For this method to have an effect, the '
+                                      'window needs to have had a toolbar '
+                                      'added beforehand. This can be achieved '
+                                      'using the “Add Toolbar” action.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Enable Shadow',
@@ -597,13 +624,24 @@ class MyAppBodyState extends State<MyAppBody> {
                                   name: 'Invalidate Shadows',
                                   function: () => Window.invalidateShadows(),
                                   description:
-                                      'This is a fairly technical action and is included here for completeness\' sake. Normally, it should not be necessary to use it.',
+                                      'This is a fairly technical action and '
+                                      'is included here for completeness\' '
+                                      'sake. Normally, it should not be '
+                                      'necessary to use it.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Add Empty Mask Image',
                                   function: () => Window.addEmptyMaskImage(),
                                   description:
-                                      'This will effectively disable the `NSVisualEffectView`\'s effect.\n\n**Warning:** It is recommended to disable the window\'s shadow using `Window.disableShadow()` when using this method. Keeping the shadow enabled when using an empty mask image can cause visual artifacts and performance issues.',
+                                      'This will effectively disable the '
+                                      '`NSVisualEffectView`\'s effect.\n\n'
+                                      '**Warning:** It is recommended to '
+                                      'disable the window\'s shadow using '
+                                      '`Window.disableShadow()` when using '
+                                      'this method. Keeping the shadow '
+                                      'enabled when using an empty mask image '
+                                      'can cause visual artifacts and '
+                                      'performance issues.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Remove Mask Image',
@@ -614,7 +652,19 @@ class MyAppBodyState extends State<MyAppBody> {
                                   function: () =>
                                       Window.makeWindowFullyTransparent(),
                                   description:
-                                      'Makes a window fully transparent (with no blur effect). This is a convenience function which executes:\n```dart\nsetWindowBackgroundColorToClear();\nmakeTitlebarTransparent();\naddEmptyMaskImage();\ndisableShadow();\n```\n**Warning:** When the window is fully transparent, its highlight effect (the thin white line at the top of the window) is still visible. This is considered a bug and may change in a future version.',
+                                      'Makes a window fully transparent '
+                                      '(with no blur effect). This is a '
+                                      'convenience function which executes:\n'
+                                      '```dart\n'
+                                      'setWindowBackgroundColorToClear();\n'
+                                      'makeTitlebarTransparent();\n'
+                                      'addEmptyMaskImage();\n'
+                                      'disableShadow();\n```\n**Warning:** '
+                                      'When the window is fully transparent, '
+                                      'its highlight effect (the thin white '
+                                      'line at the top of the window) is '
+                                      'still visible. This is considered a '
+                                      'bug and may change in a future version.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Ignore Mouse Events',
@@ -624,14 +674,30 @@ class MyAppBodyState extends State<MyAppBody> {
                                         () => Window.acknowledgeMouseEvents());
                                   },
                                   description:
-                                      'This action can be used to make parts of the window click-through, which may be desirable when used in conjunction with `Window.makeWindowFullyTransparent()`.\n\n**Note:** Executing this action will make this widow click-through, thus making it impossible to perform the “Acknowledge Mouse Events” again. For this reason, the example app automatically starts acknowledging mouse events again after five seconds.',
+                                      'This action can be used to make parts '
+                                      'of the window click-through, which may '
+                                      'be desirable when used in conjunction '
+                                      'with '
+                                      '`Window.makeWindowFullyTransparent()`.'
+                                      '\n\n**Note:** Executing this action '
+                                      'will make this widow click-through, '
+                                      'thus making it impossible to perform '
+                                      'the “Acknowledge Mouse Events” again. '
+                                      'For this reason, the example app '
+                                      'automatically starts acknowledging '
+                                      'mouse events again after five seconds.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Acknowledge Mouse Events',
                                   function: () =>
                                       Window.acknowledgeMouseEvents(),
                                   description:
-                                      'This action is included here for completeness\' sake, however it is technically impossible to run it after performing the “Ignore Mouse Events” action, since the “show all actions” button can then no longer be clicked.',
+                                      'This action is included here for '
+                                      'completeness\' sake, however it is '
+                                      'technically impossible to run it after '
+                                      'performing the “Ignore Mouse Events” '
+                                      'action, since the “show all actions” '
+                                      'button can then no longer be clicked.',
                                 ),
                                 MacOSActionMenuItem(
                                   name: 'Set Subtitle',
@@ -642,7 +708,10 @@ class MyAppBodyState extends State<MyAppBody> {
                                   name: 'Remove Subtitle',
                                   function: () => Window.setSubtitle(''),
                                   description:
-                                      'The action works by setting the subtitle to an empty string using `Window.setSubtitle(\'\')`. There is no method called `Window.removeSubtitle()`.',
+                                      'The action works by setting the '
+                                      'subtitle to an empty string using '
+                                      '`Window.setSubtitle(\'\')`. There is no '
+                                      'method called `Window.removeSubtitle()`.',
                                 ),
                               ],
                             ),
