@@ -200,6 +200,7 @@ class Window {
   static Future<void> initialize() async {
     if (Platform.isMacOS) {
       WindowManipulator.initialize();
+      setEffect(effect: WindowEffect.values[0]);
       return;
     }
 
