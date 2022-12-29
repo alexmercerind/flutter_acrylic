@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_acrylic/macos/blur_view_state_to_visual_effect_view_state_converter.dart';
-import 'package:flutter_acrylic/macos/mac_toolbar_style_to_window_toolbar_style_converter.dart';
+import 'package:flutter_acrylic/macos/converters/blur_view_state_to_visual_effect_view_state_converter.dart';
+import 'package:flutter_acrylic/macos/converters/mac_toolbar_style_to_window_toolbar_style_converter.dart';
 import 'package:flutter_acrylic/macos/macos_blur_view_state.dart';
 import 'package:flutter_acrylic/macos/macos_toolbar_style.dart';
 import 'package:flutter_acrylic/macos/visual_effect_view_properties.dart';
-import 'package:flutter_acrylic/macos/window_effect_to_material_converter.dart';
+import 'package:flutter_acrylic/macos/converters/window_effect_to_material_converter.dart';
 import 'package:flutter_acrylic/window_effect.dart';
 import 'package:macos_window_utils/window_manipulator.dart';
 
