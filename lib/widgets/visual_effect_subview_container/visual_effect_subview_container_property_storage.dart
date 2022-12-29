@@ -2,8 +2,8 @@ import 'package:flutter_acrylic/flutter_acrylic.dart';
 
 /// Storage for a [VisualEffectSubviewProperties] instance.
 ///
-/// Provides methods to identify changes in said instance that need to be transmitted to the
-/// Swift side.
+/// Provides methods to identify changes in said instance that need to be
+/// transmitted to the Swift side.
 class VisualEffectSubviewContainerPropertyStorage {
   VisualEffectSubviewProperties _currentProperties =
       VisualEffectSubviewProperties();
@@ -37,11 +37,13 @@ class VisualEffectSubviewContainerPropertyStorage {
     );
   }
 
-  /// Returns a [VisualEffectSubviewProperties] instance in which only the fields whose values
-  /// need to be transmitted to the Swift side are populated.
+  /// Returns a [VisualEffectSubviewProperties] instance in which only the
+  /// fields whose values need to be transmitted to the Swift side are
+  /// populated.
   ///
-  /// Note that the frame's size and position are represented as an `NSSize` or an `NSPoint`
-  /// object respectively. For this reason, those two properties are treated as a single value.
+  /// Note that the frame's size and position are represented as an `NSSize` or
+  /// an `NSPoint` object respectively. For this reason, those two properties
+  /// are treated as a single value.
   VisualEffectSubviewProperties getDeltaProperties(
       VisualEffectSubviewProperties newProperties) {
     final propertyChange = _getPropertyChange(newProperties);
@@ -102,7 +104,8 @@ class VisualEffectSubviewContainerPropertyStorage {
   }
 }
 
-/// A change in a [VisualEffectSubviewContainer]'s [VisualEffectSubviewProperties].
+/// A change in a [VisualEffectSubviewContainer]'s
+/// [VisualEffectSubviewProperties].
 ///
 /// Each field corresponds to a property whose value may have changed.
 class _VisualEffectSubviewContainerPropertyChange {
