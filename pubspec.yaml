@@ -31,8 +31,6 @@ flutter:
     platforms:
       windows:
         pluginClass: FlutterAcrylicPlugin
-      macos:
-        pluginClass: FlutterAcrylicPlugin
       linux:
         pluginClass: FlutterAcrylicPlugin
 
