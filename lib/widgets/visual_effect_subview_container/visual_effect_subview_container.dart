@@ -4,7 +4,8 @@ import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'visual_effect_subview_container_resize_event_relay.dart';
 import 'visual_effect_subview_container_with_global_key.dart';
 
-/// A container that applies a visual effect subview to its content (macOS only).
+/// A container that applies a visual effect subview to its content
+/// (macOS only).
 class VisualEffectSubviewContainer extends StatefulWidget {
   final Widget child;
   final double alphaValue;
@@ -26,24 +27,33 @@ class VisualEffectSubviewContainer extends StatefulWidget {
 
   /// Creates a [VisualEffectSubviewContainer].
   ///
-  /// The `alphaValue` is applied to the visual effect subview. It does not affect the opacity of the `child`.
-  /// Similarly, the `padding` only affects the subview, and does not affect the `child` either.
+  /// The [alphaValue] is applied to the visual effect subview. It does not
+  /// affect the opacity of the [child].
+  /// Similarly, the [padding] only affects the subview, and does not affect
+  /// the [child] either.
   ///
-  /// The `cornerRadius` argument specifies the radius of the visual effect view's corners. Which corners are affected
-  /// is dependent on the `cornerMask` argument. Usage example:
+  /// The [cornerRadius] argument specifies the radius of the visual effect
+  /// view's corners. Which corners are affected is dependent on the
+  /// [cornerMask] argument.
+  ///
+  /// Usage example:
   ///
   /// ```dart
   /// VisualEffectSubviewContainer(
   ///   effect: WindowEffect.hudWindow,
   ///   cornerRadius: 32.0,
-  ///   cornerMask: VisualEffectSubviewContainer.topLeftCorner + VisualEffectSubviewContainer.topRightCorner + VisualEffectSubviewContainer.bottomRightCorner,
+  ///   cornerMask: VisualEffectSubviewContainer.topLeftCorner +
+  ///       VisualEffectSubviewContainer.topRightCorner +
+  ///       VisualEffectSubviewContainer.bottomRightCorner,
   ///   child: Container(width: 128.0, height: 128.0),
   /// )
   /// ```
   ///
-  /// By default, a [VisualEffectSubviewContainer] updates its visual effect view whenever its `build` method runs. If
-  /// manual control over its update behavior is desired, it can be supplied a
-  /// [VisualEffectSubviewContainerResizeEventRelay] through which its update behavior can be controlled manually.
+  /// By default, a [VisualEffectSubviewContainer] updates its visual effect
+  /// view whenever its [build] method runs. If manual control over its update
+  /// behavior is desired, it can be supplied a
+  /// [VisualEffectSubviewContainerResizeEventRelay] through which its update
+  /// behavior can be controlled manually.
   const VisualEffectSubviewContainer(
       {Key? key,
       required this.child,
