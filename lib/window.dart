@@ -3,10 +3,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_acrylic/macos/blur_view_state_to_visual_effect_view_state_converter.dart';
+import 'package:flutter_acrylic/macos/mac_toolbar_style_to_window_toolbar_style_converter.dart';
 import 'package:flutter_acrylic/macos/macos_blur_view_state.dart';
 import 'package:flutter_acrylic/macos/macos_toolbar_style.dart';
 import 'package:flutter_acrylic/macos/visual_effect_view_properties.dart';
+import 'package:flutter_acrylic/macos/window_effect_to_material_converter.dart';
 import 'package:flutter_acrylic/window_effect.dart';
+import 'package:macos_window_utils/window_manipulator.dart';
 
 /// Platform channel name.
 const _kChannelName = "com.alexmercerind/flutter_acrylic";
@@ -194,6 +198,11 @@ class Window {
   /// }
   /// ```
   static Future<void> initialize() async {
+    if (Platform.isMacOS) {
+      WindowManipulator.initialize();
+      return;
+    }
+
     await _kChannel.invokeMethod(_kInitialize);
     _kCompleter.complete();
   }
@@ -230,6 +239,13 @@ class Window {
     Color color: Colors.transparent,
     bool dark: true,
   }) async {
+    if (Platform.isMacOS) {
+      final material =
+          WindowEffectToMaterialConverter.convertWindowEffectToMaterial(effect);
+      WindowManipulator.setMaterial(material);
+      return;
+    }
+
     await _kCompleter.future;
     await _kChannel.invokeMethod(
       _kSetEffect,
@@ -248,21 +264,45 @@ class Window {
 
   /// Hides window controls.
   static Future<void> hideWindowControls() async {
+    if (Platform.isMacOS) {
+      WindowManipulator.hideCloseButton();
+      WindowManipulator.hideMiniaturizeButton();
+      WindowManipulator.hideZoomButton();
+      return;
+    }
+
     await _kChannel.invokeMethod(_kHideWindowControls);
   }
 
   /// Shows window controls.
   static Future<void> showWindowControls() async {
+    if (Platform.isMacOS) {
+      WindowManipulator.showCloseButton();
+      WindowManipulator.showMiniaturizeButton();
+      WindowManipulator.showZoomButton();
+      return;
+    }
+
     await _kChannel.invokeMethod(_kShowWindowControls);
   }
 
   /// Makes the Flutter window fullscreen.
   static Future<void> enterFullscreen() async {
+    if (Platform.isMacOS) {
+      WindowManipulator.enterFullscreen();
+      return;
+    }
+
     await _kChannel.invokeMethod(_kEnterFullscreen);
   }
 
   /// Restores the Flutter window back to normal from fullscreen mode.
   static Future<void> exitFullscreen() async {
+    if (Platform.isMacOS) {
+      WindowManipulator.exitFullscreen();
+      return;
+    }
+
     await _kChannel.invokeMethod(_kExitFullscreen);
   }
 
@@ -274,13 +314,12 @@ class Window {
   /// If the full-size content view is disabled, this value will be 0.
   /// This value is only available on macOS.
   static Future<double> getTitlebarHeight() async {
-    if (!Platform.isMacOS) {
-      throw new UnsupportedError(
-          'getTitlebarHeight() is only available on macOS.');
+    if (Platform.isMacOS) {
+      return WindowManipulator.getTitlebarHeight();
     }
 
-    await _kCompleter.future;
-    return await _kChannel.invokeMethod(_kGetTitlebarHeight);
+    throw new UnsupportedError(
+        'getTitlebarHeight() is only available on macOS.');
   }
 
   /// Sets the document to be edited.
@@ -288,68 +327,56 @@ class Window {
   /// This will change the appearance of the close button on the titlebar.
   /// This method is only available on macOS.
   static Future<void> setDocumentEdited() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kSetDocumentEdited);
+    WindowManipulator.setDocumentEdited();
   }
 
   /// Sets the document to be unedited.
   ///
   /// This method is only available on macOS.
   static Future<void> setDocumentUnedited() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kSetDocumentUnedited);
+    WindowManipulator.setDocumentUnedited();
   }
 
   /// Sets the represented file of the window.
   ///
   /// This method is only available on macOS.
   static Future<void> setRepresentedFilename(String filename) async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kSetRepresentedFile, {
-      'filename': filename,
-    });
+    WindowManipulator.setRepresentedFilename(filename);
   }
 
   /// Sets the represented URL of the window.
   ///
   /// This method is only available on macOS.
   static Future<void> setRepresentedUrl(String url) async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kSetRepresentedURL, {
-      'url': url,
-    });
+    WindowManipulator.setRepresentedUrl(url);
   }
 
   /// Hides the titlebar of the window.
   ///
   /// This method is only available on macOS.
   static Future<void> hideTitle() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kHideTitle);
+    WindowManipulator.hideTitle();
   }
 
   /// Shows the titlebar of the window.
   ///
   /// This method is only available on macOS.
   static Future<void> showTitle() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kShowTitle);
+    WindowManipulator.showTitle();
   }
 
   /// Makes the window's titlebar transparent.
   ///
   /// This method is only available on macOS.
   static Future<void> makeTitlebarTransparent() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kMakeTitlebarTransparent);
+    WindowManipulator.makeTitlebarTransparent();
   }
 
   /// Makes the window's titlebar opaque.
   ///
   /// This method is only available on macOS.
   static Future<void> makeTitlebarOpaque() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kMakeTitlebarOpaque);
+    WindowManipulator.makeTitlebarOpaque();
   }
 
   /// Enables the window's full-size content view.
@@ -359,66 +386,67 @@ class Window {
   /// the titlebar transparent.
   /// This method is only available on macOS.
   static Future<void> enableFullSizeContentView() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kEnableFullSizeContentView);
+    WindowManipulator.enableFullSizeContentView();
   }
 
   /// Disables the window's full-size content view.
   ///
   /// This method is only available on macOS.
   static Future<void> disableFullSizeContentView() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kDisableFullSizeContentView);
+    WindowManipulator.disableFullSizeContentView();
   }
 
   /// Zooms the window.
   ///
   /// This method is only available on macOS.
   static Future<void> zoomWindow() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kZoomWindow);
+    WindowManipulator.zoomWindow();
   }
 
   /// Unzooms the window.
   ///
   /// This method is only available on macOS.
   static Future<void> unzoomWindow() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kUnzoomWindow);
+    WindowManipulator.unzoomWindow();
   }
 
   /// Returns if the window is zoomed.
   ///
   /// This method is only available on macOS.
   static Future<bool> isWindowZoomed() async {
+    if (Platform.isMacOS) {
+      return WindowManipulator.isWindowZoomed();
+    }
+
     if (!Platform.isMacOS) {
       throw new UnsupportedError(
           'isWindowZoomed() is only available on macOS.');
     }
 
-    await _kCompleter.future;
-    return await _kChannel.invokeMethod(_kIsWindowZoomed);
+    return false;
   }
 
   /// Returns if the window is fullscreened.
   ///
   /// This method is only available on macOS.
   static Future<bool> isWindowFullscreened() async {
+    if (Platform.isMacOS) {
+      return WindowManipulator.isWindowFullscreened();
+    }
+
     if (!Platform.isMacOS) {
       throw new UnsupportedError(
           'isWindowFullscreened() is only available on macOS.');
     }
 
-    await _kCompleter.future;
-    return await _kChannel.invokeMethod(_kIsWindowFullscreened);
+    return false;
   }
 
   /// Hides the window's zoom button.
   ///
   /// This method is only available on macOS.
   static Future<void> hideZoomButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kHideZoomButton);
+    WindowManipulator.hideZoomButton();
   }
 
   /// Shows the window's zoom button.
@@ -426,16 +454,14 @@ class Window {
   /// The zoom button is visible by default.
   /// This method is only available on macOS.
   static Future<void> showZoomButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kShowZoomButton);
+    WindowManipulator.showZoomButton();
   }
 
   /// Hides the window's miniaturize button.
   ///
   /// This method is only available on macOS.
   static Future<void> hideMiniaturizeButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kHideMiniaturizeButton);
+    WindowManipulator.hideMiniaturizeButton();
   }
 
   /// Shows the window's miniaturize button.
@@ -443,16 +469,14 @@ class Window {
   /// The miniaturize button is visible by default.
   /// This method is only available on macOS.
   static Future<void> showMiniaturizeButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kShowMiniaturizeButton);
+    WindowManipulator.showMiniaturizeButton();
   }
 
   /// Hides the window's close button.
   ///
   /// This method is only available on macOS.
   static Future<void> hideCloseButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kHideCloseButton);
+    WindowManipulator.hideCloseButton();
   }
 
   /// Shows the window's close button.
@@ -460,8 +484,7 @@ class Window {
   /// The close button is visible by default.
   /// This method is only available on macOS.
   static Future<void> showCloseButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kShowCloseButton);
+    WindowManipulator.showCloseButton();
   }
 
   /// Enables the window's zoom button.
@@ -469,16 +492,14 @@ class Window {
   /// The zoom button is enabled by default.
   /// This method is only available on macOS.
   static Future<void> enableZoomButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kEnableZoomButton);
+    WindowManipulator.enableZoomButton();
   }
 
   /// Disables the window's zoom button.
   ///
   /// This method is only available on macOS.
   static Future<void> disableZoomButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kDisableZoomButton);
+    WindowManipulator.disableZoomButton();
   }
 
   /// Enables the window's miniaturize button.
@@ -486,16 +507,14 @@ class Window {
   /// The miniaturize button is enabled by default.
   /// This method is only available on macOS.
   static Future<void> enableMiniaturizeButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kEnableMiniaturizeButton);
+    WindowManipulator.enableMiniaturizeButton();
   }
 
   /// Disables the window's miniaturize button.
   ///
   /// This method is only available on macOS.
   static Future<void> disableMiniaturizeButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kDisableMiniaturizeButton);
+    WindowManipulator.disableMiniaturizeButton();
   }
 
   /// Enables the window's close button.
@@ -503,51 +522,41 @@ class Window {
   /// The close button is enabled by default.
   /// This method is only available on macOS.
   static Future<void> enableCloseButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kEnableCloseButton);
+    WindowManipulator.enableCloseButton();
   }
 
   /// Disables the window's close button.
   ///
   /// This method is only available on macOS.
   static Future<void> disableCloseButton() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kDisableCloseButton);
+    WindowManipulator.disableCloseButton();
   }
 
   /// Gets whether the window is currently being resized by the user.
   ///
   /// This method is only available on macOS.
   static Future<bool> isWindowInLiveResize() async {
-    if (!Platform.isMacOS) {
-      throw UnsupportedError(
-          'isWindowInLiveResize() is only available on macOS.');
+    if (Platform.isMacOS) {
+      return WindowManipulator.isWindowInLiveResize();
     }
 
-    await _kCompleter.future;
-    return await _kChannel.invokeMethod(_kIsWindowInLiveResize);
+    throw UnsupportedError(
+        'isWindowInLiveResize() is only available on macOS.');
   }
 
   /// Sets the window's alpha value.
   ///
   /// This method is only available on macOS.
   static Future<void> setWindowAlphaValue(double value) async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kSetWindowAlphaValue, <String, dynamic>{
-      'value': value,
-    });
+    WindowManipulator.setWindowAlphaValue(value);
+    return;
   }
 
   /// Gets if the window is visible.
   ///
   /// This method is only available on macOS.
   static Future<bool> isWindowVisible() async {
-    if (!Platform.isMacOS) {
-      throw UnsupportedError('isWindowVisible() is only available on macOS.');
-    }
-
-    await _kCompleter.future;
-    return await _kChannel.invokeMethod(_kIsWindowVisible);
+    return WindowManipulator.isWindowVisible();
   }
 
   /// Sets the window background color to the default (opaque) window color.
@@ -555,8 +564,8 @@ class Window {
   /// This method mainly affects the window's titlebar.
   /// This method is only available on macOS.
   static Future<void> setWindowBackgroundColorToDefaultColor() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kSetWindowBackgroundColorToDefaultColor);
+    WindowManipulator.setWindowBackgroundColorToDefaultColor();
+    return;
   }
 
   /// Sets the window background color to clear.
@@ -564,18 +573,16 @@ class Window {
   /// This method mainly affects the window's titlebar.
   /// This method is only available on macOS.
   static Future<void> setWindowBackgroundColorToClear() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kSetWindowBackgroundColorToClear);
+    WindowManipulator.setWindowBackgroundColorToClear();
   }
 
   /// Sets the blur view state.
   ///
   /// This method is only available on macOS.
   static Future<void> setBlurViewState(MacOSBlurViewState state) async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kSetBlurViewState, <String, dynamic>{
-      'state': state.toString().split('.').last,
-    });
+    final visualEffectViewState = BlurViewStateToVisualEffectViewStateConverter
+        .convertBlurViewStateToVisualEffectViewState(state);
+    WindowManipulator.setNSVisualEffectViewState(visualEffectViewState);
   }
 
   /// Adds a visual effect subview to the application's window and returns its
@@ -584,9 +591,13 @@ class Window {
   /// This method is only available on macOS.
   static Future<int> addVisualEffectSubview(
       VisualEffectSubviewProperties properties) async {
-    await _kCompleter.future;
-    return await _kChannel.invokeMethod(
-        _kAddVisualEffectSubview, properties.toMap());
+    if (Platform.isMacOS) {
+      final newProperties =
+          properties.toMacOSWindowUtilsVisualEffectSubviewProperties();
+      return WindowManipulator.addVisualEffectSubview(newProperties);
+    }
+
+    return -1;
   }
 
   /// Updates the properties of a visual effect subview.
@@ -595,12 +606,10 @@ class Window {
   static Future<void> updateVisualEffectSubviewProperties(
       int visualEffectSubviewId,
       VisualEffectSubviewProperties properties) async {
-    await _kCompleter.future;
-    await _kChannel
-        .invokeMethod(_kUpdateVisualEffectSubviewProperties, <String, dynamic>{
-      'visualEffectSubviewId': visualEffectSubviewId,
-      ...properties.toMap(),
-    });
+    final newProperties =
+        properties.toMacOSWindowUtilsVisualEffectSubviewProperties();
+    WindowManipulator.updateVisualEffectSubviewProperties(
+        visualEffectSubviewId, newProperties);
   }
 
   /// Removes a visual effect subview from the application's window.
@@ -608,35 +617,24 @@ class Window {
   /// This method is only available on macOS.
   static Future<void> removeVisualEffectSubview(
       int visualEffectSubviewId) async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kRemoveVisualEffectSubview, <String, dynamic>{
-      'visualEffectSubviewId': visualEffectSubviewId,
-    });
+    WindowManipulator.removeVisualEffectSubview(visualEffectSubviewId);
   }
 
   /// Overrides the brightness setting of the window (macOS only).
   static Future<void> overrideMacOSBrightness({
     required bool dark,
   }) async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(
-      _kOverrideMacOSBrightness,
-      {
-        'dark': dark,
-      },
-    );
+    WindowManipulator.overrideMacOSBrightness(dark: dark);
   }
 
   /// Adds a toolbar to the window (macOS only).
   static Future<void> addToolbar() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kAddToolbar, {});
+    WindowManipulator.addToolbar();
   }
 
   /// Removes the window's toolbar (macOS only).
   static Future<void> removeToolbar() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kRemoveToolbar, {});
+    WindowManipulator.removeToolbar();
   }
 
   /// Sets the window's toolbar style (macOS only).
@@ -651,22 +649,19 @@ class Window {
   /// ```
   static Future<void> setToolbarStyle(
       {required MacOSToolbarStyle toolbarStyle}) async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kSetToolbarStyle, {
-      'toolbarStyle': toolbarStyle.name,
-    });
+    final newToolbarStyle = MacOSToolbarStyleToWindowToolbarStyleConverter
+        .convertMacOSToolbarStyleToWindowToolbarStyle(toolbarStyle);
+    WindowManipulator.setToolbarStyle(toolbarStyle: newToolbarStyle);
   }
 
   /// Enables the window's shadow (macOS only).
   static Future<void> enableShadow() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kEnableShadow, {});
+    WindowManipulator.enableShadow();
   }
 
   /// Disables the window's shadow (macOS only).
   static Future<void> disableShadow() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kDisableShadow, {});
+    WindowManipulator.disableShadow();
   }
 
   /// Invalidates the window's shadow (macOS only).
@@ -674,8 +669,7 @@ class Window {
   /// This is a fairly technical method and is included here for
   /// completeness' sake. Normally, it should not be necessary to use it.
   static Future<void> invalidateShadows() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kInvalidateShadows, {});
+    WindowManipulator.invalidateShadows();
   }
 
   /// Adds an empty mask image to the window's view (macOS only).
@@ -687,14 +681,12 @@ class Window {
   /// enabled when using an empty mask image can cause visual artifacts
   /// and performance issues.
   static Future<void> addEmptyMaskImage() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kAddEmptyMaskImage, {});
+    WindowManipulator.addEmptyMaskImage();
   }
 
   /// Removes the window's mask image (macOS only).
   static Future<void> removeMaskImage() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kRemoveMaskImage, {});
+    WindowManipulator.removeMaskImage();
   }
 
   /// Makes a window fully transparent (with no blur effect) (macOS only).
@@ -723,8 +715,7 @@ class Window {
   /// may be desirable when used in conjunction with
   /// `Window.makeWindowFullyTransparent()`.
   static Future<void> ignoreMouseEvents() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kIgnoreMouseEvents, {});
+    WindowManipulator.ignoreMouseEvents();
   }
 
   /// Makes the window acknowledge mouse events (macOS only).
@@ -733,17 +724,13 @@ class Window {
   /// may be desirable when used in conjunction with
   /// `Window.makeWindowFullyTransparent()`.
   static Future<void> acknowledgeMouseEvents() async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kAcknowledgeMouseEvents, {});
+    WindowManipulator.acknowledgeMouseEvents();
   }
 
   /// Sets the subtitle of the window (macOS only).
   ///
   /// To remove the subtitle, pass an empty string to this method.
   static Future<void> setSubtitle(String subtitle) async {
-    await _kCompleter.future;
-    await _kChannel.invokeMethod(_kSetSubtitle, {
-      'subtitle': subtitle,
-    });
+    WindowManipulator.setSubtitle(subtitle);
   }
 }
