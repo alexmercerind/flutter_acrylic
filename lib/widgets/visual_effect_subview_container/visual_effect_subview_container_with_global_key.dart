@@ -6,11 +6,6 @@ import 'package:flutter_acrylic/widgets/visual_effect_subview_container/visual_e
 
 import 'visual_effect_subview_container_property_storage.dart';
 
-/// A visual effect subview container which needs to be provided a global key.
-///
-/// This widget is intended to be used by the [VisualEffectSubviewContainer] widget.
-/// As a user of the [flutter_acrylic] package it is recommended to use that widget
-/// instead, as it takes care of the global key creation by itself.
 class VisualEffectSubviewContainerWithGlobalKey extends StatefulWidget {
   final Widget child;
   final double alphaValue;
@@ -28,6 +23,12 @@ class VisualEffectSubviewContainerWithGlobalKey extends StatefulWidget {
   static const bottomLeftCorner =
       VisualEffectSubviewProperties.bottomLeftCorner;
 
+  /// A visual effect subview container which needs to be provided a global key.
+  ///
+  /// This widget is intended to be used by the [VisualEffectSubviewContainer]
+  /// widget. As a user of the [flutter_acrylic] package it is recommended to
+  /// use that widget instead, as it takes care of the global key creation by
+  /// itself.
   const VisualEffectSubviewContainerWithGlobalKey(
       {required GlobalKey key,
       required this.child,
@@ -90,7 +91,8 @@ class _VisualEffectSubviewContainerWithGlobalKeyState
     super.initState();
   }
 
-  /// Removes the previously added visual effect subview from the application window.
+  /// Removes the previously added visual effect subview from the application
+  /// window.
   void _removeVisualEffectSubviewFromApplicationWindow() {
     if (_visualEffectSubviewId == null) {
       return;
@@ -108,10 +110,10 @@ class _VisualEffectSubviewContainerWithGlobalKeyState
 
   /// Modifies the visual effect subview.
   ///
-  /// This method takes the current position and size of the visual effect subview and
-  /// compares the values of all of the subview's properties to their previous values.
-  /// If any differences are identified, the visual effect subview will be updated on
-  /// the Swift side.
+  /// This method takes the current position and size of the visual effect
+  /// subview and compares the values of all of the subview's properties to
+  /// their previous values. If any differences are identified, the visual
+  /// effect subview will be updated on the Swift side.
   void _modifyVisualEffectSubview(
       {required double xPosition,
       required double yPosition,
@@ -141,8 +143,8 @@ class _VisualEffectSubviewContainerWithGlobalKeyState
     }
   }
 
-  /// Determines the position and size of this widget relative to the application
-  /// window and modifies the visual effect subview accordingly.
+  /// Determines the position and size of this widget relative to the
+  /// application window and modifies the visual effect subview accordingly.
   void _updateVisualEffectSubview() {
     final renderObject = (widget.key as GlobalKey)
         .currentContext!
