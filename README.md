@@ -8,7 +8,7 @@ Mention in your `pubspec.yaml`.
 ```yaml
 dependencies:
   ...
-  flutter_acrylic: ^1.0.0
+  flutter_acrylic: ^1.1.0
 ```
 
 ## Example
