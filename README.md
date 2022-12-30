@@ -371,21 +371,23 @@ You can see the [example](https://github.com/alexmercerind/flutter_acrylic/blob/
 
 **Additional setup for macOS:**
 
+flutter_acrylic depends on the [macos_window_utils](https://pub.dev/packages/macos_window_utils) plugin, which needs to be initialized as follows:
+
 Open the `macos/Runner.xcworkspace` folder of your project using Xcode, press ⇧ + ⌘ + O and search for `MainFlutterWindow.swift`.
 
-Insert `import flutter_acrylic` at the top of the file.
+Insert `import macos_window_utils` at the top of the file.
 Then, replace the code above the `super.awakeFromNib()`-line with the following code:
 
 ```swift
 let windowFrame = self.frame
-let blurryContainerViewController = BlurryContainerViewController()
-self.contentViewController = blurryContainerViewController
+let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
+self.contentViewController = macOSWindowUtilsViewController
 self.setFrame(windowFrame, display: true)
 
-/* Initialize the flutter_acrylic plugin */
+/* Initialize the macos_window_utils plugin */
 MainFlutterWindowManipulator.start(mainFlutterWindow: self)
 
-RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)
+RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
 ```
 
 Assuming you're starting with the default configuration, the finished code should look something like this:
@@ -393,7 +395,7 @@ Assuming you're starting with the default configuration, the finished code shoul
 ```diff
 import Cocoa
 import FlutterMacOS
-+import flutter_acrylic
++import macos_window_utils
 
 class MainFlutterWindow: NSWindow {
   override func awakeFromNib() {
@@ -405,14 +407,14 @@ class MainFlutterWindow: NSWindow {
 -   RegisterGeneratedPlugins(registry: flutterViewController)
     
 +   let windowFrame = self.frame
-+   let blurryContainerViewController = BlurryContainerViewController()
-+   self.contentViewController = blurryContainerViewController
++   let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
++   self.contentViewController = macOSWindowUtilsViewController
 +   self.setFrame(windowFrame, display: true)
 
-+   /* Initialize the flutter_acrylic plugin */
++   /* Initialize the macos_window_utils plugin */
 +   MainFlutterWindowManipulator.start(mainFlutterWindow: self)
 
-+   RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)
++   RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
 
     super.awakeFromNib()
   }
@@ -420,6 +422,12 @@ class MainFlutterWindow: NSWindow {
 ```
 
 Now press ⇧ + ⌘ + O once more and search for `Runner.xcodeproj`. Go to `info` > `Deployment Target` and set the `macOS Deployment Target` to `10.13` or above.
+
+Additionally, you may need to open the `Podfile` in your Xcode project and make sure the deployment target in the first line is set to `10.14.6` or above:
+
+```podspec
+platform :osx, '10.14.6'
+```
 
 Depending on your use case, you may want to extend the area of the window that Flutter can draw to to the entire window, such that you are able to draw onto the window's title bar as well (for example when you're only trying to make the sidebar transparent while the rest of the window is meant to stay opaque).
 
