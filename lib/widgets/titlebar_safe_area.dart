@@ -43,9 +43,10 @@ class TitlebarSafeArea extends StatelessWidget {
 
   /// A widget that provides a safe area for its child.
   ///
-  /// The safe area is the area on the top of the window that is not covered by the title bar.
-  /// This widget has no effect when the full-size content view is disabled or when the app is
-  /// running on a platform other than macOS.
+  /// The safe area is the area on the top of the window that is not covered by
+  /// the title bar. This widget has no effect when the full-size content view
+  /// is disabled or when the app is running on a platform other than macOS.
+  ///
   /// Example:
   /// ```dart
   /// TitlebarSafeArea(

@@ -44,12 +44,13 @@ class _SidebarFrameState extends State<SidebarFrame> {
                   begin: _isOpen ? sidebarWidth : 0.0,
                   end: _isOpen ? sidebarWidth : 0.0),
               builder: (BuildContext context, double value, Widget? child) {
-                // The TransparentMacOSSidebar needs to be built inside the TweenAnimationBuilder's `build` method
-                // because it needs to be rebuilt whenever its size changes so that the visual effect subview gets
-                // updated.
-                // If you ever find yourself in a situation where a rebuild cannot be guaranteed, check out the
-                // VisualEffectSubviewContainerResizeEventRelay widget, which lets you control the sidebar's
-                // update behavior manually.
+                // The TransparentMacOSSidebar needs to be built inside the
+                // TweenAnimationBuilder's `build` method because it needs to be
+                // rebuilt whenever its size changes so that the visual effect
+                // subview gets updated. If you ever find yourself in a
+                // situation where a rebuild cannot be guaranteed, check out the
+                // VisualEffectSubviewContainerResizeEventRelay class, which
+                // lets you control the sidebar's update behavior manually.
                 return TransparentMacOSSidebar(
                   state: widget.macOSBlurViewState,
                   child: Container(

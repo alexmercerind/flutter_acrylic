@@ -21,9 +21,9 @@ void main() {
       frameY: 0.0,
     ));
 
-    // On the Swift side, the frame size is represented by an `NSSize` object. For this reason,
-    // even if only one metric changes, both metrics will need to be transmitted, so that an
-    // `NSSize` object can be created.
+    // On the Swift side, the frame size is represented by an `NSSize` object.
+    // For this reason, even if only one metric changes, both metrics will need
+    // to be transmitted, so that an `NSSize` object can be created.
     expect(
         delta0,
         VisualEffectSubviewProperties(
@@ -61,8 +61,8 @@ void main() {
   });
 
   testWidgets(
-      'visual effect subview container property storage frame position change test',
-      (tester) async {
+      'visual effect subview container property storage frame position change '
+      'test', (tester) async {
     final storage = VisualEffectSubviewContainerPropertyStorage();
     storage.updateProperties(VisualEffectSubviewProperties(
       frameWidth: 1.0,
@@ -78,9 +78,9 @@ void main() {
       frameY: 0.0,
     ));
 
-    // On the Swift side, the frame position is represented by an `NSPoint` object. For this reason,
-    // even if only one value changes, both values will need to be transmitted, so that an
-    // `NSPoint` object can be created.
+    // On the Swift side, the frame position is represented by an `NSPoint`
+    // object. For this reason, even if only one value changes, both values will
+    // need to be transmitted, so that an `NSPoint` object can be created.
     expect(
         delta0,
         VisualEffectSubviewProperties(
@@ -118,8 +118,8 @@ void main() {
   });
 
   testWidgets(
-      'visual effect subview container property storage alpha value change test',
-      (tester) async {
+      'visual effect subview container property storage alpha value change '
+      'test', (tester) async {
     final storage = VisualEffectSubviewContainerPropertyStorage();
     storage.updateProperties(VisualEffectSubviewProperties(
       alphaValue: 1.0,

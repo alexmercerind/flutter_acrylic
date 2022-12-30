@@ -1,4 +1,9 @@
 import 'package:flutter_acrylic/flutter_acrylic.dart';
+import 'package:flutter_acrylic/macos/converters/blur_view_state_to_visual_effect_view_state_converter.dart';
+import 'package:flutter_acrylic/macos/converters/window_effect_to_material_converter.dart';
+
+import 'package:macos_window_utils/macos/visual_effect_view_properties.dart'
+    as MacOSWindowUtilsVisualEffectSubviewProperties;
 
 /// Visual effect subview properties (macOS only).
 ///
@@ -13,7 +18,8 @@ class VisualEffectSubviewProperties {
   /// The x position of the subview's frame.
   final double? frameX;
 
-  /// The y position of the subview's frame, starting at the bottom of the window.
+  /// The y position of the subview's frame, starting at the bottom of the
+  /// window.
   final double? frameY;
 
   /// The alpha value of the subview.
@@ -22,7 +28,8 @@ class VisualEffectSubviewProperties {
   /// The corner Radius of the subview.
   final double? cornerRadius;
 
-  /// A bitmask indicating which corners should follow the `cornerRadius` property.
+  /// A bitmask indicating which corners should follow the `cornerRadius`
+  /// property.
   final int? cornerMask;
 
   /// The effect/material of the subview.
@@ -58,49 +65,29 @@ class VisualEffectSubviewProperties {
       effect == null &&
       state == null;
 
-  /// Creates a map in which the properties of this instance are contained.
-  ///
-  /// Only non-null properties will be present in that map.
-  Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
+  MacOSWindowUtilsVisualEffectSubviewProperties.VisualEffectSubviewProperties
+      toMacOSWindowUtilsVisualEffectSubviewProperties() {
+    final material = effect == null
+        ? null
+        : WindowEffectToMaterialConverter.convertWindowEffectToMaterial(
+            effect!);
+    final visualEffectViewState = state == null
+        ? null
+        : BlurViewStateToVisualEffectViewStateConverter
+            .convertBlurViewStateToVisualEffectViewState(state!);
 
-    if (frameWidth != null) {
-      result['frameWidth'] = frameWidth;
-    }
-
-    if (frameHeight != null) {
-      result['frameHeight'] = frameHeight;
-    }
-
-    if (frameX != null) {
-      result['frameX'] = frameX;
-    }
-
-    if (frameY != null) {
-      result['frameY'] = frameY;
-    }
-
-    if (alphaValue != null) {
-      result['alphaValue'] = alphaValue;
-    }
-
-    if (cornerRadius != null) {
-      result['cornerRadius'] = cornerRadius;
-    }
-
-    if (cornerMask != null) {
-      result['cornerMask'] = cornerMask;
-    }
-
-    if (effect != null) {
-      result['effect'] = effect!.index;
-    }
-
-    if (state != null) {
-      result['state'] = state!.name;
-    }
-
-    return result;
+    return MacOSWindowUtilsVisualEffectSubviewProperties
+        .VisualEffectSubviewProperties(
+      frameWidth: frameWidth,
+      frameHeight: frameHeight,
+      frameX: frameX,
+      frameY: frameY,
+      alphaValue: alphaValue,
+      cornerRadius: cornerRadius,
+      cornerMask: cornerMask,
+      material: material,
+      state: visualEffectViewState,
+    );
   }
 
   @override
@@ -132,6 +119,7 @@ class VisualEffectSubviewProperties {
 
   @override
   String toString() {
-    return '$frameWidth $frameHeight $frameX $frameY $alphaValue $cornerRadius $cornerMask $effect $state';
+    return '$frameWidth $frameHeight $frameX $frameY $alphaValue $cornerRadius'
+        '$cornerMask $effect $state';
   }
 }

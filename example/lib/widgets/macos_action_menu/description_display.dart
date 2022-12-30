@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-/// A widget that displays an action menu item's description at the bottom
-/// of the action menu.
+/// A widget that displays an action menu item's description at the bottom of
+/// the action menu.
 class DescriptionDisplay extends StatelessWidget {
   static const maxHeight = 150.0;
 

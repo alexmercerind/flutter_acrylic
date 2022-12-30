@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 /// An item to be displayed in the action list.
@@ -22,11 +24,39 @@ class ActionListItem extends StatefulWidget {
 }
 
 class _ActionListItemState extends State<ActionListItem> {
+  final _globalKey = GlobalKey();
   bool _isBeingHoveredOver = false;
+
+  void _ensureVisible() {
+    if (_globalKey.currentContext == null) {
+      return;
+    }
+
+    Scrollable.ensureVisible(_globalKey.currentContext!,
+        alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart);
+    Scrollable.ensureVisible(_globalKey.currentContext!,
+        alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd);
+  }
+
+  @override
+  void initState() {
+    // Run `_ensureVisible` through a timer to ensure that it runs after the
+    // `build` method has already run.
+    if (widget.isSelected) {
+      Timer(const Duration(), _ensureVisible);
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isSelected) {
+      _ensureVisible();
+    }
+
     return GestureDetector(
+      key: _globalKey,
       onTap: widget.isSelected ? widget.perform : widget.select,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
