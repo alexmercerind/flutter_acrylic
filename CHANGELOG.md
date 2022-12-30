@@ -7,6 +7,9 @@
 - Add methods and widgets to create visual effect subviews on macOS.
 - Improve documentation of various widgets and classes.
 
+**Breaking change:**
+Migrated to [macos_window_utils](https://pub.dev/packages/macos_window_utils). See the [migration guide](https://github.com/alexmercerind/flutter_acrylic/blob/master/MIGRATIONGUIDE.md) for more information.
+
 ## 1.0.0+2
 
 - Hotfix: Fixes a problem with too many rebuilds in TitlebarSafeArea.
