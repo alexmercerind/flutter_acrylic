@@ -1,11 +1,11 @@
 ## 1.1.0
-- Add methods to add a toolbar to the window on macOS and change its style.
-- Add methods to enable/disable the window's shadow on macOS.
-- Add method to make the window fully transparent on macOS.
-- Add methods to ignore mouse events on macOS.
-- Add method to set the window's subtitle on macOS.
-- Add methods and widgets to create visual effect subviews on macOS.
-- Improve documentation of various widgets and classes.
+- Added methods to add a toolbar to the window on macOS and change its style.
+- Added methods to enable/disable the window's shadow on macOS.
+- Added method to make the window fully transparent on macOS.
+- Added methods to ignore mouse events on macOS.
+- Added method to set the window's subtitle on macOS.
+- Added methods and widgets to create visual effect subviews on macOS.
+- Improved documentation of various widgets and classes.
 
 **Breaking change:**
 Migrated to [macos_window_utils](https://pub.dev/packages/macos_window_utils). See the [migration guide](https://github.com/alexmercerind/flutter_acrylic/blob/master/MIGRATIONGUIDE.md) for more information.
