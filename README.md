@@ -421,7 +421,7 @@ class MainFlutterWindow: NSWindow {
 }
 ```
 
-Now press ⇧ + ⌘ + O once more and search for `Runner.xcodeproj`. Go to `info` > `Deployment Target` and set the `macOS Deployment Target` to `10.13` or above.
+Now press ⇧ + ⌘ + O once more and search for `Runner.xcodeproj`. Go to `info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above.
 
 Additionally, you may need to open the `Podfile` in your Xcode project and make sure the deployment target in the first line is set to `10.14.6` or above:
 
