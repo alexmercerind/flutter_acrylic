@@ -1,7 +1,9 @@
 ## 1.1.0+1
+
 - Added [macos_window_utils](https://pub.dev/packages/macos_window_utils) as endorsed implementation.
 
 ## 1.1.0
+
 - Added methods to add a toolbar to the window on macOS and change its style.
 - Added methods to enable/disable the window's shadow on macOS.
 - Added method to make the window fully transparent on macOS.
