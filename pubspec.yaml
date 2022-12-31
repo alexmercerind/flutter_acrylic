@@ -33,6 +33,8 @@ flutter:
         pluginClass: FlutterAcrylicPlugin
       linux:
         pluginClass: FlutterAcrylicPlugin
+      macos:
+        default_package: macos_window_utils
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
