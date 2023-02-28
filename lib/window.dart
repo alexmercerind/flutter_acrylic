@@ -91,8 +91,8 @@ class Window {
   ///
   static Future<void> setEffect({
     required WindowEffect effect,
-    Color color: Colors.transparent,
-    bool dark: true,
+    Color color = Colors.transparent,
+    bool dark = true,
   }) async {
     if (Platform.isMacOS) {
       final material =

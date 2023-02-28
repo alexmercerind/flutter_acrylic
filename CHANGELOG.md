@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Upgraded [macos_window_utils](https://pub.dev/packages/macos_window_utils) to version 1.0.2 to ensure compatibility with Flutter 3.7 on macOS.
+
 ## 1.1.0+1
 
 - Added [macos_window_utils](https://pub.dev/packages/macos_window_utils) as endorsed implementation.
