@@ -35,7 +35,6 @@ class DescriptionDisplay extends StatelessWidget {
             ),
           ],
         ),
-        // child: Text(description!),
         child: Markdown(
           data: description!,
           shrinkWrap: true,
