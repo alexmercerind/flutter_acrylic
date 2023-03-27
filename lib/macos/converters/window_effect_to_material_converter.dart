@@ -5,7 +5,8 @@ class WindowEffectToMaterialConverter {
   WindowEffectToMaterialConverter._();
 
   static NSVisualEffectViewMaterial convertWindowEffectToMaterial(
-      WindowEffect windowEffect) {
+    WindowEffect windowEffect,
+  ) {
     switch (windowEffect.index) {
       case 0: // disabled
         return NSVisualEffectViewMaterial.windowBackground;
