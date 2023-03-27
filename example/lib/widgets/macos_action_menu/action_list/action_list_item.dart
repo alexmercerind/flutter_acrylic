@@ -32,10 +32,14 @@ class _ActionListItemState extends State<ActionListItem> {
       return;
     }
 
-    Scrollable.ensureVisible(_globalKey.currentContext!,
-        alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart);
-    Scrollable.ensureVisible(_globalKey.currentContext!,
-        alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd);
+    Scrollable.ensureVisible(
+      _globalKey.currentContext!,
+      alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
+    );
+    Scrollable.ensureVisible(
+      _globalKey.currentContext!,
+      alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
+    );
   }
 
   @override
