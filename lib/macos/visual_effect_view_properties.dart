@@ -38,16 +38,17 @@ class VisualEffectSubviewProperties {
   /// The state of the subview.
   final MacOSBlurViewState? state;
 
-  VisualEffectSubviewProperties(
-      {this.frameWidth,
-      this.frameHeight,
-      this.frameX,
-      this.frameY,
-      this.alphaValue,
-      this.cornerRadius,
-      this.cornerMask,
-      this.effect,
-      this.state});
+  VisualEffectSubviewProperties({
+    this.frameWidth,
+    this.frameHeight,
+    this.frameX,
+    this.frameY,
+    this.alphaValue,
+    this.cornerRadius,
+    this.cornerMask,
+    this.effect,
+    this.state,
+  });
 
   static const topLeftCorner = 1 << 0;
   static const topRightCorner = 1 << 1;
@@ -70,7 +71,8 @@ class VisualEffectSubviewProperties {
     final material = effect == null
         ? null
         : WindowEffectToMaterialConverter.convertWindowEffectToMaterial(
-            effect!);
+            effect!,
+          );
     final visualEffectViewState = state == null
         ? null
         : BlurViewStateToVisualEffectViewStateConverter
