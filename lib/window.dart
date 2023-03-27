@@ -33,8 +33,8 @@ const _kEnterFullscreen = "EnterFullscreen";
 /// Exits fullscreen.
 const _kExitFullscreen = "ExitFullscreen";
 
-final MethodChannel _kChannel = const MethodChannel(_kChannelName);
-final Completer<void> _kCompleter = new Completer<void>();
+const MethodChannel _kChannel = MethodChannel(_kChannelName);
+final Completer<void> _kCompleter = Completer<void>();
 
 /// **Window**
 ///
@@ -55,6 +55,7 @@ class Window {
     if (Platform.isMacOS) {
       WindowManipulator.initialize();
       setEffect(effect: WindowEffect.values[0]);
+
       return;
     }
 
@@ -98,6 +99,7 @@ class Window {
       final material =
           WindowEffectToMaterialConverter.convertWindowEffectToMaterial(effect);
       WindowManipulator.setMaterial(material);
+
       return;
     }
 
@@ -123,6 +125,7 @@ class Window {
       WindowManipulator.hideCloseButton();
       WindowManipulator.hideMiniaturizeButton();
       WindowManipulator.hideZoomButton();
+
       return;
     }
 
@@ -135,6 +138,7 @@ class Window {
       WindowManipulator.showCloseButton();
       WindowManipulator.showMiniaturizeButton();
       WindowManipulator.showZoomButton();
+
       return;
     }
 
@@ -145,6 +149,7 @@ class Window {
   static Future<void> enterFullscreen() async {
     if (Platform.isMacOS) {
       WindowManipulator.enterFullscreen();
+
       return;
     }
 
@@ -155,6 +160,7 @@ class Window {
   static Future<void> exitFullscreen() async {
     if (Platform.isMacOS) {
       WindowManipulator.exitFullscreen();
+
       return;
     }
 
@@ -173,8 +179,7 @@ class Window {
       return WindowManipulator.getTitlebarHeight();
     }
 
-    throw new UnsupportedError(
-        'getTitlebarHeight() is only available on macOS.');
+    throw UnsupportedError('getTitlebarHeight() is only available on macOS.');
   }
 
   /// Sets the document to be edited.
@@ -277,8 +282,7 @@ class Window {
     }
 
     if (!Platform.isMacOS) {
-      throw new UnsupportedError(
-          'isWindowZoomed() is only available on macOS.');
+      throw UnsupportedError('isWindowZoomed() is only available on macOS.');
     }
 
     return false;
@@ -293,8 +297,9 @@ class Window {
     }
 
     if (!Platform.isMacOS) {
-      throw new UnsupportedError(
-          'isWindowFullscreened() is only available on macOS.');
+      throw UnsupportedError(
+        'isWindowFullscreened() is only available on macOS.',
+      );
     }
 
     return false;
@@ -399,7 +404,8 @@ class Window {
     }
 
     throw UnsupportedError(
-        'isWindowInLiveResize() is only available on macOS.');
+      'isWindowInLiveResize() is only available on macOS.',
+    );
   }
 
   /// Sets the window's alpha value.
@@ -407,6 +413,7 @@ class Window {
   /// This method is only available on macOS.
   static Future<void> setWindowAlphaValue(double value) async {
     WindowManipulator.setWindowAlphaValue(value);
+
     return;
   }
 
@@ -423,7 +430,6 @@ class Window {
   /// This method is only available on macOS.
   static Future<void> setWindowBackgroundColorToDefaultColor() async {
     WindowManipulator.setWindowBackgroundColorToDefaultColor();
-    return;
   }
 
   /// Sets the window background color to clear.
@@ -448,10 +454,12 @@ class Window {
   ///
   /// This method is only available on macOS.
   static Future<int> addVisualEffectSubview(
-      VisualEffectSubviewProperties properties) async {
+    VisualEffectSubviewProperties properties,
+  ) async {
     if (Platform.isMacOS) {
       final newProperties =
           properties.toMacOSWindowUtilsVisualEffectSubviewProperties();
+
       return WindowManipulator.addVisualEffectSubview(newProperties);
     }
 
@@ -462,19 +470,23 @@ class Window {
   ///
   /// This method is only available on macOS.
   static Future<void> updateVisualEffectSubviewProperties(
-      int visualEffectSubviewId,
-      VisualEffectSubviewProperties properties) async {
+    int visualEffectSubviewId,
+    VisualEffectSubviewProperties properties,
+  ) async {
     final newProperties =
         properties.toMacOSWindowUtilsVisualEffectSubviewProperties();
     WindowManipulator.updateVisualEffectSubviewProperties(
-        visualEffectSubviewId, newProperties);
+      visualEffectSubviewId,
+      newProperties,
+    );
   }
 
   /// Removes a visual effect subview from the application's window.
   ///
   /// This method is only available on macOS.
   static Future<void> removeVisualEffectSubview(
-      int visualEffectSubviewId) async {
+    int visualEffectSubviewId,
+  ) async {
     WindowManipulator.removeVisualEffectSubview(visualEffectSubviewId);
   }
 
@@ -505,8 +517,9 @@ class Window {
   /// Window.addToolbar();
   /// Window.setToolbarStyle(MacOSToolbarStyle.unified);
   /// ```
-  static Future<void> setToolbarStyle(
-      {required MacOSToolbarStyle toolbarStyle}) async {
+  static Future<void> setToolbarStyle({
+    required MacOSToolbarStyle toolbarStyle,
+  }) async {
     final newToolbarStyle = MacOSToolbarStyleToWindowToolbarStyleConverter
         .convertMacOSToolbarStyleToWindowToolbarStyle(toolbarStyle);
     WindowManipulator.setToolbarStyle(toolbarStyle: newToolbarStyle);
