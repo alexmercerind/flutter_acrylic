@@ -5,7 +5,8 @@ class MacOSToolbarStyleToWindowToolbarStyleConverter {
   MacOSToolbarStyleToWindowToolbarStyleConverter._();
 
   static NSWindowToolbarStyle convertMacOSToolbarStyleToWindowToolbarStyle(
-      MacOSToolbarStyle toolbarStyle) {
+    MacOSToolbarStyle toolbarStyle,
+  ) {
     switch (toolbarStyle) {
       case MacOSToolbarStyle.automatic:
         return NSWindowToolbarStyle.automatic;
