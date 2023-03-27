@@ -54,17 +54,17 @@ class VisualEffectSubviewContainer extends StatefulWidget {
   /// behavior is desired, it can be supplied a
   /// [VisualEffectSubviewContainerResizeEventRelay] through which its update
   /// behavior can be controlled manually.
-  const VisualEffectSubviewContainer(
-      {Key? key,
-      required this.child,
-      this.alphaValue = 1.0,
-      this.cornerRadius,
-      this.cornerMask = 0xf,
-      required this.effect,
-      this.state = MacOSBlurViewState.followsWindowActiveState,
-      this.padding = EdgeInsets.zero,
-      this.resizeEventRelay})
-      : super(key: key);
+  const VisualEffectSubviewContainer({
+    Key? key,
+    required this.child,
+    this.alphaValue = 1.0,
+    this.cornerRadius,
+    this.cornerMask = 0xf,
+    required this.effect,
+    this.state = MacOSBlurViewState.followsWindowActiveState,
+    this.padding = EdgeInsets.zero,
+    this.resizeEventRelay,
+  }) : super(key: key);
 
   @override
   State<VisualEffectSubviewContainer> createState() =>
@@ -79,7 +79,6 @@ class _VisualEffectSubviewContainerState
   Widget build(BuildContext context) {
     return VisualEffectSubviewContainerWithGlobalKey(
       key: _globalKey,
-      child: widget.child,
       alphaValue: widget.alphaValue,
       cornerRadius: widget.cornerRadius,
       cornerMask: widget.cornerMask,
@@ -87,6 +86,7 @@ class _VisualEffectSubviewContainerState
       state: widget.state,
       padding: widget.padding,
       resizeEventRelay: widget.resizeEventRelay,
+      child: widget.child,
     );
   }
 }
