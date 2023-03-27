@@ -29,17 +29,17 @@ class VisualEffectSubviewContainerWithGlobalKey extends StatefulWidget {
   /// widget. As a user of the [flutter_acrylic] package it is recommended to
   /// use that widget instead, as it takes care of the global key creation by
   /// itself.
-  const VisualEffectSubviewContainerWithGlobalKey(
-      {required GlobalKey key,
-      required this.child,
-      this.alphaValue = 1.0,
-      this.cornerRadius,
-      this.cornerMask = 0xf,
-      required this.effect,
-      required this.state,
-      required this.padding,
-      this.resizeEventRelay})
-      : super(key: key);
+  const VisualEffectSubviewContainerWithGlobalKey({
+    required GlobalKey key,
+    required this.child,
+    this.alphaValue = 1.0,
+    this.cornerRadius,
+    this.cornerMask = 0xf,
+    required this.effect,
+    required this.state,
+    required this.padding,
+    this.resizeEventRelay,
+  }) : super(key: key);
 
   @override
   State<VisualEffectSubviewContainerWithGlobalKey> createState() =>
@@ -114,11 +114,12 @@ class _VisualEffectSubviewContainerWithGlobalKeyState
   /// subview and compares the values of all of the subview's properties to
   /// their previous values. If any differences are identified, the visual
   /// effect subview will be updated on the Swift side.
-  void _modifyVisualEffectSubview(
-      {required double xPosition,
-      required double yPosition,
-      required double width,
-      required double height}) {
+  void _modifyVisualEffectSubview({
+    required double xPosition,
+    required double yPosition,
+    required double width,
+    required double height,
+  }) {
     if (_visualEffectSubviewId == null) {
       return;
     }
@@ -138,7 +139,9 @@ class _VisualEffectSubviewContainerWithGlobalKeyState
     final delta = _propertyStorage.getDeltaProperties(newProperties);
     if (!delta.isEmpty) {
       Window.updateVisualEffectSubviewProperties(
-          _visualEffectSubviewId!, delta);
+        _visualEffectSubviewId!,
+        delta,
+      );
       _propertyStorage.updateProperties(newProperties);
     }
   }
