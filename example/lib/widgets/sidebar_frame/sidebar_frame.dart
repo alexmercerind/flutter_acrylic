@@ -11,12 +11,12 @@ class SidebarFrame extends StatefulWidget {
   final Widget sidebar;
   final MacOSBlurViewState macOSBlurViewState;
 
-  const SidebarFrame(
-      {Key? key,
-      required this.sidebar,
-      required this.child,
-      required this.macOSBlurViewState})
-      : super(key: key);
+  const SidebarFrame({
+    Key? key,
+    required this.sidebar,
+    required this.child,
+    required this.macOSBlurViewState,
+  }) : super(key: key);
 
   @override
   State<SidebarFrame> createState() => _SidebarFrameState();
@@ -41,8 +41,9 @@ class _SidebarFrameState extends State<SidebarFrame> {
               duration: const Duration(milliseconds: 1200),
               curve: Curves.fastLinearToSlowEaseIn,
               tween: Tween<double>(
-                  begin: _isOpen ? sidebarWidth : 0.0,
-                  end: _isOpen ? sidebarWidth : 0.0),
+                begin: _isOpen ? sidebarWidth : 0.0,
+                end: _isOpen ? sidebarWidth : 0.0,
+              ),
               builder: (BuildContext context, double value, Widget? child) {
                 // The TransparentMacOSSidebar needs to be built inside the
                 // TweenAnimationBuilder's `build` method because it needs to be
