@@ -2,7 +2,7 @@
 
 - Upgraded [macos_window_utils](https://pub.dev/packages/macos_window_utils) to version 1.1.2 to make it work without modifications to `MainFlutterWindow.swift`.
 - Removed dependencies on deprecated Flutter code.
-- Refactored code based on newly introduced linting rules.
+- Refactored code based on newly introduced linter rules.
 - Improved the [macos_window_utils](https://pub.dev/packages/macos_window_utils) import to prevent potential breakage in the future.
 
 ## 1.1.1
