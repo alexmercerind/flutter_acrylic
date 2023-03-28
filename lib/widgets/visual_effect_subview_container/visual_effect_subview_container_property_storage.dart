@@ -10,7 +10,8 @@ class VisualEffectSubviewContainerPropertyStorage {
 
   /// Returns which properties have changed.
   _VisualEffectSubviewContainerPropertyChange _getPropertyChange(
-      VisualEffectSubviewProperties newProperties) {
+    VisualEffectSubviewProperties newProperties,
+  ) {
     final hasFrameSizeChanged =
         newProperties.frameWidth != _currentProperties.frameWidth ||
             newProperties.frameHeight != _currentProperties.frameHeight;
@@ -45,7 +46,8 @@ class VisualEffectSubviewContainerPropertyStorage {
   /// an `NSPoint` object respectively. For this reason, those two properties
   /// are treated as a single value.
   VisualEffectSubviewProperties getDeltaProperties(
-      VisualEffectSubviewProperties newProperties) {
+    VisualEffectSubviewProperties newProperties,
+  ) {
     final propertyChange = _getPropertyChange(newProperties);
 
     double? frameWidth, frameHeight;
@@ -117,12 +119,13 @@ class _VisualEffectSubviewContainerPropertyChange {
   final bool hasEffectChanged;
   final bool hasStateChanged;
 
-  _VisualEffectSubviewContainerPropertyChange(
-      {required this.hasFrameSizeChanged,
-      required this.hasFramePositionChanged,
-      required this.hasAlphaValueChanged,
-      required this.hasCornerRadiusChanged,
-      required this.hasCornerMaskChanged,
-      required this.hasEffectChanged,
-      required this.hasStateChanged});
+  _VisualEffectSubviewContainerPropertyChange({
+    required this.hasFrameSizeChanged,
+    required this.hasFramePositionChanged,
+    required this.hasAlphaValueChanged,
+    required this.hasCornerRadiusChanged,
+    required this.hasCornerMaskChanged,
+    required this.hasEffectChanged,
+    required this.hasStateChanged,
+  });
 }

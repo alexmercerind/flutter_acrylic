@@ -44,7 +44,7 @@ class _MacOSActionMenuState extends State<MacOSActionMenu> {
   Widget build(BuildContext context) {
     return TitlebarSafeArea(
       child: Material(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         child: Focus(
           onKeyEvent: (focusNode, event) {
             if (event is KeyDownEvent || event is KeyRepeatEvent) {
@@ -52,6 +52,7 @@ class _MacOSActionMenuState extends State<MacOSActionMenu> {
                 setState(() {
                   _selectedIndex = _legalSelectedIndex + 1;
                 });
+
                 return KeyEventResult.handled;
               }
 
@@ -59,12 +60,14 @@ class _MacOSActionMenuState extends State<MacOSActionMenu> {
                 setState(() {
                   _selectedIndex = _legalSelectedIndex - 1;
                 });
+
                 return KeyEventResult.handled;
               }
 
               if (event.physicalKey == PhysicalKeyboardKey.enter) {
                 _filteredItems[_legalSelectedIndex].function();
                 Navigator.of(context).maybePop();
+
                 return KeyEventResult.handled;
               }
             }
@@ -124,6 +127,9 @@ class MacOSActionMenuItem {
   final void Function() function;
   final String? description;
 
-  MacOSActionMenuItem(
-      {required this.name, required this.function, this.description});
+  MacOSActionMenuItem({
+    required this.name,
+    required this.function,
+    this.description,
+  });
 }

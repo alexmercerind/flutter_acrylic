@@ -30,14 +30,14 @@ class TransparentMacOSBottomBar extends StatelessWidget {
   ///   ),
   /// )
   /// ```
-  const TransparentMacOSBottomBar(
-      {Key? key,
-      this.alphaValue = 1.0,
-      this.effect = WindowEffect.sidebar,
-      this.state = MacOSBlurViewState.followsWindowActiveState,
-      this.resizeEventRelay,
-      required this.child})
-      : super(key: key);
+  const TransparentMacOSBottomBar({
+    Key? key,
+    this.alphaValue = 1.0,
+    this.effect = WindowEffect.sidebar,
+    this.state = MacOSBlurViewState.followsWindowActiveState,
+    this.resizeEventRelay,
+    required this.child,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class TransparentMacOSBottomBar extends StatelessWidget {
       // window is being resized, doing so can cause visual artifacts. To hide
       // those artifacts, the TransparentMacOSBottomBar widget adds a large
       // negative right margin to the visual effect subview.
-      padding: EdgeInsets.only(right: -7680.0),
+      padding: const EdgeInsets.only(right: -7680.0),
       child: child,
     );
   }

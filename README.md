@@ -371,59 +371,11 @@ You can see the [example](https://github.com/alexmercerind/flutter_acrylic/blob/
 
 **Additional setup for macOS:**
 
-flutter_acrylic depends on the [macos_window_utils](https://pub.dev/packages/macos_window_utils) plugin, which needs to be initialized as follows:
+flutter_acrylic depends on the [macos_window_utils](https://pub.dev/packages/macos_window_utils) plugin, which requires macOS 10.14.6 or above. Please update your macOS deployment target as follows:
 
-Open the `macos/Runner.xcworkspace` folder of your project using Xcode, press ⇧ + ⌘ + O and search for `MainFlutterWindow.swift`.
+Open the `macos/Runner.xcworkspace` folder of your project using Xcode, press ⇧ + ⌘ + O and search for `Runner.xcodeproj`. Go to `Info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above.
 
-Insert `import macos_window_utils` at the top of the file.
-Then, replace the code above the `super.awakeFromNib()`-line with the following code:
-
-```swift
-let windowFrame = self.frame
-let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
-self.contentViewController = macOSWindowUtilsViewController
-self.setFrame(windowFrame, display: true)
-
-/* Initialize the macos_window_utils plugin */
-MainFlutterWindowManipulator.start(mainFlutterWindow: self)
-
-RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
-```
-
-Assuming you're starting with the default configuration, the finished code should look something like this:
-
-```diff
-import Cocoa
-import FlutterMacOS
-+import macos_window_utils
-
-class MainFlutterWindow: NSWindow {
-  override func awakeFromNib() {
--   let flutterViewController = FlutterViewController.init()
--   let windowFrame = self.frame
--   self.contentViewController = flutterViewController
--   self.setFrame(windowFrame, display: true)
-
--   RegisterGeneratedPlugins(registry: flutterViewController)
-    
-+   let windowFrame = self.frame
-+   let macOSWindowUtilsViewController = MacOSWindowUtilsViewController()
-+   self.contentViewController = macOSWindowUtilsViewController
-+   self.setFrame(windowFrame, display: true)
-
-+   /* Initialize the macos_window_utils plugin */
-+   MainFlutterWindowManipulator.start(mainFlutterWindow: self)
-
-+   RegisterGeneratedPlugins(registry: macOSWindowUtilsViewController.flutterViewController)
-
-    super.awakeFromNib()
-  }
-}
-```
-
-Now press ⇧ + ⌘ + O once more and search for `Runner.xcodeproj`. Go to `info` > `Deployment Target` and set the `macOS Deployment Target` to `10.14.6` or above.
-
-Additionally, you may need to open the `Podfile` in your Xcode project and make sure the deployment target in the first line is set to `10.14.6` or above:
+Additionally, you may need to open the `Podfile` in your Xcode project and make sure the deployment target in the first line is set to `10.14.6` or above as well:
 
 ```podspec
 platform :osx, '10.14.6'

@@ -2,8 +2,8 @@ import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_acrylic/macos/converters/blur_view_state_to_visual_effect_view_state_converter.dart';
 import 'package:flutter_acrylic/macos/converters/window_effect_to_material_converter.dart';
 
-import 'package:macos_window_utils/macos/visual_effect_view_properties.dart'
-    as MacOSWindowUtilsVisualEffectSubviewProperties;
+import 'package:macos_window_utils/macos_window_utils.dart'
+    as macos_window_utils;
 
 /// Visual effect subview properties (macOS only).
 ///
@@ -38,16 +38,17 @@ class VisualEffectSubviewProperties {
   /// The state of the subview.
   final MacOSBlurViewState? state;
 
-  VisualEffectSubviewProperties(
-      {this.frameWidth,
-      this.frameHeight,
-      this.frameX,
-      this.frameY,
-      this.alphaValue,
-      this.cornerRadius,
-      this.cornerMask,
-      this.effect,
-      this.state});
+  VisualEffectSubviewProperties({
+    this.frameWidth,
+    this.frameHeight,
+    this.frameX,
+    this.frameY,
+    this.alphaValue,
+    this.cornerRadius,
+    this.cornerMask,
+    this.effect,
+    this.state,
+  });
 
   static const topLeftCorner = 1 << 0;
   static const topRightCorner = 1 << 1;
@@ -65,19 +66,19 @@ class VisualEffectSubviewProperties {
       effect == null &&
       state == null;
 
-  MacOSWindowUtilsVisualEffectSubviewProperties.VisualEffectSubviewProperties
+  macos_window_utils.VisualEffectSubviewProperties
       toMacOSWindowUtilsVisualEffectSubviewProperties() {
     final material = effect == null
         ? null
         : WindowEffectToMaterialConverter.convertWindowEffectToMaterial(
-            effect!);
+            effect!,
+          );
     final visualEffectViewState = state == null
         ? null
         : BlurViewStateToVisualEffectViewStateConverter
             .convertBlurViewStateToVisualEffectViewState(state!);
 
-    return MacOSWindowUtilsVisualEffectSubviewProperties
-        .VisualEffectSubviewProperties(
+    return macos_window_utils.VisualEffectSubviewProperties(
       frameWidth: frameWidth,
       frameHeight: frameHeight,
       frameX: frameX,

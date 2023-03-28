@@ -11,8 +11,9 @@ class VisualEffectSubviewContainerResizeEventRelay {
   /// when its `build` method runs.
   final bool disableUpdateOnBuild;
 
-  VisualEffectSubviewContainerResizeEventRelay(
-      {required this.disableUpdateOnBuild});
+  VisualEffectSubviewContainerResizeEventRelay({
+    required this.disableUpdateOnBuild,
+  });
 
   void Function()? _forceUpdate;
 

@@ -32,10 +32,14 @@ class _ActionListItemState extends State<ActionListItem> {
       return;
     }
 
-    Scrollable.ensureVisible(_globalKey.currentContext!,
-        alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart);
-    Scrollable.ensureVisible(_globalKey.currentContext!,
-        alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd);
+    Scrollable.ensureVisible(
+      _globalKey.currentContext!,
+      alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
+    );
+    Scrollable.ensureVisible(
+      _globalKey.currentContext!,
+      alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
+    );
   }
 
   @override
@@ -70,7 +74,8 @@ class _ActionListItemState extends State<ActionListItem> {
           duration: const Duration(milliseconds: 50),
           decoration: BoxDecoration(
             color: Theme.of(context)
-                .backgroundColor
+                .colorScheme
+                .background
                 .withOpacity(_getBackgroundOpacity()),
           ),
           child: SizedBox(

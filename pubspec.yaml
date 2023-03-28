@@ -1,6 +1,6 @@
 name: flutter_acrylic
 description: Window acrylic, mica & transparency effects for Flutter on Windows, macOS & Linux.
-version: 1.1.1
+version: 1.1.2
 homepage: https://github.com/alexmercerind/flutter_acrylic
 repository: https://github.com/alexmercerind/flutter_acrylic
 documentation: https://github.com/alexmercerind/flutter_acrylic/blob/master/README.md
@@ -10,13 +10,15 @@ environment:
   flutter: ">=3.7.0"
 
 dependencies:
-  macos_window_utils: ^1.0.2
+  macos_window_utils: ^1.1.2
   flutter:
     sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.0
+  dart_code_metrics: ^5.6.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -5,7 +5,8 @@ class BlurViewStateToVisualEffectViewStateConverter {
   BlurViewStateToVisualEffectViewStateConverter._();
 
   static NSVisualEffectViewState convertBlurViewStateToVisualEffectViewState(
-      MacOSBlurViewState blurViewState) {
+    MacOSBlurViewState blurViewState,
+  ) {
     switch (blurViewState) {
       case MacOSBlurViewState.active:
         return NSVisualEffectViewState.active;
