@@ -1,3 +1,8 @@
+## 1.1.3
+
+- Upgraded [macos_window_utils](https://pub.dev/packages/macos_window_utils) to version 1.1.3 to fix an issue that prevented apps from closing properly on Flutter 3.10.
+- Fixed a race condition that may cause the window effect to be set before the window manipulator has been initialized on macOS.
+
 ## 1.1.2
 
 - Upgraded [macos_window_utils](https://pub.dev/packages/macos_window_utils) to version 1.1.2 to make flutter_acrylic work without modifications to `MainFlutterWindow.swift`.
