@@ -77,6 +77,13 @@ typedef LONG NTSTATUS, *PNTSTATUS;
 
 typedef NTSTATUS(WINAPI* RtlGetVersionPtr)(PRTL_OSVERSIONINFOW);
 
+enum WINDOWATTRIBUTE {
+  DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
+  DWMWA_CAPTION_COLOR = 35,
+  DWMWA_SYSTEMBACKDROP_TYPE = 38,
+  DWMWA_MICA_EFFECT = 1029
+};
+
 namespace {
 
 static constexpr auto kChannelName = "com.alexmercerind/flutter_acrylic";
@@ -193,10 +200,13 @@ void FlutterAcrylicPlugin::HandleMethodCall(
       BOOL enable = TRUE, dark_bool = dark;
       MARGINS margins = {-1};
       ::DwmExtendFrameIntoClientArea(GetParentWindow(), &margins);
-      ::DwmSetWindowAttribute(GetParentWindow(), 20, &dark_bool,
+      ::DwmSetWindowAttribute(GetParentWindow(), WINDOWATTRIBUTE::DWMWA_USE_IMMERSIVE_DARK_MODE, &dark_bool,
                               sizeof(dark_bool));
+      COLORREF COLOR_NONE = 0xFFFFFFFE;
+      ::DwmSetWindowAttribute(GetParentWindow(), DWMWA_CAPTION_COLOR, &COLOR_NONE,
+                              sizeof(COLOR_NONE));
       INT effect_value = effect == 4 ? 3 : effect == 5 ? 2 : 4;
-      ::DwmSetWindowAttribute(GetParentWindow(), 38, &effect_value,
+      ::DwmSetWindowAttribute(GetParentWindow(), WINDOWATTRIBUTE::DWMWA_SYSTEMBACKDROP_TYPE, &effect_value,
                               sizeof(enable));
     } else {
       if (effect == 5) {
@@ -208,9 +218,9 @@ void FlutterAcrylicPlugin::HandleMethodCall(
           // glass"
           // effect with negative margins.
           ::DwmExtendFrameIntoClientArea(GetParentWindow(), &margins);
-          ::DwmSetWindowAttribute(GetParentWindow(), 20, &dark_bool,
+          ::DwmSetWindowAttribute(GetParentWindow(), WINDOWATTRIBUTE::DWMWA_USE_IMMERSIVE_DARK_MODE, &dark_bool,
                                   sizeof(dark_bool));
-          ::DwmSetWindowAttribute(GetParentWindow(), 1029, &enable,
+          ::DwmSetWindowAttribute(GetParentWindow(), WINDOWATTRIBUTE::DWMWA_MICA_EFFECT, &enable,
                                   sizeof(enable));
         }
       } else {
@@ -229,9 +239,9 @@ void FlutterAcrylicPlugin::HandleMethodCall(
           // https://github.com/bitsdojo/bitsdojo_window/blob/adad0cd40be3d3e12df11d864f18a96a2d0fb4fb/bitsdojo_window_windows/windows/bitsdojo_window.cpp#L149
           MARGINS margins = {0, 0, 1, 0};
           ::DwmExtendFrameIntoClientArea(GetParentWindow(), &margins);
-          ::DwmSetWindowAttribute(GetParentWindow(), 20, &enable,
+          ::DwmSetWindowAttribute(GetParentWindow(), WINDOWATTRIBUTE::DWMWA_USE_IMMERSIVE_DARK_MODE, &enable,
                                   sizeof(enable));
-          ::DwmSetWindowAttribute(GetParentWindow(), 1029, &enable,
+          ::DwmSetWindowAttribute(GetParentWindow(), WINDOWATTRIBUTE::DWMWA_MICA_EFFECT, &enable,
                                   sizeof(enable));
         }
         accent = {
