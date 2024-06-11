@@ -1,3 +1,7 @@
+## 1.1.4
+
+- Fixed a bug that caused the title bar to be incorrectly rendered on Windows 11 [[#81](https://github.com/alexmercerind/flutter_acrylic/pull/81)] (@Auties00).
+
 ## 1.1.3
 
 - Upgraded [macos_window_utils](https://pub.dev/packages/macos_window_utils) to version 1.1.3 to fix an issue that prevented apps from closing properly on Flutter 3.10.

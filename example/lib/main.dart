@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
-import 'package:flutter/material.dart';
 
-import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_acrylic/widgets/visual_effect_subview_container/visual_effect_subview_container.dart';
 import 'package:flutter_acrylic_example/widgets/macos_action_menu/macos_action_menu.dart';
 import 'package:flutter_acrylic_example/widgets/sidebar_frame/sidebar_frame.dart';

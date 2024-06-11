@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
-
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 
 class _MacOSTitlebarSafeArea extends StatefulWidget {

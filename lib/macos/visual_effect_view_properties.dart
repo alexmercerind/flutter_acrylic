@@ -1,7 +1,6 @@
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_acrylic/macos/converters/blur_view_state_to_visual_effect_view_state_converter.dart';
 import 'package:flutter_acrylic/macos/converters/window_effect_to_material_converter.dart';
-
 import 'package:macos_window_utils/macos_window_utils.dart'
     as macos_window_utils;
 
